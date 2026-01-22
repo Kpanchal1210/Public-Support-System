@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report an Issue – Public Support System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{% static 'css/reports.css' %}">
+</head>
+
+<body>
+
+<nav>
+    <h2>PUBLIC<span>SUPPORT</span></h2>
+    <div class="nav-links">
+        <a href="#">Dashboard</a>
+        <a href="#" class="logout">Logout</a>
+    </div>
+</nav>
+
+<div class="header">
+    <h1>Report an <span>Issue</span></h1>
+    <p>Help us improve your community. Choose a category below to start your report.</p>
+</div>
+
+<div class="departments">
+    <div class="dept-card" onclick="openForm('Garbage Disposal')">
+        <h3>🗑️ Garbage</h3>
+        <p>Collection missed or overflowing bins</p>
+    </div>
+
+    <div class="dept-card" onclick="openForm('Road Infrastructure')">
+        <h3>🛣️ Roads</h3>
+        <p>Report potholes or damaged pavement</p>
+    </div>
+
+    <div class="dept-card" onclick="openForm('Street Lighting')">
+        <h3>💡 Street Light</h3>
+        <p>Dark areas or flickering lamps</p>
+    </div>
+
+    <div class="dept-card" onclick="openForm('Water & Sewage')">
+        <h3>💧 Water Leak</h3>
+        <p>Pipeline bursts or sewage issues</p>
+    </div>
+</div>
+
+<div class="form-section" id="formSection">
+    <div class="form-container">
+        <h2 id="deptTitle">Complaint Form</h2>
+
+        <form onsubmit="submitComplaint(event)">
+            <label>Full Name</label>
+            <input type="text" placeholder="John Doe" required>
+
+            <label>Location Details</label>
+            <input type="text" placeholder="House No, Street, Landmark" required>
+
+            <label>Description of Issue</label>
+            <textarea placeholder="Describe what's happening..." required></textarea>
+
+            <button type="submit">Submit Complaint</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 Public Support Portal &bull; Designed for Citizens
+</footer>
+
+
+</body>
+</html>

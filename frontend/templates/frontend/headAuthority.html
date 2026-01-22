@@ -1,0 +1,132 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Executive Oversight – CivicFlow Authority</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{% static 'css/headAuthority.css' %}">
+</head>
+
+<body>
+
+<div class="sidebar">
+    <div class="auth-profile">
+        <div class="avatar-shield">🏛️</div>
+        <h3 class="auth-name">Comm. Richards</h3>
+        <p class="auth-role">Chief Authority</p>
+    </div>
+
+    <nav>
+        <a href="#" class="active">🏢 City Overview</a>
+        <a href="#">📋 Budget Approvals</a>
+        <a href="#" class="nav-danger">🚨 Escalations</a>
+    </nav>
+</div>
+
+<div class="main-area">
+
+    <div class="page-header">
+        <h1>Executive Command</h1>
+        <p>
+            Oversight of delayed Street Light, Water, Road, and Garbage department work.
+        </p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card stat-danger">
+            <h5>Critical Escalations</h5>
+            <h2>08</h2>
+        </div>
+
+        <div class="stat-card">
+            <h5>Average Delay</h5>
+            <h2>4.2 Days</h2>
+        </div>
+
+        <div class="stat-card">
+            <h5>Department Compliance</h5>
+            <h2>82%</h2>
+        </div>
+
+        <div class="stat-card">
+            <h5>Citizen Impact</h5>
+            <h2>High</h2>
+        </div>
+    </div>
+
+    <div class="escalation-container">
+        <div class="escalation-header">
+            <h3>⚠️ Escalated Department Issues</h3>
+            <span>Timeline Monitoring</span>
+        </div>
+
+        <table class="esc-table">
+            <thead>
+                <tr>
+                    <th>Department</th>
+                    <th>Issue</th>
+                    <th>Status</th>
+                    <th>Lead</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><span class="dept-tag water">WATER</span></td>
+                    <td>
+                        <b>Pipeline Leakage</b><br>
+                        <small>Sector 4</small>
+                    </td>
+                    <td><span class="delay-badge">Delayed 48h+</span></td>
+                    <td>Director Mehta</td>
+                    <td><button class="btn-intervene">Intervene</button></td>
+                </tr>
+
+                <tr>
+                    <td><span class="dept-tag road">ROAD</span></td>
+                    <td>
+                        <b>Pothole Repair</b><br>
+                        <small>Highway 12</small>
+                    </td>
+                    <td><span class="delay-badge">Delayed 24h</span></td>
+                    <td>Eng. Ramesh</td>
+                    <td><button class="btn-intervene">Review</button></td>
+                </tr>
+
+                <tr>
+                    <td><span class="dept-tag light">STREET LIGHT</span></td>
+                    <td>
+                        <b>Light Replacement</b><br>
+                        <small>Garden Road</small>
+                    </td>
+                    <td><span class="delay-badge">Delayed</span></td>
+                    <td>Super. Khan</td>
+                    <td><button class="btn-intervene">Expedite</button></td>
+                </tr>
+
+                <tr>
+                    <td><span class="dept-tag garbage">GARBAGE</span></td>
+                    <td>
+                        <b>Waste Collection Delay</b><br>
+                        <small>Zone B</small>
+                    </td>
+                    <td><span class="delay-badge">Delayed 72h+</span></td>
+                    <td>Admin Shanti</td>
+                    <td><button class="btn-intervene">Intervene</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>
