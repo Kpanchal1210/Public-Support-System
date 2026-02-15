@@ -11,3 +11,6 @@ def reports(request):
 
 def headAuthority(request):
     return render(request, 'frontend/headAuthority.html')
+
+def index(request):
+    return render(request, 'frontend/index.html')
