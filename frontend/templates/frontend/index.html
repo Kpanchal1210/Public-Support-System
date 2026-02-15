@@ -36,7 +36,11 @@
     </p>
 
     <div class="hero-actions">
-        <button class="btn-primary">Report an Issue</button>
+        <button class="btn-primary"
+        onclick="location.href='{% url 'reports' %}'">
+    Report an Issue
+</button>
+
         <button class="btn-secondary">View Reports</button>
     </div>
 </div>
