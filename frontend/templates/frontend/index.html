@@ -1,85 +1,103 @@
 {% load static %}
 
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>CivicFlow – Public Support System</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Public Support System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
 
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
+  <body>
+    <!-- NAVBAR -->
+    <nav>
+      <h1>PUBLIC SUPPORT</h1>
 
-<body>
+      <div>
+        <!-- ✅ Connected URLs -->
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}" class="register">Register</a>
+      </div>
+    </nav>
 
-<nav>
-    <h1>PUBLIC SUPPORT</h1>
-    <div>
-        <a href="#">Home</a>
-        <a href="#">Login</a>
-        <a href="#" class="register">Register</a>
-    </div>
-</nav>
-
-<div class="hero">
-    <h2>
-        See a problem around you? <br>
+    <!-- HERO SECTION -->
+    <div class="hero">
+      <h2>
+        See a problem around you? <br />
         <span>Let the city know.</span>
-    </h2>
-    <p>
+      </h2>
+
+      <p>
         Public Support helps citizens report everyday issues like broken roads,
         garbage collection delays, or faulty streetlights — quickly and clearly.
-    </p>
+      </p>
 
-    <div class="hero-actions">
-        <button class="btn-primary"
-        onclick="location.href='{% url 'reports' %}'">
-    Report an Issue
-</button>
+      <div class="hero-actions">
+        <!-- Reports page -->
+        <button
+          class="btn-primary"
+          onclick="location.href='{% url 'reports' %}'"
+        >
+          Report an Issue
+        </button>
 
         <button class="btn-secondary">View Reports</button>
+      </div>
     </div>
-</div>
 
-<section>
-    <div class="section-title">What people are reporting</div>
+    <!-- REPORT CARDS -->
+    <section>
+      <div class="section-title">What people are reporting</div>
 
-    <div class="cards">
+      <div class="cards">
         <div class="card">
-            <span class="tag">ROAD</span>
-            <h4>Potholes near bus stand</h4>
-            <p>Multiple potholes slowing traffic and causing frequent jams during peak hours.</p>
+          <span class="tag">ROAD</span>
+          <h4>Potholes near bus stand</h4>
+          <p>
+            Multiple potholes slowing traffic and causing frequent jams during
+            peak hours.
+          </p>
         </div>
 
         <div class="card">
-            <span class="tag">GARBAGE</span>
-            <h4>Waste not collected</h4>
-            <p>Garbage bins have not been cleared for three days, causing overflow.</p>
+          <span class="tag">GARBAGE</span>
+          <h4>Waste not collected</h4>
+          <p>
+            Garbage bins have not been cleared for three days, causing overflow.
+          </p>
         </div>
 
         <div class="card">
-            <span class="tag">STREETLIGHT</span>
-            <h4>Streetlight not working</h4>
-            <p>Dark intersection at night making it unsafe for pedestrians.</p>
+          <span class="tag">STREETLIGHT</span>
+          <h4>Streetlight not working</h4>
+          <p>Dark intersection at night making it unsafe for pedestrians.</p>
         </div>
-    </div>
-</section>
+      </div>
+    </section>
 
-<div class="cta">
-    <div>
+    <!-- CTA -->
+    <div class="cta">
+      <div>
         <h3>Noticed something that needs fixing?</h3>
         <p>It takes less than a minute to report.</p>
+      </div>
+
+      <button onclick="location.href='{% url 'reports' %}'">Report now</button>
     </div>
-    <button>Report now</button>
-</div>
 
-<footer>
-    © 2025 Public Support Portal • Built for citizens, not complaints
-</footer>
-
-</body>
+    <!-- FOOTER -->
+    <footer>
+      © 2026 Public Support Portal • Built for citizens, not complaints
+    </footer>
+  </body>
 </html>
