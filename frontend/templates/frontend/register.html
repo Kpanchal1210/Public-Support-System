@@ -1,79 +1,77 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Join CivicFlow – Public Support</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <meta charset="UTF-8" />
+  <title>Join CivicFlow – Public Support</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" href="{% static 'css/register.css' %}" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
+  <link rel="stylesheet" href="{% static 'css/register.css' %}" />
 
-  <body>
-    <nav class="navbar">
-      <h1><a href="/">PUBLIC SUPPORT</a></h1>
-      <div class="nav-links">
-        <a href="{% url 'login' %}">Login</a>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <h1><a href="/">PUBLIC SUPPORT</a></h1>
+  <div class="nav-links">
+    <a href="{% url 'login' %}">Login</a>
+  </div>
+</nav>
+
+<main class="auth-container">
+  <div class="auth-card">
+
+    <h2>Create an Account</h2>
+    <p>Join your neighbors in improving the city.</p>
+
+    <!-- Error Messages -->
+    {% if error %}
+      <div class="error-message">{{ error }}</div>
+    {% endif %}
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="error-message">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="John Doe" required />
       </div>
-    </nav>
 
-    <main class="auth-container">
-      <div class="auth-card">
-        <h2>Create an Account</h2>
-        <p>Join your neighbors in improving the city.</p>
-
-        <form method="POST">
-          {% csrf_token %}
-
-          <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" name="name" placeholder="John Doe" required />
-          </div>
-
-          <div class="form-group">
-            <label>Email Address</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="john@example.com"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Create a password"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              name="confirm_password"
-              placeholder="Repeat password"
-              required
-            />
-          </div>
-
-          <button type="submit" class="btn-primary">Register Now</button>
-        </form>
-
-        <div class="auth-footer">
-          Already have an account?
-          <a href="{% url 'login' %}">Login here</a>
-        </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="john@example.com" required />
       </div>
-    </main>
 
-    <footer>© 2026 Public Support Portal • Built for citizens</footer>
-  </body>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Create a password" required />
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" name="confirm_password" placeholder="Repeat password" required />
+      </div>
+
+      <button type="submit" class="btn-primary">Register Now</button>
+    </form>
+
+    <div class="auth-footer">
+      Already have an account?
+      <a href="{% url 'login' %}">Login here</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>© 2026 Public Support Portal • Built for citizens</footer>
+
+</body>
 </html>

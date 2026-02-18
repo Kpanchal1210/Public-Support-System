@@ -1,72 +1,87 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Login – CivicFlow</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <meta charset="UTF-8" />
+  <title>Login – CivicFlow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/login.css' %}" />
 
-    <!-- Google Font -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
 
-  <body>
-    <!-- NAVBAR -->
-    <nav class="navbar">
-      <h1 class="logo">
-        <a href="/">PUBLIC SUPPORT</a>
-      </h1>
+<body>
 
-      <div class="nav-links">
-        <a href="{% url 'register' %}">Register</a>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <h1 class="logo">
+    <a href="/">PUBLIC SUPPORT</a>
+  </h1>
+
+  <div class="nav-links">
+    <a href="{% url 'register' %}">Register</a>
+  </div>
+</nav>
+
+<!-- LOGIN -->
+<main class="auth-container">
+  <div class="auth-card">
+
+    <h2>Welcome Back</h2>
+    <p>Login to manage your complaints and track updates.</p>
+
+    <!-- ✅ ERROR MESSAGE -->
+    {% if error %}
+      <div class="error-message">
+        {{ error }}
       </div>
-    </nav>
+    {% endif %}
 
-    <!-- LOGIN -->
-    <main class="auth-container">
-      <div class="auth-card">
-        <h2>Welcome Back</h2>
-        <p>Login to manage your complaints and track updates.</p>
+    <!-- ✅ DJANGO MESSAGES SUPPORT -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="error-message">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
 
-        <form method="POST">
-          {% csrf_token %}
+    <form method="POST" action="">
+      {% csrf_token %}
 
-          <div class="form-group">
-            <label>Username</label>
-            <input
-              type="text"
-              name="username"
-              placeholder="Enter your username"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="••••••••"
-              required
-            />
-          </div>
-
-          <button type="submit" class="btn-primary">Sign In</button>
-        </form>
-
-        <div class="auth-footer">
-          Don’t have an account?
-          <a href="{% url 'register' %}">Create one</a>
-        </div>
+      <div class="form-group">
+        <label>Username</label>
+        <input
+          type="text"
+          name="username"
+          placeholder="Enter your username"
+          required
+        />
       </div>
-    </main>
 
-    <footer>© 2026 Public Support Portal • Built for citizens</footer>
-  </body>
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="••••••••"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn-primary">Sign In</button>
+    </form>
+
+    <div class="auth-footer">
+      Don’t have an account?
+      <a href="{% url 'register' %}">Create one</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>© 2026 Public Support Portal • Built for citizens</footer>
+
+</body>
 </html>
