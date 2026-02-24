@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 # =========================
@@ -11,22 +12,25 @@ from django.contrib import messages
 def index(request):
     return render(request, 'frontend/index.html')
 
-
+@login_required(login_url='login')
 def worker_portal(request):
     return render(request, 'frontend/worker_portal.html')
 
-
+@login_required(login_url='login')
 def department(request):
     return render(request, 'frontend/department.html')
 
-
+@login_required(login_url='login')
 def reports(request):
     return render(request, 'frontend/reports.html')
 
-
+@login_required(login_url='login')
 def headAuthority(request):
     return render(request, 'frontend/headAuthority.html')
 
+def logout_view(request):
+    logout(request)
+    return render(request, 'frontend/logout.html')
 
 # =========================
 # LOGIN

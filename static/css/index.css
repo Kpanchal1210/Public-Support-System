@@ -43,8 +43,24 @@ nav a {
 nav a:hover {
     color: var(--accent-primary);
 }
-.register {
-    color: var(--accent-warm);
+
+.nav-links a[href*="login"] {
+  color: #2563eb;
+  border: 1px solid #2563eb;
+  margin-right: 8px;
+}
+
+.nav-links a[href*="login"]:hover {
+  background: #2563eb;
+  color: white;
+}
+
+.nav-links span {
+  background: #eef2ff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #2563eb;
 }
 
 /* HERO */
