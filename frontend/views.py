@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+from accounts.models import UserProfile
+
 
 # =========================
 # PUBLIC PAGES
@@ -42,20 +44,29 @@ def login_view(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
 
-        # authenticate user
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request, user)   # create session
-            return redirect('index')
+            login(request, user)
+
+            # get user role
+            profile = UserProfile.objects.get(user=user)
+
+            if profile.user_type == 'department':
+                return redirect('department')
+
+            elif profile.user_type == 'head':
+                return redirect('headAuthority')
+
+            else:
+                return redirect('index')
 
         else:
             return render(request, 'frontend/login.html', {
                 'error': 'Invalid username or password'
             })
 
-    return render(request, 'frontend/login.html')
-
+    return render(request, 'frontend/login.html') 
 
 # =========================
 # REGISTER
