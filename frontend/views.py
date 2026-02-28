@@ -49,8 +49,8 @@ def login_view(request):
         if user is not None:
             login(request, user)
 
-            # get user role
-            profile = UserProfile.objects.get(user=user)
+            # get or create profile safely
+            profile, created = UserProfile.objects.get_or_create(user=user)
 
             if profile.user_type == 'department':
                 return redirect('department')
@@ -66,8 +66,7 @@ def login_view(request):
                 'error': 'Invalid username or password'
             })
 
-    return render(request, 'frontend/login.html') 
-
+    return render(request, 'frontend/login.html')
 # =========================
 # REGISTER
 # =========================
