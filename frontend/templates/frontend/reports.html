@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +9,7 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <!-- External CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/reports.css' %}">
 </head>
 
@@ -19,8 +18,8 @@
 <nav>
     <h2>PUBLIC<span>SUPPORT</span></h2>
     <div class="nav-links">
-        <a href="#">Dashboard</a>
-        <a href="#" class="logout">Logout</a>
+        <a href="{% url 'index' %}">Dashboard</a>
+        <a href="{% url 'logout' %}" class="logout">Logout</a>
     </div>
 </nav>
 
@@ -29,41 +28,48 @@
     <p>Help us improve your community. Choose a category below to start your report.</p>
 </div>
 
+<!-- Departments -->
+
 <div class="departments">
-    <div class="dept-card" onclick="openForm('Garbage Disposal')">
+
+    <div class="dept-card" onclick="setCategory('garbage')">
         <h3>🗑️ Garbage</h3>
         <p>Collection missed or overflowing bins</p>
     </div>
 
-    <div class="dept-card" onclick="openForm('Road Infrastructure')">
+    <div class="dept-card" onclick="setCategory('roads')">
         <h3>🛣️ Roads</h3>
         <p>Report potholes or damaged pavement</p>
     </div>
 
-    <div class="dept-card" onclick="openForm('Street Lighting')">
+    <div class="dept-card" onclick="setCategory('elecricity')">
         <h3>💡 Street Light</h3>
         <p>Dark areas or flickering lamps</p>
     </div>
 
-    <div class="dept-card" onclick="openForm('Water & Sewage')">
+    <div class="dept-card" onclick="setCategory('water')">
         <h3>💧 Water Leak</h3>
         <p>Pipeline bursts or sewage issues</p>
     </div>
+
 </div>
+
+<!-- Complaint Form -->
 
 <div class="form-section" id="formSection">
     <div class="form-container">
         <h2 id="deptTitle">Complaint Form</h2>
 
-        <form onsubmit="submitComplaint(event)">
-            <label>Full Name</label>
-            <input type="text" placeholder="John Doe" required>
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.issue_type }}
 
             <label>Location Details</label>
-            <input type="text" placeholder="House No, Street, Landmark" required>
+            {{ form.location }}
 
             <label>Description of Issue</label>
-            <textarea placeholder="Describe what's happening..." required></textarea>
+            {{ form.description }}
 
             <button type="submit">Submit Complaint</button>
         </form>
@@ -71,9 +77,10 @@
 </div>
 
 <footer>
-    &copy; 2026 Public Support Portal &bull; Designed for Citizens
+    &copy; 2026 Public Support Portal • Designed for Citizens
 </footer>
 
+<script src="{% static 'js/reports.js' %}"></script>
 
 </body>
 </html>
