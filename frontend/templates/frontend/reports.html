@@ -58,16 +58,6 @@
 
 <div class="form-section" id="formSection">
     <div class="form-container">
-
-        <!-- Success Message -->
-        {% if messages %}
-            {% for message in messages %}
-                <div class="success-message">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-
         <h2 id="deptTitle">Complaint Form</h2>
 
         <form method="POST" enctype="multipart/form-data">
@@ -94,6 +84,16 @@
 </footer>
 
 <script src="{% static 'js/reports.js' %}"></script>
+
+{% if messages %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        {% for message in messages %}
+            alert("{{ message }}");
+        {% endfor %}
+    });
+    </script>
+{% endif %}
 
 </body>
 </html>

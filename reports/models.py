@@ -8,7 +8,6 @@ class Issue(models.Model):
         ('water', 'Water Supply'),
         ('electricity', 'Electricity'),
         ('garbage', 'Garbage'),
-        ('other', 'Other'),
     ]
 
     STATUS_CHOICES = [
@@ -18,7 +17,7 @@ class Issue(models.Model):
     ]
 
     citizen = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    worker = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_worker')
     description = models.TextField()
     issue_type = models.CharField(max_length=50, choices=ISSUE_TYPES)
     location = models.CharField(max_length=255)
@@ -28,4 +27,4 @@ class Issue(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.title} - {self.status}"
+        return f"{self.issue_type} - {self.status}"
