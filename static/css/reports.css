@@ -115,6 +115,41 @@ nav h2 span {
 }
 
 /* FORM */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast-message {
+    background: #2ecc71;
+    color: white;
+    padding: 14px 20px;
+    margin-top: 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    animation: slideIn 0.5s ease, fadeOut 0.5s ease 3s forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateX(120%);
+    }
+}
 
 .form-section {
     display: none;
