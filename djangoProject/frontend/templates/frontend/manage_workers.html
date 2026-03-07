@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Manage Workers</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/manage_worker.css' %}">
+</head>
+
+<body>
+
+<div class="worker-container">
+
+<header class="worker-header">
+<h1>Manage Workers</h1>
+<p>View and manage all registered workers</p>
+</header>
+
+<div class="table-wrapper">
+
+<table class="worker-table">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Username</th>
+<th>Email</th>
+<th>Role</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for worker in workers %}
+
+<tr>
+
+<td>{{ worker.id }}</td>
+
+<td>
+<div class="worker-name">
+<div class="worker-avatar">
+{{ worker.username|first|upper }}
+</div>
+{{ worker.username }}
+</div>
+</td>
+
+<td>
+{% if worker.email %}
+{{ worker.email }}
+{% else %}
+<span class="no-email">No email</span>
+{% endif %}
+</td>
+
+<td>
+<span class="worker-role">
+{{ worker.userprofile.user_type }}
+</span>
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="4" class="no-data">
+No workers found
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>

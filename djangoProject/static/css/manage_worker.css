@@ -1,0 +1,147 @@
+/* ================= ROOT VARIABLES ================= */
+
+:root {
+    --bg-body: #f8fafc;
+    --bg-card: #ffffff;
+    --accent-primary: #4f46e5;
+    --accent-secondary: #0ea5e9;
+    --text-main: #1e293b;
+    --text-dim: #64748b;
+    --border-color: #e2e8f0;
+}
+
+/* ================= GLOBAL ================= */
+
+body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg-body);
+    color: var(--text-main);
+    padding: 40px;
+}
+
+/* ================= CONTAINER ================= */
+
+.worker-container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+/* ================= HEADER ================= */
+
+.worker-header h1 {
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.worker-header p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrapper {
+    background: var(--bg-card);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.worker-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* TABLE HEADER */
+
+.worker-table thead {
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    color: white;
+}
+
+.worker-table th {
+    padding: 16px;
+    font-size: 0.8rem;
+    text-align: left;
+    letter-spacing: 0.5px;
+}
+
+/* TABLE BODY */
+
+.worker-table td {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+/* HOVER EFFECT */
+
+.worker-table tbody tr:hover {
+    background: #f1f5f9;
+}
+
+/* ================= WORKER NAME ================= */
+
+.worker-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ================= AVATAR ================= */
+
+.worker-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    color: white;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ================= ROLE BADGE ================= */
+
+.worker-role {
+    background: #e0f2fe;
+    color: var(--accent-secondary);
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* ================= NO EMAIL ================= */
+
+.no-email {
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+/* ================= EMPTY MESSAGE ================= */
+
+.no-data {
+    text-align: center;
+    color: var(--text-dim);
+    padding: 30px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 20px;
+    }
+
+    .worker-table th,
+    .worker-table td {
+        padding: 12px;
+        font-size: 0.8rem;
+    }
+
+}

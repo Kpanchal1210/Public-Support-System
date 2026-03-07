@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import User
-
 from .models import Issue
 from .forms import IssueForm
+from accounts.models import UserProfile
 
 
 @login_required
@@ -26,15 +26,3 @@ def report_issue(request):
 
     return render(request, "frontend/reports.html", {"form": form})
 
-
-@login_required
-def department_dashboard(request):
-
-    issues = Issue.objects.all().order_by('-created_at')
-
-    workers = User.objects.filter(groups__name='Worker')
-
-    return render(request, "frontend/department.html", {
-        "issues": issues,
-        "workers": workers
-    })

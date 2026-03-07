@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from accounts.models import UserProfile
+from reports.models import Issue
 
 
 # =========================
@@ -20,7 +21,28 @@ def worker_portal(request):
 
 @login_required(login_url='login')
 def department(request):
-    return render(request, 'frontend/department.html')
+    pending_issues = Issue.objects.filter(status='pending')
+    active_issues = Issue.objects.filter(status='in_progress')
+    workers = User.objects.filter(userprofile__user_type='worker')
+    
+    if request.method == 'POST':
+        issue_id = request.POST.get('issue_id')
+        worker_id = request.POST.get('worker')
+        
+        issue = get_object_or_404(Issue, id=issue_id)
+        worker = get_object_or_404(User, id=worker_id)
+        issue.worker = worker
+        issue.status = 'in_progress'
+        issue.save()
+        
+        messages.success(request, 'Issue allocated successfully!')
+        return redirect('department')
+    
+    return render(request, 'frontend/department.html', {
+        'pending_issues': pending_issues,
+        'active_issues': active_issues,
+        'workers': workers
+    })
 
 @login_required(login_url='login')
 def reports(request):
@@ -29,6 +51,15 @@ def reports(request):
 @login_required(login_url='login')
 def headAuthority(request):
     return render(request, 'frontend/headAuthority.html')
+
+@login_required(login_url='login')
+def manage_workers(request):
+
+    workers = User.objects.filter(userprofile__user_type='worker')
+
+    return render(request, 'frontend/manage_workers.html', {
+        'workers': workers
+    })
 
 def logout_view(request):
     logout(request)

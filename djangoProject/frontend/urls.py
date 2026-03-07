@@ -10,4 +10,5 @@ urlpatterns = [
     path('department/', views.department, name='department'),
     path('reports/', include('reports.urls')),
     path('headAuthority/', views.headAuthority, name='headAuthority'),
+    path('manage_workers/', views.manage_workers, name='manage_workers'),
 ]
