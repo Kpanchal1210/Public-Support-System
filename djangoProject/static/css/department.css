@@ -1,0 +1,266 @@
+/* ================= ROOT VARIABLES ================= */
+:root {
+    --bg-body: #f8fafc;
+    --bg-sidebar: #ffffff;
+    --bg-card: #ffffff;
+    --accent-primary: #4f46e5;
+    --accent-secondary: #0ea5e9;
+    --contrast-gold: #b45309;
+    --success: #059669;
+    --text-main: #1e293b;
+    --text-dim: #64748b;
+    --border-color: #e2e8f0;
+}
+
+/* ================= GLOBAL ================= */
+body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-body);
+    background-image: radial-gradient(at 0% 0%, rgba(79,70,229,0.05), transparent 50%);
+    color: var(--text-main);
+    display: flex;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
+}
+
+p {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 260px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    padding: 30px;
+    height: 100vh;
+}
+
+.dept-profile {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    color: #fff;
+    border-radius: 15px;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(14,165,233,0.25);
+}
+
+nav a {
+    display: block;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    transition: 0.25s;
+    font-weight: 600;
+}
+
+nav a:hover {
+    background: #f1f5f9;
+    color: var(--accent-primary);
+}
+
+/* ================= MAIN AREA ================= */
+.main-area {
+    flex: 1;
+    padding: 40px;
+}
+
+header h1 {
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+/* ================= SECTIONS ================= */
+section {
+    margin-bottom: 50px;
+}
+
+section h3 {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--accent-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 20px;
+}
+
+/* ================= ALLOCATION ================= */
+.allocation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.pending-card {
+    background: var(--bg-card);
+    border: 1px solid var(--accent-primary);
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 10px 25px rgba(79,70,229,0.12);
+}
+
+.pending-card h4 {
+    margin: 15px 0 5px;
+}
+
+.pending-card label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+}
+
+/* ================= TASK CARDS ================= */
+.task-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.task-item {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.worker-assignment {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f1f5f9;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+/* ================= MEDIA ================= */
+.media-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.media-box {
+    background: #e2e8f0;
+    border-radius: 14px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+}
+
+.media-box span {
+    font-size: 0.6rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: var(--text-main);
+}
+
+/* ================= PROGRESS ================= */
+.progress-bar {
+    margin: 15px 0;
+    background: #e2e8f0;
+    border-radius: 10px;
+    height: 8px;
+    position: relative;
+}
+
+.progress-bar div {
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-secondary), var(--accent-primary));
+    border-radius: 10px;
+}
+
+/* ================= BUTTONS ================= */
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    transition: all 0.25s ease;
+}
+
+/* Primary (Allocate) */
+.pending-card button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 13px;
+    background: linear-gradient(135deg, var(--accent-primary), #4338ca);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(79,70,229,0.3);
+}
+
+.pending-card button:hover {
+    transform: translateY(-1px);
+}
+
+/* Action Buttons */
+.action-bar {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.action-bar button:first-child {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.action-bar button:first-child:hover {
+    background: #f1f5f9;
+    color: var(--accent-primary);
+}
+
+.action-bar button:last-child {
+    background: linear-gradient(135deg, #16a34a, var(--success));
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(5,150,105,0.3);
+}
+
+.action-bar button:last-child:hover {
+    transform: translateY(-1px);
+}
+
+/* ================= SELECT ================= */
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: #f8fafc;
+    font-family: inherit;
+}

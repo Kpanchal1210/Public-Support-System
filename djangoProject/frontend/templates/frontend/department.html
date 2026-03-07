@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Department Console – CivicFlow</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/department.css' %}">
+</head>
+
+<body>
+
+<div class="sidebar">
+    <div class="dept-profile">
+        <div class="avatar">HQ</div>
+        <h4>Roads Dept.</h4>
+        <p>Admin Control</p>
+    </div>
+
+    <nav>
+        <a href="#">Monitor Problems</a>
+        <a href="#">Manage Workers</a>
+        <a href="#">Budget</a>
+        <a href="#">Logout</a>
+    </nav>
+</div>
+
+<div class="main-area">
+
+    <header>
+        <h1>Department Management</h1>
+    </header>
+
+    <section>
+        <h3>New Complaints (Waiting for Allocation)</h3>
+
+        <div class="allocation-grid">
+            <div class="pending-card">
+                <div class="media-box">
+                    <span>CITIZEN EVIDENCE</span>
+                    <div>[ Image Placeholder ]</div>
+                </div>
+
+                <h4>Broken Streetlight</h4>
+                <p>Sector 5, Garden Street</p>
+
+                <label>Select Worker</label>
+                <select>
+                    <option>John Doe (Electrical)</option>
+                    <option>Officer Ramesh (Roads)</option>
+                    <option>Worker Suresh (Utility)</option>
+                </select>
+
+                <button>Allocate Work</button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Active Field Work (Monitoring)</h3>
+
+        <div class="task-grid">
+            <div class="task-item">
+
+                <div class="task-header">
+                    <div>
+                        <h2>Pothole Repair - Sector 12</h2>
+                        <p>Gandhinagar, Sector 12B</p>
+                    </div>
+
+                    <div class="worker-assignment">
+                        <span>Assigned to:</span>
+                        <b>Officer Ramesh</b>
+                    </div>
+                </div>
+
+                <p>
+                    <strong>Problem:</strong>
+                    Large structural crack reported by citizen. Risk level: High.
+                </p>
+
+                <div class="media-container">
+                    <div class="media-box">
+                        <span>CITIZEN PHOTO</span>
+                        <div>[ Before ]</div>
+                    </div>
+
+                    <div class="media-box">
+                        <span>WORKER UPDATE</span>
+                        <div>[ Live Feed ]</div>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div>40% Completed</div>
+                </div>
+
+                <div class="action-bar">
+                    <button>Message Worker</button>
+                    <button>Verify & Close</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>

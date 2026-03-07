@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report an Issue – Public Support System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/reports.css' %}">
+</head>
+
+<body>
+
+<nav>
+    <h2>PUBLIC<span>SUPPORT</span></h2>
+    <div class="nav-links">
+        <a href="{% url 'index' %}">Dashboard</a>
+        <a href="{% url 'logout' %}" class="logout">Logout</a>
+    </div>
+</nav>
+
+<div class="header">
+    <h1>Report an <span>Issue</span></h1>
+    <p>Help us improve your community. Choose a category below to start your report.</p>
+</div>
+
+<!-- Departments -->
+
+<div class="departments">
+
+    <div class="dept-card" onclick="setCategory('garbage')">
+        <h3>🗑️ Garbage</h3>
+        <p>Collection missed or overflowing bins</p>
+    </div>
+
+    <div class="dept-card" onclick="setCategory('road')">
+        <h3>🛣️ Roads</h3>
+        <p>Report potholes or damaged pavement</p>
+    </div>
+
+    <div class="dept-card" onclick="setCategory('electricity')">
+        <h3>💡 Street Light</h3>
+        <p>Dark areas or flickering lamps</p>
+    </div>
+
+    <div class="dept-card" onclick="setCategory('water')">
+        <h3>💧 Water Leak</h3>
+        <p>Pipeline bursts or sewage issues</p>
+    </div>
+
+</div>
+
+<!-- Complaint Form -->
+
+<div class="form-section" id="formSection">
+    <div class="form-container">
+        <h2 id="deptTitle">Complaint Form</h2>
+
+        <form method="POST" action="/reports/report_issue/" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label>Issue Category</label>
+            {{ form.issue_type }}
+
+            <label>Location Details</label>
+            {{ form.location }}
+
+            <label>Description of Issue</label>
+            {{ form.description }}
+
+            <label>Upload Image</label>
+            {{ form.image }}
+
+            <button type="submit">Submit Complaint</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 Public Support Portal • Designed for Citizens
+</footer>
+
+<script src="{% static 'js/reports.js' %}"></script>
+
+{% if messages %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            {% for message in messages %}
+                alert("{{ message }}");
+            {% endfor %}
+        });
+    </script>
+{% endif %}
+
+</body>
+</html>
