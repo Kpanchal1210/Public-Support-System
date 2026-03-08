@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Issue
+from django.http import HttpResponseForbidden
 from .forms import IssueForm
 from accounts.models import UserProfile
 
@@ -10,6 +11,9 @@ from accounts.models import UserProfile
 @login_required
 def report_issue(request):
 
+    if request.user.userprofile.user_type != 'citizen':
+        return HttpResponseForbidden("Only citizens are allowed to report issues.")
+    
     if request.method == "POST":
         form = IssueForm(request.POST, request.FILES)
 

@@ -15,29 +15,49 @@ from reports.models import Issue
 def index(request):
     return render(request, 'frontend/index.html')
 
-@login_required(login_url='login')
-def worker_portal(request):
-    return render(request, 'frontend/worker_portal.html')
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from reports.models import Issue
+
 
 @login_required(login_url='login')
 def department(request):
-    pending_issues = Issue.objects.filter(status='pending')
-    active_issues = Issue.objects.filter(status='in_progress')
-    workers = User.objects.filter(userprofile__user_type='worker')
-    
+
+    # Get department of logged-in user
+    dept = request.user.userprofile.department
+
+    # Filter issues based on department
+    pending_issues = Issue.objects.filter(
+        issue_type=dept,
+        status='pending'
+    )
+
+    active_issues = Issue.objects.filter(
+        issue_type=dept,
+        status='in_progress'
+    )
+
+    # Get workers belonging to the same department
+    workers = User.objects.filter(
+        userprofile__user_type='worker',
+        userprofile__department=dept
+    )
+
+    # Assign worker to issue
     if request.method == 'POST':
         issue_id = request.POST.get('issue_id')
         worker_id = request.POST.get('worker')
-        
+
         issue = get_object_or_404(Issue, id=issue_id)
         worker = get_object_or_404(User, id=worker_id)
+
         issue.worker = worker
         issue.status = 'in_progress'
         issue.save()
-        
-        messages.success(request, 'Issue allocated successfully!')
+
         return redirect('department')
-    
+
     return render(request, 'frontend/department.html', {
         'pending_issues': pending_issues,
         'active_issues': active_issues,
@@ -61,6 +81,26 @@ def manage_workers(request):
         'workers': workers
     })
 
+@login_required(login_url='login')
+def worker_portal(request):
+
+    issues = Issue.objects.filter(worker=request.user)
+
+    if request.method == "POST":
+        issue_id = request.POST.get("issue_id")
+        status = request.POST.get("status")
+
+        issue = get_object_or_404(Issue, id=issue_id)
+
+        issue.status = status
+        issue.save()
+
+        return redirect('worker_portal')
+
+    return render(request, 'frontend/worker_portal.html', {
+        "issues": issues
+    })
+
 def logout_view(request):
     logout(request)
     return render(request, 'frontend/logout.html')
@@ -68,6 +108,11 @@ def logout_view(request):
 # =========================
 # LOGIN
 # =========================
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from accounts.models import UserProfile
+
 
 def login_view(request):
 
@@ -80,15 +125,26 @@ def login_view(request):
         if user is not None:
             login(request, user)
 
-            # get or create profile safely
+            # ensure profile exists
             profile, created = UserProfile.objects.get_or_create(user=user)
 
-            if profile.user_type == 'department':
+            # Department users
+            if profile.user_type in ['garbage', 'water', 'electricity', 'road']:
                 return redirect('department')
 
+            # Worker
+            elif profile.user_type == 'worker':
+                return redirect('worker_portal')
+
+            # Head authority
             elif profile.user_type == 'head':
                 return redirect('headAuthority')
 
+            # Citizen
+            elif profile.user_type == 'citizen':
+                return redirect('index')
+
+            # fallback
             else:
                 return redirect('index')
 

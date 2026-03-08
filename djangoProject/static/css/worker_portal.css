@@ -6,10 +6,14 @@
     --accent-secondary: #0ea5e9;
     --contrast-gold: #b45309;
     --success: #059669;
+    --warning: #d97706;
+    --danger: #dc2626;
     --text-main: #1e293b;
     --text-dim: #64748b;
     --border-color: #e2e8f0;
 }
+
+/* ================= GLOBAL ================= */
 
 body {
     margin: 0;
@@ -20,7 +24,8 @@ body {
     min-height: 100vh;
 }
 
-/* Sidebar */
+/* ================= SIDEBAR ================= */
+
 .sidebar {
     width: 260px;
     background: var(--bg-sidebar);
@@ -49,7 +54,8 @@ body {
     font-weight: bold;
 }
 
-/* Navigation */
+/* ================= NAVIGATION ================= */
+
 nav a {
     display: block;
     color: var(--text-dim);
@@ -66,47 +72,76 @@ nav a:hover {
     color: var(--accent-primary);
 }
 
-/* Main Area */
+/* ================= MAIN AREA ================= */
+
 .main-area {
     flex: 1;
     padding: 40px;
 }
 
-.page-content {
-    display: none;
+.main-area h1 {
+    margin-bottom: 25px;
 }
 
-.page-content.active {
-    display: block;
-}
+/* ================= TASK GRID ================= */
 
-/* Tasks */
 .task-grid {
     display: grid;
     gap: 20px;
 }
+
+/* ================= TASK CARD ================= */
 
 .task-item {
     background: var(--bg-card);
     border-radius: 20px;
     padding: 24px;
     border: 1px solid var(--border-color);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.04);
 }
+
+/* ================= TASK HEADER ================= */
 
 .task-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
 }
+
+.task-header h2 {
+    margin: 5px 0 0;
+}
+
+/* ================= STATUS TAG ================= */
 
 .priority-tag {
     font-size: 0.7rem;
     padding: 4px 10px;
     border-radius: 6px;
+    font-weight: 800;
     background: #dcfce7;
     color: var(--success);
-    font-weight: 800;
 }
+
+/* ================= STATUS COLORS ================= */
+
+.status-pending {
+    background: #fef3c7;
+    color: var(--warning);
+}
+
+.status-progress {
+    background: #e0f2fe;
+    color: var(--accent-secondary);
+}
+
+.status-resolved {
+    background: #dcfce7;
+    color: var(--success);
+}
+
+/* ================= ISSUE INFO ================= */
 
 .task-info-box {
     background: #f1f5f9;
@@ -115,13 +150,30 @@ nav a:hover {
     margin-bottom: 20px;
 }
 
-/* Progress Bar */
+/* ================= IMAGE ================= */
+
+.issue-image {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.issue-image img {   /* controls image size */
+    width: 260px;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    object-fit: cover;
+}
+
+/* ================= PROGRESS BAR ================= */
+
 .progress-bar-bg {
     width: 100%;
     height: 10px;
     background: #e2e8f0;
     border-radius: 10px;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .progress-fill {
@@ -130,7 +182,8 @@ nav a:hover {
     border-radius: 10px;
 }
 
-/* Controls */
+/* ================= CONTROLS ================= */
+
 .controls {
     display: flex;
     gap: 12px;
@@ -141,6 +194,7 @@ select {
     padding: 10px;
     border-radius: 10px;
     border: 1px solid var(--border-color);
+    font-family: inherit;
 }
 
 .update-btn {
@@ -151,4 +205,33 @@ select {
     border-radius: 10px;
     font-weight: 700;
     cursor: pointer;
+}
+
+.update-btn:hover {
+    opacity: 0.9;
+}
+
+/* ================= NO ISSUES ================= */
+
+.no-issues {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    color: var(--text-dim);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+.sidebar {
+    display: none;
+}
+
+.main-area {
+    padding: 20px;
+}
+
 }

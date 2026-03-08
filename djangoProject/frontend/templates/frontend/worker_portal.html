@@ -3,109 +3,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Worker Portal – CivicFlow</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>Worker Portal – CivicFlow</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/worker_portal.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/worker_portal.css' %}">
 </head>
 
 <body>
 
 <div class="sidebar">
-    <div class="worker-profile">
-        <div class="avatar">JD</div>
-        <h4>John Doe</h4>
-        <p>Garbage Department</p>
-    </div>
 
-    <nav>
-        <a href="#" class="active" onclick="showPage('assignments', this)">🗑️ Garbage Tasks</a>
-        <a href="#" onclick="showPage('schedule', this)">📅 Daily Route</a>
-    </nav>
+<div class="worker-profile">
+<div class="avatar">
+{{ request.user.username|first|upper }}
 </div>
+
+<h4>{{ request.user.username }}</h4>
+<p>Field Worker</p>
+</div>
+
+<nav>
+<a href="#" class="active">Assigned Tasks</a>
+<a href="{% url 'logout' %}">Logout</a>
+</nav>
+
+</div>
+
 
 <div class="main-area">
 
-    <div id="assignments" class="page-content active">
-        <h1>Garbage Collection Tasks</h1>
+<h1>My Assigned Issues</h1>
 
-        <div class="task-grid">
+<div class="task-grid">
 
-            <!-- TASK 1 -->
-            <div class="task-item">
-                <div class="task-header">
-                    <div>
-                        <span class="priority-tag">High Priority</span>
-                        <h2>Overflowing Garbage Bins</h2>
-                    </div>
-                    <b>40%</b>
-                </div>
+{% for issue in issues %}
 
-                <div class="task-info-box">
-                    <p><b>📍 Location:</b> Sector 12B, Near City Bank ATM</p>
-                    <p><b>⚠️ Issue:</b> Community garbage bins overflowing for 2 days.</p>
-                </div>
+<div class="task-item">
 
-                <div class="progress-bar-bg">
-                    <div class="progress-fill" style="width:40%;"></div>
-                </div>
+<div class="task-header">
 
-                <div class="controls">
-                    <select>
-                        <option>Reached Location</option>
-                        <option selected>Initial Waste Collection</option>
-                        <option>Bin Cleaning & Sanitization</option>
-                        <option>Task Completed</option>
-                    </select>
-                    <button class="update-btn">Update</button>
-                </div>
-            </div>
+<div>
+<span class="priority-tag">{{ issue.get_issue_type_display }}</span>
+<h2>{{ issue.location }}</h2>
+</div>
 
-            <!-- TASK 2 -->
-            <div class="task-item">
-                <div class="task-header">
-                    <div>
-                        <span class="priority-tag normal">Normal</span>
-                        <h2>Missed Garbage Pickup</h2>
-                    </div>
-                    <b>10%</b>
-                </div>
-
-                <div class="task-info-box">
-                    <p><b>📍 Location:</b> Central Mall, Service Road</p>
-                    <p><b>⚠️ Issue:</b> Garbage not collected in morning route.</p>
-                </div>
-
-                <div class="progress-bar-bg">
-                    <div class="progress-fill" style="width:10%;"></div>
-                </div>
-
-                <div class="controls">
-                    <select>
-                        <option selected>Arrived at Site</option>
-                        <option>Waste Loading</option>
-                        <option>Area Cleaning</option>
-                        <option>Task Completed</option>
-                    </select>
-                    <button class="update-btn">Update</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div id="schedule" class="page-content">
-        <h1>Today’s Garbage Route</h1>
-        <p>🕘 09:00 AM – Sector 12 Community Bins</p>
-        <p>🕜 01:30 PM – Central Mall Service Road</p>
-    </div>
+<b>{{ issue.status }}</b>
 
 </div>
 
+
+<div class="task-info-box">
+
+<p><b>📍 Location:</b> {{ issue.location }}</p>
+
+<p><b>⚠️ Issue:</b> {{ issue.description }}</p>
+
+</div>
+
+
+{% if issue.image %}
+<div class="issue-image">
+<img src="{{ issue.image.url }}" style="width:100%;border-radius:10px;">
+</div>
+{% endif %}
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+<input type="hidden" name="issue_id" value="{{ issue.id }}">
+
+<div class="controls">
+
+<select name="status">
+
+<option value="pending" {% if issue.status == "pending" %}selected{% endif %}>Pending</option>
+
+<option value="in_progress" {% if issue.status == "in_progress" %}selected{% endif %}>In Progress</option>
+
+<option value="resolved" {% if issue.status == "resolved" %}selected{% endif %}>Resolved</option>
+
+</select>
+
+<button class="update-btn">Update</button>
+
+</div>
+
+</form>
+
+</div>
+
+{% empty %}
+
+<p>No issues assigned.</p>
+
+{% endfor %}
+
+</div>
+
+</div>
 
 </body>
 </html>
