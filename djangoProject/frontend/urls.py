@@ -11,4 +11,5 @@ urlpatterns = [
     path('reports/', include('reports.urls')),
     path('headAuthority/', views.headAuthority, name='headAuthority'),
     path('manage_workers/', views.manage_workers, name='manage_workers'),
+    path('view_reports/', views.view_reports, name='view_reports'),
 ]

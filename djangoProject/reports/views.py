@@ -8,7 +8,7 @@ from .forms import IssueForm
 from accounts.models import UserProfile
 
 
-@login_required
+@login_required(login_url='login')
 def report_issue(request):
 
     if request.user.userprofile.user_type != 'citizen':

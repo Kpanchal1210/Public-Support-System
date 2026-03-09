@@ -8,10 +8,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="{% static 'css/manage_worker.css' %}">
 </head>
 
 <body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<div class="logo">
+PUBLIC SUPPORT
+</div>
+
+<div class="nav-buttons">
+
+<a href="{% url 'department' %}" class="nav-btn dashboard-btn">
+Dashboard
+</a>
+
+<a href="{% url 'logout' %}" class="nav-btn logout-btn">
+Logout
+</a>
+
+</div>
+
+</nav>
+
+
+<!-- MAIN CONTAINER -->
 
 <div class="worker-container">
 
@@ -19,6 +45,9 @@
 <h1>Manage Workers</h1>
 <p>View and manage all registered workers</p>
 </header>
+
+
+<!-- TABLE -->
 
 <div class="table-wrapper">
 
@@ -43,10 +72,13 @@
 
 <td>
 <div class="worker-name">
+
 <div class="worker-avatar">
 {{ worker.username|first|upper }}
 </div>
+
 {{ worker.username }}
+
 </div>
 </td>
 

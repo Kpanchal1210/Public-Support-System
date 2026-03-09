@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -75,7 +76,12 @@ def headAuthority(request):
 @login_required(login_url='login')
 def manage_workers(request):
 
-    workers = User.objects.filter(userprofile__user_type='worker')
+    department = request.user.userprofile.department
+
+    workers = User.objects.filter(
+        userprofile__user_type='worker',
+        userprofile__department=department
+    )
 
     return render(request, 'frontend/manage_workers.html', {
         'workers': workers
@@ -99,6 +105,14 @@ def worker_portal(request):
 
     return render(request, 'frontend/worker_portal.html', {
         "issues": issues
+    })
+
+def view_reports(request):
+
+    issues = Issue.objects.all().order_by('-created_at')
+
+    return render(request, 'frontend/my_reports.html', {
+        'issues': issues
     })
 
 def logout_view(request):
@@ -129,7 +143,7 @@ def login_view(request):
             profile, created = UserProfile.objects.get_or_create(user=user)
 
             # Department users
-            if profile.user_type in ['garbage', 'water', 'electricity', 'road']:
+            if profile.user_type == 'department':
                 return redirect('department')
 
             # Worker

@@ -1,0 +1,195 @@
+:root {
+    --bg-main: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-card: #f1f5f9;
+
+    --accent-primary: #6366f1;
+    --accent-secondary: #06b6d4;
+    --accent-warm: #6366f1;
+
+    --text-dark: #0f172a;
+    --text-muted: #64748b;
+}
+
+*{
+box-sizing:border-box;
+}
+
+body{
+font-family:'Plus Jakarta Sans', sans-serif;
+margin:0;
+background:linear-gradient(180deg,#f9fafb,#eef2ff);
+color:var(--text-dark);
+}
+
+
+/* NAVBAR */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:22px 60px;
+background:var(--bg-surface);
+border-bottom:1px solid #e5e7eb;
+}
+
+.logo{
+font-size:20px;
+font-weight:700;
+color:var(--accent-primary);
+}
+
+.nav-links{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:var(--text-dark);
+font-weight:500;
+padding:6px 10px;
+border-radius:6px;
+transition:0.3s;
+}
+
+.nav-links a:hover{
+color:var(--accent-primary);
+}
+
+.logout-btn{
+border:1px solid #ef4444;
+color:#ef4444;
+}
+
+.logout-btn:hover{
+background:#ef4444;
+color:white;
+}
+
+
+/* HEADER */
+
+.header{
+text-align:center;
+padding:70px 60px 30px 60px;
+}
+
+.header h1{
+font-size:36px;
+margin-bottom:8px;
+}
+
+.header p{
+color:var(--text-muted);
+}
+
+
+/* REPORT GRID */
+
+.report-container{
+padding:40px 60px 80px 60px;
+}
+
+.report-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:28px;
+}
+
+
+/* REPORT CARD */
+
+.report-card{
+background:var(--bg-surface);
+padding:26px;
+border-radius:22px;
+box-shadow:0 8px 20px rgba(0,0,0,0.05);
+transition:transform 0.2s ease;
+}
+
+.report-card:hover{
+transform:translateY(-4px);
+}
+
+
+/* ISSUE TYPE */
+
+.issue-type{
+display:inline-block;
+background:rgba(6,182,212,0.15);
+color:var(--accent-secondary);
+padding:5px 12px;
+border-radius:20px;
+font-size:11px;
+font-weight:600;
+}
+
+
+/* DESCRIPTION */
+
+.description{
+margin:12px 0;
+color:var(--text-muted);
+}
+
+
+/* IMAGE */
+
+.issue-image img{
+width:100%;
+border-radius:12px;
+margin-top:10px;
+}
+
+
+/* STATUS */
+
+.status{
+display:inline-block;
+margin-top:14px;
+padding:6px 14px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+}
+
+.pending{
+background:#fef3c7;
+color:#92400e;
+}
+
+.in_progress{
+background:#dbeafe;
+color:#1e40af;
+}
+
+.resolved{
+background:#dcfce7;
+color:#166534;
+}
+
+
+/* EMPTY STATE */
+
+.empty-state{
+text-align:center;
+padding:80px;
+}
+
+.empty-state p{
+color:var(--text-muted);
+}
+
+
+/* FOOTER */
+
+footer{
+background:var(--bg-card);
+text-align:center;
+padding:34px;
+color:var(--text-muted);
+font-size:13px;
+}

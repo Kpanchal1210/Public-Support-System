@@ -16,15 +16,71 @@ body {
     margin: 0;
     font-family: 'Plus Jakarta Sans', sans-serif;
     background: var(--bg-body);
+    background-image: radial-gradient(at 0% 0%, rgba(79,70,229,0.05), transparent 50%);
     color: var(--text-main);
-    padding: 40px;
 }
 
-/* ================= CONTAINER ================= */
+/* ================= NAVBAR ================= */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent-primary);
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.nav-btn {
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: 0.25s;
+}
+
+/* DASHBOARD BUTTON */
+
+.dashboard-btn {
+    background: #f1f5f9;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.dashboard-btn:hover {
+    background: #e2e8f0;
+    color: var(--accent-primary);
+}
+
+/* LOGOUT BUTTON */
+
+.logout-btn {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.logout-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* ================= MAIN CONTAINER ================= */
 
 .worker-container {
     max-width: 1000px;
     margin: auto;
+    padding: 40px;
 }
 
 /* ================= HEADER ================= */
@@ -40,7 +96,7 @@ body {
     margin-bottom: 30px;
 }
 
-/* ================= TABLE ================= */
+/* ================= TABLE WRAPPER ================= */
 
 .table-wrapper {
     background: var(--bg-card);
@@ -48,6 +104,8 @@ body {
     box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     overflow: hidden;
 }
+
+/* ================= TABLE ================= */
 
 .worker-table {
     width: 100%;
@@ -63,8 +121,8 @@ body {
 
 .worker-table th {
     padding: 16px;
-    font-size: 0.8rem;
     text-align: left;
+    font-size: 0.8rem;
     letter-spacing: 0.5px;
 }
 
@@ -75,8 +133,6 @@ body {
     border-bottom: 1px solid var(--border-color);
     font-size: 0.9rem;
 }
-
-/* HOVER EFFECT */
 
 .worker-table tbody tr:hover {
     background: #f1f5f9;
@@ -122,7 +178,7 @@ body {
     font-style: italic;
 }
 
-/* ================= EMPTY MESSAGE ================= */
+/* ================= EMPTY STATE ================= */
 
 .no-data {
     text-align: center;
@@ -134,7 +190,7 @@ body {
 
 @media (max-width: 768px) {
 
-    body {
+    .worker-container {
         padding: 20px;
     }
 

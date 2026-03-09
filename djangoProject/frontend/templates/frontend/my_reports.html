@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>All Reported Issues</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/my_reports.css' %}">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<div class="logo">
+    <span>PUBLIC SUPPORT</span>
+</div>
+
+<div class="nav-links">
+
+<a href="{% url 'index' %}">Dashboard</a>
+
+<a href="{% url 'report_issue' %}">Report Issue</a>
+
+<a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+
+</div>
+
+</nav>
+
+
+<div class="header">
+<h1>All Reported Issues</h1>
+<p>View issues reported by citizens across the system</p>
+</div>
+
+
+<div class="report-container">
+
+<div class="report-grid">
+
+{% for issue in issues %}
+
+<div class="report-card">
+
+<span class="issue-type">
+{{ issue.issue_type }}
+</span>
+
+<h3>{{ issue.location }}</h3>
+
+<p class="description">
+{{ issue.description }}
+</p>
+
+{% if issue.image %}
+<div class="issue-image">
+<img src="{{ issue.image.url }}">
+</div>
+{% endif %}
+
+{% if issue.status == 'pending' %}
+<span class="status pending">Pending</span>
+
+{% elif issue.status == 'in_progress' %}
+<span class="status in_progress">In Progress</span>
+
+{% elif issue.status == 'resolved' %}
+<span class="status resolved">Resolved</span>
+{% endif %}
+
+</div>
+
+{% empty %}
+
+<div class="empty-state">
+<h2>No Issues Reported Yet</h2>
+<p>The system currently has no reported complaints.</p>
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</body>
+</html>
