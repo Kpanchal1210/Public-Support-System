@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<div class="logo">
+PUBLIC SUPPORT
+</div>
+
+<div class="nav-buttons">
+
+<a href="{% url 'admin_dashboard' %}" class="nav-btn dashboard-btn">
+Dashboard
+</a>
+
+<a href="{% url 'logout' %}" class="nav-btn logout-btn">
+Logout
+</a>
+
+</div>
+
+</nav>
+
+
+<!-- MAIN DASHBOARD -->
+
+<div class="dashboard-container">
+
+<header class="dashboard-header">
+<h1>Admin Dashboard</h1>
+<p>Manage users and monitor system issues</p>
+</header>
+
+
+<!-- USER MANAGEMENT -->
+
+<h2 class="section-title">User Management</h2>
+
+<div class="user-grid">
+
+<a href="{% url 'citizen_list' %}" class="user-card">
+<h3>Citizens</h3>
+<p>View all registered citizens</p>
+</a>
+
+<a href="{% url 'department_list' %}" class="user-card">
+<h3>Departments</h3>
+<p>Manage department accounts</p>
+</a>
+
+<a href="{% url 'worker_list' %}" class="user-card">
+<h3>Workers</h3>
+<p>View and manage workers</p>
+</a>
+
+</div>
+
+
+<!-- ISSUE STATISTICS -->
+
+<h2 class="section-title">Issue Statistics</h2>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+<h3>Total Issues</h3>
+<p>{{ total_issues }}</p>
+</div>
+
+<div class="stat-card">
+<h3>Pending</h3>
+<p>{{ pending }}</p>
+</div>
+
+<div class="stat-card">
+<h3>Resolved</h3>
+<p>{{ resolved }}</p>
+</div>
+
+</div>
+
+
+<!-- RECENT ISSUES -->
+
+<div class="table-wrapper">
+
+<h2>Recent Issues</h2>
+
+<table class="issue-table">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Citizen</th>
+<th>Type</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for issue in recent_issues %}
+
+<tr>
+
+<td>{{ issue.id }}</td>
+
+<td>{{ issue.citizen.username }}</td>
+
+<td>{{ issue.issue_type }}</td>
+
+<td>
+<span class="status {{ issue.status }}">
+{{ issue.status }}
+</span>
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="4" class="no-data">
+No issues reported
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>

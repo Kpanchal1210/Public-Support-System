@@ -1,4 +1,6 @@
 from django.urls import include, path
+
+from reports import admin
 from . import views
 
 urlpatterns = [
@@ -8,6 +10,10 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('worker_portal/', views.worker_portal, name='worker_portal'),
     path('department/', views.department, name='department'),
+    path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('citizen_list/', views.citizen_list, name='citizen_list'),
+    path('department_list/', views.department_list, name='department_list'),
+    path('workers_list/', views.worker_list, name='worker_list'),
     path('reports/', include('reports.urls')),
     path('headAuthority/', views.headAuthority, name='headAuthority'),
     path('manage_workers/', views.manage_workers, name='manage_workers'),

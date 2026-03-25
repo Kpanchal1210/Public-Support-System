@@ -8,6 +8,7 @@ class UserProfile(models.Model):
         ('department', 'Department'),
         ('worker', 'Worker'),
         ('head', 'Head Authority'),
+        ('admin', 'Admin'),
     )
 
     DEPARTMENTS = (

@@ -13,13 +13,31 @@ from reports.models import Issue
 # PUBLIC PAGES
 # =========================
 
-def index(request):
-    return render(request, 'frontend/index.html')
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from reports.models import Issue
+
+def index(request):
+
+    if request.user.is_authenticated:
+
+        role = request.user.userprofile.user_type
+
+        if role == 'department':
+            return redirect('department')
+
+        elif role == 'worker':
+            return redirect('worker_portal')
+
+        elif role == 'head':
+            return redirect('headAuthority')
+
+        # only citizen stays here
+        elif role == 'citizen':
+            return render(request, 'frontend/index.html')
+
+    return render(request, 'frontend/index.html')
 
 
 @login_required(login_url='login')
@@ -142,7 +160,11 @@ def login_view(request):
             # ensure profile exists
             profile, created = UserProfile.objects.get_or_create(user=user)
 
-            # Department users
+            # admin
+            if profile.user_type == 'admin':
+                return redirect('admin_dashboard')
+            
+            # Department
             if profile.user_type == 'department':
                 return redirect('department')
 
@@ -201,3 +223,69 @@ def register(request):
         return redirect('login')
 
     return render(request, 'frontend/register.html')
+
+@login_required
+def admin_dashboard(request):
+
+    total_users = User.objects.count()
+    total_issues = Issue.objects.count()
+
+    pending = Issue.objects.filter(status='pending').count()
+    resolved = Issue.objects.filter(status='resolved').count()
+
+    recent_issues = Issue.objects.order_by('-created_at')[:5]
+
+    context = {
+        "total_users": total_users,
+        "total_issues": total_issues,
+        "pending": pending,
+        "resolved": resolved,
+        "recent_issues": recent_issues
+    }
+
+    return render(request, "frontend/admin_dashboard.html", context)
+
+
+@login_required(login_url='login')
+def citizen_list(request):
+
+    if request.user.userprofile.user_type != 'admin':
+        return HttpResponseForbidden("Access denied")
+
+    citizens = User.objects.filter(
+        userprofile__user_type='citizen'
+    )
+
+    return render(request, 'frontend/citizen_list.html', {
+        'citizens': citizens
+    })
+
+
+@login_required(login_url='login')
+def department_list(request):
+
+    if request.user.userprofile.user_type != 'admin':
+        return HttpResponseForbidden("Access denied")
+
+    departments = User.objects.filter(
+        userprofile__user_type='department'
+    )
+
+    return render(request, 'frontend/department_list.html', {
+        'departments': departments
+    })
+
+
+@login_required(login_url='login')
+def worker_list(request):
+
+    if request.user.userprofile.user_type != 'admin':
+        return HttpResponseForbidden("Access denied")
+
+    workers = User.objects.filter(
+        userprofile__user_type='worker'
+    )
+
+    return render(request, 'frontend/worker_list.html', {
+        'workers': workers
+    })

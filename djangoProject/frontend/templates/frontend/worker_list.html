@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Workers</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/user_list.css' %}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Workers</h1>
+
+<div class="grid">
+
+{% for user in workers %}
+
+<div class="card">
+
+<div class="avatar">
+{{ user.username|first|upper }}
+</div>
+
+<h3>{{ user.username }}</h3>
+
+<p>Department: {{ user.userprofile.department }}</p>
+
+<span class="tag worker">Worker</span>
+
+</div>
+
+{% empty %}
+
+<p>No workers found</p>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</body>
+</html>
