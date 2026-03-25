@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from accounts.models import UserProfile
 from reports.models import Issue
+from reports.utils import auto_escalate_issues
 
 
 # =========================
@@ -43,27 +44,38 @@ def index(request):
 @login_required(login_url='login')
 def department(request):
 
+    # 🔥 AUTO ESCALATION RUNS FIRST
+    auto_escalate_issues()
+
     # Get department of logged-in user
     dept = request.user.userprofile.department
 
-    # Filter issues based on department
+    # ✅ Only NON-ESCALATED issues for department
     pending_issues = Issue.objects.filter(
         issue_type=dept,
-        status='pending'
+        status='pending',
+        is_escalated=False
     )
 
     active_issues = Issue.objects.filter(
         issue_type=dept,
-        status='in_progress'
+        status='in_progress',
+        is_escalated=False
     )
 
-    # Get workers belonging to the same department
+    # 🔥 Escalated issues (optional to show)
+    escalated_issues = Issue.objects.filter(
+        issue_type=dept,
+        is_escalated=True
+    )
+
+    # Get workers of same department
     workers = User.objects.filter(
         userprofile__user_type='worker',
         userprofile__department=dept
     )
 
-    # Assign worker to issue
+    # Assign worker
     if request.method == 'POST':
         issue_id = request.POST.get('issue_id')
         worker_id = request.POST.get('worker')
@@ -80,6 +92,7 @@ def department(request):
     return render(request, 'frontend/department.html', {
         'pending_issues': pending_issues,
         'active_issues': active_issues,
+        'escalated_issues': escalated_issues,  # 🔥 optional
         'workers': workers
     })
 
@@ -89,7 +102,18 @@ def reports(request):
 
 @login_required(login_url='login')
 def headAuthority(request):
-    return render(request, 'frontend/headAuthority.html')
+
+    issues = Issue.objects.all().order_by('-created_at')
+
+    context = {
+        "issues": issues,
+        "total_count": issues.count(),
+        "escalated_count": issues.filter(is_escalated=True).count(),
+        "inprogress_count": issues.filter(status="in_progress").count(),
+        "resolved_count": issues.filter(status="resolved").count(),
+    }
+
+    return render(request, "frontend/headAuthority.html", context)
 
 @login_required(login_url='login')
 def manage_workers(request):

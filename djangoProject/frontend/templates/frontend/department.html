@@ -64,22 +64,20 @@
 <h4>{{ issue.issue_type }}</h4>
 
 <p><b>Citizen:</b> {{ issue.citizen.username }}</p>
-
 <p><b>Location:</b> {{ issue.location }}</p>
-
 <p><b>Description:</b> {{ issue.description }}</p>
 
+<!-- 🔥 Deadline -->
+<p><b>Deadline:</b> {{ issue.deadline|date:"d M Y H:i" }}</p>
 
 <form method="POST">
 
 {% csrf_token %}
-
 <input type="hidden" name="issue_id" value="{{ issue.id }}">
 
 <label>Select Worker</label>
 
 <select name="worker" required>
-
 <option value="">Choose Worker</option>
 
 {% for worker in workers %}
@@ -97,9 +95,7 @@
 </div>
 
 {% empty %}
-
 <p>No pending complaints.</p>
-
 {% endfor %}
 
 </div>
@@ -139,10 +135,12 @@
 {{ issue.description }}
 </p>
 
+<!-- 🔥 Deadline -->
+<p><b>Deadline:</b> {{ issue.deadline|date:"d M Y H:i" }}</p>
+
 <div class="media-container">
 
 <div class="media-box">
-
 <span>CITIZEN PHOTO</span>
 
 {% if issue.image %}
@@ -162,14 +160,46 @@
 </div>
 
 {% empty %}
-
 <p>No active work.</p>
-
 {% endfor %}
 
 </div>
 
 </section>
+
+
+
+<!-- ================= ESCALATED ISSUES ================= -->
+
+<section>
+
+<h3 style="color: red;">⚠️ Escalated Issues</h3>
+
+<div class="allocation-grid">
+
+{% for issue in escalated_issues %}
+
+<div class="pending-card escalated-card">
+
+<h4>{{ issue.issue_type }}</h4>
+
+<p><b>Location:</b> {{ issue.location }}</p>
+<p><b>Description:</b> {{ issue.description }}</p>
+
+<p><b>Status:</b> Escalated 🚨</p>
+
+<p><b>Deadline Passed:</b> {{ issue.deadline|date:"d M Y H:i" }}</p>
+
+</div>
+
+{% empty %}
+<p>No escalated issues.</p>
+{% endfor %}
+
+</div>
+
+</section>
+
 
 </div>
 

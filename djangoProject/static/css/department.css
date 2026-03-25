@@ -7,6 +7,8 @@
     --accent-secondary: #0ea5e9;
     --contrast-gold: #b45309;
     --success: #059669;
+    --danger: #ef4444;
+
     --text-main: #1e293b;
     --text-dim: #64748b;
     --border-color: #e2e8f0;
@@ -74,7 +76,7 @@ nav a {
 }
 
 nav a:hover {
-    background: #f1f5f9;
+    background: #eef2ff;
     color: var(--accent-primary);
 }
 
@@ -95,7 +97,7 @@ section {
 }
 
 section h3 {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 800;
     color: var(--accent-secondary);
     text-transform: uppercase;
@@ -103,7 +105,11 @@ section h3 {
     margin-bottom: 20px;
 }
 
-/* ================= NEW ISSUE CARDS ================= */
+section h3.escalated-title {
+    color: var(--danger);
+}
+
+/* ================= CARDS ================= */
 .allocation-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -119,6 +125,11 @@ section h3 {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    transition: all 0.25s ease;
+}
+
+.pending-card:hover {
+    transform: translateY(-6px);
 }
 
 .pending-card h4 {
@@ -131,7 +142,28 @@ section h3 {
     color: var(--accent-primary);
 }
 
-/* ================= TASK CARDS ================= */
+/* ================= ESCALATED ================= */
+.escalated-card {
+    border: 2px solid var(--danger);
+    background: linear-gradient(135deg, #fee2e2, #fff1f2);
+    box-shadow: 0 10px 30px rgba(239,68,68,0.25);
+    animation: shake 0.3s ease;
+}
+
+.escalated-card h4 {
+    color: #dc2626;
+}
+
+/* subtle alert effect */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    50% { transform: translateX(2px); }
+    75% { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+}
+
+/* ================= TASK ================= */
 .task-grid {
     display: grid;
     gap: 20px;
@@ -146,6 +178,11 @@ section h3 {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    transition: all 0.25s ease;
+}
+
+.task-item:hover {
+    transform: translateY(-5px);
 }
 
 .task-header {
@@ -162,6 +199,37 @@ section h3 {
     padding: 8px 14px;
     border-radius: 12px;
     font-size: 0.8rem;
+}
+
+/* ================= DEADLINE ================= */
+.deadline {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* Normal */
+.deadline {
+    color: var(--text-main);
+}
+
+/* Warning */
+.deadline-warning {
+    color: #d97706;
+    animation: pulseWarning 1.2s infinite;
+}
+
+/* Expired */
+.deadline-expired {
+    color: var(--danger);
+    font-weight: 800;
+    text-shadow: 0 0 5px rgba(239,68,68,0.4);
+}
+
+/* Animation */
+@keyframes pulseWarning {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
 }
 
 /* ================= MEDIA ================= */
@@ -183,17 +251,15 @@ section h3 {
     border: 1px solid var(--border-color);
 }
 
-.media-box span {
-    font-size: 0.6rem;
-    font-weight: 800;
-    margin-bottom: 6px;
-    color: var(--text-main);
-}
-
 .media-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.media-box div {
+    font-size: 0.75rem;
+    color: var(--text-dim);
 }
 
 /* ================= PROGRESS ================= */
@@ -202,7 +268,6 @@ section h3 {
     background: #e2e8f0;
     border-radius: 10px;
     height: 8px;
-    position: relative;
 }
 
 .progress-bar div {
@@ -212,7 +277,7 @@ section h3 {
     border-radius: 10px;
 }
 
-/* ================= BUTTONS ================= */
+/* ================= BUTTON ================= */
 button {
     font-family: inherit;
     cursor: pointer;
@@ -222,7 +287,6 @@ button {
     transition: all 0.25s ease;
 }
 
-/* Allocate button */
 .pending-card button {
     width: 100%;
     margin-top: 10px;
@@ -233,35 +297,7 @@ button {
 }
 
 .pending-card button:hover {
-    transform: translateY(-1px);
-}
-
-/* Action buttons */
-.action-bar {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.action-bar button:first-child {
-    background: #f8fafc;
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
-}
-
-.action-bar button:first-child:hover {
-    background: #f1f5f9;
-    color: var(--accent-primary);
-}
-
-.action-bar button:last-child {
-    background: linear-gradient(135deg, #16a34a, var(--success));
-    color: #fff;
-    box-shadow: 0 6px 16px rgba(5,150,105,0.3);
-}
-
-.action-bar button:last-child:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 /* ================= SELECT ================= */
@@ -272,13 +308,11 @@ select {
     border-radius: 10px;
     border: 1px solid var(--border-color);
     background: #f8fafc;
-    font-family: inherit;
     font-size: 0.85rem;
 }
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 900px) {
-
     .sidebar {
         display: none;
     }

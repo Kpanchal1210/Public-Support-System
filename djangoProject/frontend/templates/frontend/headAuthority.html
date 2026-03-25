@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,10 +6,7 @@
     <title>Executive Oversight – CivicFlow Authority</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- External CSS -->
     <link rel="stylesheet" href="{% static 'css/headAuthority.css' %}">
 </head>
 
@@ -19,114 +15,115 @@
 <div class="sidebar">
     <div class="auth-profile">
         <div class="avatar-shield">🏛️</div>
-        <h3 class="auth-name">Comm. Richards</h3>
-        <p class="auth-role">Chief Authority</p>
+        <h3 class="auth-name">Head Authority</h3>
+        <p class="auth-role">System Supervisor</p>
     </div>
 
     <nav>
-        <a href="#" class="active">🏢 City Overview</a>
-        <a href="#">📋 Budget Approvals</a>
-        <a href="#" class="nav-danger">🚨 Escalations</a>
+        <a href="#" class="active">🏢 Overview</a>
+        <a href="{% url 'logout' %}">Logout</a>
     </nav>
 </div>
 
 <div class="main-area">
 
     <div class="page-header">
-        <h1>Executive Command</h1>
-        <p>
-            Oversight of delayed Street Light, Water, Road, and Garbage department work.
-        </p>
+        <h1>Executive Dashboard</h1>
+        <p>Monitor escalated and department-wise issues.</p>
     </div>
 
+    <!-- Stats -->
     <div class="stats-grid">
         <div class="stat-card stat-danger">
-            <h5>Critical Escalations</h5>
-            <h2>08</h2>
+            <h5>Escalated</h5>
+            <h2>{{ escalated_count }}</h2>
         </div>
 
         <div class="stat-card">
-            <h5>Average Delay</h5>
-            <h2>4.2 Days</h2>
+            <h5>In Progress</h5>
+            <h2>{{ inprogress_count }}</h2>
         </div>
 
         <div class="stat-card">
-            <h5>Department Compliance</h5>
-            <h2>82%</h2>
+            <h5>Resolved</h5>
+            <h2>{{ resolved_count }}</h2>
         </div>
 
         <div class="stat-card">
-            <h5>Citizen Impact</h5>
-            <h2>High</h2>
+            <h5>Total Issues</h5>
+            <h2>{{ total_count }}</h2>
         </div>
     </div>
 
-    <div class="escalation-container">
-        <div class="escalation-header">
-            <h3>⚠️ Escalated Department Issues</h3>
-            <span>Timeline Monitoring</span>
-        </div>
+    <!-- FILTER BUTTONS -->
+    <div class="filter-buttons">
+        <button class="active">All</button>
+        <button>Escalated</button>
+        <button>In Progress</button>
+        <button>Resolved</button>
+    </div>
 
+    <!-- TABLE -->
+    <div class="escalation-container">
         <table class="esc-table">
             <thead>
                 <tr>
                     <th>Department</th>
                     <th>Issue</th>
                     <th>Status</th>
-                    <th>Lead</th>
+                    <th>Worker</th>
                     <th>Action</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr>
-                    <td><span class="dept-tag water">WATER</span></td>
-                    <td>
-                        <b>Pipeline Leakage</b><br>
-                        <small>Sector 4</small>
-                    </td>
-                    <td><span class="delay-badge">Delayed 48h+</span></td>
-                    <td>Director Mehta</td>
-                    <td><button class="btn-intervene">Intervene</button></td>
-                </tr>
 
-                <tr>
-                    <td><span class="dept-tag road">ROAD</span></td>
+                {% for issue in issues %}
+                <tr class="issue-row {{ issue.status }} {% if issue.is_escalated %}escalated{% endif %}">
+                    
                     <td>
-                        <b>Pothole Repair</b><br>
-                        <small>Highway 12</small>
+                        <span class="dept-tag {{ issue.issue_type }}">
+                            {{ issue.issue_type|upper }}
+                        </span>
                     </td>
-                    <td><span class="delay-badge">Delayed 24h</span></td>
-                    <td>Eng. Ramesh</td>
-                    <td><button class="btn-intervene">Review</button></td>
-                </tr>
 
-                <tr>
-                    <td><span class="dept-tag light">STREET LIGHT</span></td>
                     <td>
-                        <b>Light Replacement</b><br>
-                        <small>Garden Road</small>
+                        <b>{{ issue.description|truncatechars:30 }}</b><br>
+                        <small>{{ issue.location }}</small>
                     </td>
-                    <td><span class="delay-badge">Delayed</span></td>
-                    <td>Super. Khan</td>
-                    <td><button class="btn-intervene">Expedite</button></td>
-                </tr>
 
-                <tr>
-                    <td><span class="dept-tag garbage">GARBAGE</span></td>
                     <td>
-                        <b>Waste Collection Delay</b><br>
-                        <small>Zone B</small>
+                        {% if issue.is_escalated %}
+                            <span class="delay-badge">Escalated</span>
+                        {% else %}
+                            <span class="status-tag">{{ issue.status }}</span>
+                        {% endif %}
                     </td>
-                    <td><span class="delay-badge">Delayed 72h+</span></td>
-                    <td>Admin Shanti</td>
-                    <td><button class="btn-intervene">Intervene</button></td>
+
+                    <td>
+                        {% if issue.worker %}
+                            {{ issue.worker.username }}
+                        {% else %}
+                            Not Assigned
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <button class="btn-intervene">Intervene</button>
+                        <button class="btn-view">View</button>
+                    </td>
+
                 </tr>
+                {% endfor %}
+
             </tbody>
         </table>
     </div>
 
 </div>
+
+<!-- JS FILE -->
+<script src="{% static 'js/headAuthority.js' %}"></script>
 
 </body>
 </html>
