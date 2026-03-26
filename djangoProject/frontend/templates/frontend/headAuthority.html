@@ -21,6 +21,14 @@
 
     <nav>
         <a href="#" class="active">🏢 Overview</a>
+        <!-- 🔔 NOTIFICATION BUTTON -->
+    <a href="{% url 'notification' %}" class="notif-btn">
+        🔔 Notifications
+
+        {% if unread_count > 0 %}
+        <span class="badge">{{ unread_count }}</span>
+        {% endif %}
+    </a>
         <a href="{% url 'logout' %}">Logout</a>
     </nav>
 </div>

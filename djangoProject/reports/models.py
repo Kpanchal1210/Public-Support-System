@@ -82,7 +82,7 @@ class Issue(models.Model):
         # 🔥 safety minimum (6 hours)
         final_days = max(final_days, 0.25)
 
-        self.deadline = timezone.now() + timedelta(seconds=30)
+        self.deadline = timezone.now() + timedelta(days=final_days)
 
     def save(self, *args, **kwargs):
         if not self.deadline:

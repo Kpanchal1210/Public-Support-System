@@ -20,18 +20,33 @@
   <body>
     <!-- NAVBAR -->
     <nav>
-      <h1>PUBLIC SUPPORT</h1>
+  <h1>PUBLIC SUPPORT</h1>
 
-      <div class="nav-links">
-        {% if user.is_authenticated %}
-        <span>Welcome, {{ user.username }}</span>
-        <a href="{% url 'logout' %}">Logout</a>
-      {% else %}
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'register' %}">Register</a>
-      {% endif %}
-      </div>
-    </nav>
+  <div class="nav-links">
+    
+    {% if user.is_authenticated %}
+    
+      <span>Welcome, {{ user.username }}</span>
+
+      <!-- 🔔 NOTIFICATION BUTTON -->
+      <a href="{% url 'notification' %}" class="notif-btn">
+        🔔
+        {% if unread_count > 0 %}
+        <span class="badge">{{ unread_count }}</span>
+        {% endif %}
+      </a>
+
+      <a href="{% url 'logout' %}">Logout</a>
+
+    {% else %}
+
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+
+    {% endif %}
+
+  </div>
+</nav>
 
     <!-- HERO SECTION -->
     <div class="hero">

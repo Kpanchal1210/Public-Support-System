@@ -6,25 +6,24 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from accounts.models import UserProfile
-from reports.models import Issue
-from reports.utils import auto_escalate_issues
+from reports.models import Issue, Notification
+from reports.utils import auto_escalate_issues, create_notification
 
 
 # =========================
 # PUBLIC PAGES
 # =========================
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from reports.models import Issue
 
 def index(request):
+
+    unread_count = 0  # default
 
     if request.user.is_authenticated:
 
         role = request.user.userprofile.user_type
 
+        # 🔁 Redirect other roles
         if role == 'department':
             return redirect('department')
 
@@ -34,23 +33,34 @@ def index(request):
         elif role == 'head':
             return redirect('headAuthority')
 
-        # only citizen stays here
+        # 👤 Citizen stays here
         elif role == 'citizen':
-            return render(request, 'frontend/index.html')
 
-    return render(request, 'frontend/index.html')
+            unread_count = Notification.objects.filter(
+                user=request.user,
+                is_read=False
+            ).count()
+
+            return render(request, 'frontend/index.html', {
+                'unread_count': unread_count
+            })
+
+    # 👤 Not logged in
+    return render(request, 'frontend/index.html', {
+        'unread_count': unread_count
+    })
 
 
 @login_required(login_url='login')
 def department(request):
 
-    # 🔥 AUTO ESCALATION RUNS FIRST
+    # 🔥 Auto escalation check
     auto_escalate_issues()
 
-    # Get department of logged-in user
+    # 🔥 Get department
     dept = request.user.userprofile.department
 
-    # ✅ Only NON-ESCALATED issues for department
+    # 🔥 Filter issues
     pending_issues = Issue.objects.filter(
         issue_type=dept,
         status='pending',
@@ -63,47 +73,67 @@ def department(request):
         is_escalated=False
     )
 
-    # 🔥 Escalated issues (optional to show)
     escalated_issues = Issue.objects.filter(
         issue_type=dept,
         is_escalated=True
     )
 
-    # Get workers of same department
+    # 🔥 Get workers of same department
     workers = User.objects.filter(
         userprofile__user_type='worker',
         userprofile__department=dept
     )
 
-    # Assign worker
+    # ================= ASSIGN WORK =================
     if request.method == 'POST':
+
         issue_id = request.POST.get('issue_id')
         worker_id = request.POST.get('worker')
 
         issue = get_object_or_404(Issue, id=issue_id)
         worker = get_object_or_404(User, id=worker_id)
 
+        # Assign worker
         issue.worker = worker
         issue.status = 'in_progress'
         issue.save()
 
+        # 🔔 NOTIFICATION TO WORKER
+        create_notification(
+            worker,
+            f"You have been assigned a {issue.issue_type} issue at {issue.location}"
+        )
+
         return redirect('department')
 
+    # ================= RESPONSE =================
     return render(request, 'frontend/department.html', {
         'pending_issues': pending_issues,
         'active_issues': active_issues,
-        'escalated_issues': escalated_issues,  # 🔥 optional
+        'escalated_issues': escalated_issues,
         'workers': workers
     })
+
 
 @login_required(login_url='login')
 def reports(request):
     return render(request, 'frontend/reports.html')
 
+
 @login_required(login_url='login')
 def headAuthority(request):
 
     issues = Issue.objects.all().order_by('-created_at')
+
+    # 🔔 Notifications for this user
+    notification_list = Notification.objects.filter(
+        user=request.user
+    ).order_by('-created_at')[:5]
+
+    unread_count = Notification.objects.filter(
+        user=request.user,
+        is_read=False
+    ).count()
 
     context = {
         "issues": issues,
@@ -111,6 +141,10 @@ def headAuthority(request):
         "escalated_count": issues.filter(is_escalated=True).count(),
         "inprogress_count": issues.filter(status="in_progress").count(),
         "resolved_count": issues.filter(status="resolved").count(),
+
+        # 🔔 add this
+        "notification_list": notification_list,
+        "unread_count": unread_count,
     }
 
     return render(request, "frontend/headAuthority.html", context)
@@ -132,8 +166,20 @@ def manage_workers(request):
 @login_required(login_url='login')
 def worker_portal(request):
 
+    # 🔥 Issues assigned to worker
     issues = Issue.objects.filter(worker=request.user)
 
+    # 🔔 Notifications for worker
+    notification_list = Notification.objects.filter(
+        user=request.user
+    ).order_by('-created_at')[:5]
+
+    unread_count = Notification.objects.filter(
+        user=request.user,
+        is_read=False
+    ).count()
+
+    # ================= UPDATE STATUS =================
     if request.method == "POST":
         issue_id = request.POST.get("issue_id")
         status = request.POST.get("status")
@@ -145,8 +191,13 @@ def worker_portal(request):
 
         return redirect('worker_portal')
 
+    # ================= RESPONSE =================
     return render(request, 'frontend/worker_portal.html', {
-        "issues": issues
+        "issues": issues,
+
+        # 🔔 notification data
+        "notification_list": notification_list,
+        "unread_count": unread_count
     })
 
 def view_reports(request):

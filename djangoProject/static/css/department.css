@@ -325,3 +325,42 @@ select {
         grid-template-columns: 1fr;
     }
 }
+
+/* ================= NOTIFICATION BUTTON ================= */
+
+.notif-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.notif-btn:hover {
+    background: #eef2ff;
+    color: var(--accent-primary);
+}
+
+/* BADGE */
+.notif-btn .badge {
+    background: var(--danger);
+    color: white;
+    font-size: 10px;
+    padding: 3px 7px;
+    border-radius: 50%;
+    margin-left: auto;
+}
+
+.notif-btn.active {
+    background: #eef2ff;
+    color: var(--accent-primary);
+}
+
+nav a, .notif-btn {
+    display: block;
+}

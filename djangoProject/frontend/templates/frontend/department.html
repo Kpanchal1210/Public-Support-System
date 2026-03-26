@@ -16,21 +16,32 @@
 
 <div class="sidebar">
 
-<div class="dept-profile">
-<div class="avatar">HQ</div>
-<h4>Department Panel</h4>
-<p>Issue Management</p>
+    <div class="dept-profile">
+        <div class="avatar">HQ</div>
+        <h4>Department Panel</h4>
+        <p>Issue Management</p>
+    </div>
+
+    <nav>
+
+        <a href="{% url 'manage_workers' %}">Manage Workers</a>
+
+        <a href="{% url 'notification' %}" class="notif-btn">
+        🔔 Notifications
+
+        {% if unread_count > 0 %}
+        <span class="badge">{{ unread_count }}</span>
+        {% endif %}
+        </a>
+
+        <a href="{% url 'logout' %}">Logout</a>
+
+    </nav>
+
 </div>
 
-<nav>
-<a href="{% url 'manage_workers' %}">Manage Workers</a>
-<a href="{% url 'logout' %}">Logout</a>
-</nav>
 
-</div>
-
-
-<!-- ================= MAIN AREA ================= -->
+<!-- ================= MAIN ================= -->
 
 <div class="main-area">
 
@@ -39,7 +50,7 @@
 </header>
 
 
-<!-- ================= NEW COMPLAINTS ================= -->
+<!-- ================= PENDING ================= -->
 
 <section>
 
@@ -52,13 +63,11 @@
 <div class="pending-card">
 
 <div class="media-box">
-
 {% if issue.image %}
 <img src="{{ issue.image.url }}">
 {% else %}
 <div>No Image</div>
 {% endif %}
-
 </div>
 
 <h4>{{ issue.issue_type }}</h4>
@@ -67,11 +76,18 @@
 <p><b>Location:</b> {{ issue.location }}</p>
 <p><b>Description:</b> {{ issue.description }}</p>
 
-<!-- 🔥 Deadline -->
-<p><b>Deadline:</b> {{ issue.deadline|date:"d M Y H:i" }}</p>
+<!-- TIME LEFT -->
+<p class="deadline
+    {% if issue.formatted_time_left == 'Expired' %}
+        deadline-expired
+    {% elif issue.time_left and issue.time_left.days == 0 %}
+        deadline-warning
+    {% endif %}
+">
+    ⏳ {{ issue.formatted_time_left }}
+</p>
 
 <form method="POST">
-
 {% csrf_token %}
 <input type="hidden" name="issue_id" value="{{ issue.id }}">
 
@@ -79,17 +95,12 @@
 
 <select name="worker" required>
 <option value="">Choose Worker</option>
-
 {% for worker in workers %}
-<option value="{{ worker.id }}">
-{{ worker.username }}
-</option>
+<option value="{{ worker.id }}">{{ worker.username }}</option>
 {% endfor %}
-
 </select>
 
 <button type="submit">Allocate Work</button>
-
 </form>
 
 </div>
@@ -103,8 +114,7 @@
 </section>
 
 
-
-<!-- ================= ACTIVE WORK ================= -->
+<!-- ================= ACTIVE ================= -->
 
 <section>
 
@@ -130,25 +140,28 @@
 
 </div>
 
-<p>
-<strong>Problem:</strong>
-{{ issue.description }}
-</p>
+<p><strong>Problem:</strong> {{ issue.description }}</p>
 
-<!-- 🔥 Deadline -->
-<p><b>Deadline:</b> {{ issue.deadline|date:"d M Y H:i" }}</p>
+<!-- TIME LEFT -->
+<p class="deadline
+    {% if issue.formatted_time_left == 'Expired' %}
+        deadline-expired
+    {% elif issue.time_left and issue.time_left.days == 0 %}
+        deadline-warning
+    {% endif %}
+">
+    ⏳ {{ issue.formatted_time_left }}
+</p>
 
 <div class="media-container">
 
 <div class="media-box">
 <span>CITIZEN PHOTO</span>
-
 {% if issue.image %}
 <img src="{{ issue.image.url }}">
 {% else %}
 <div>No Image</div>
 {% endif %}
-
 </div>
 
 </div>
@@ -168,12 +181,11 @@
 </section>
 
 
-
-<!-- ================= ESCALATED ISSUES ================= -->
+<!-- ================= ESCALATED ================= -->
 
 <section>
 
-<h3 style="color: red;">⚠️ Escalated Issues</h3>
+<h3 class="escalated-title">⚠️ Escalated Issues</h3>
 
 <div class="allocation-grid">
 
@@ -186,9 +198,9 @@
 <p><b>Location:</b> {{ issue.location }}</p>
 <p><b>Description:</b> {{ issue.description }}</p>
 
-<p><b>Status:</b> Escalated 🚨</p>
-
-<p><b>Deadline Passed:</b> {{ issue.deadline|date:"d M Y H:i" }}</p>
+<p class="deadline deadline-expired">
+🚨 Escalated
+</p>
 
 </div>
 
@@ -199,7 +211,6 @@
 </div>
 
 </section>
-
 
 </div>
 
