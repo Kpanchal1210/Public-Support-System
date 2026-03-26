@@ -13,3 +13,12 @@ def auto_escalate_issues():
         if issue.deadline and timezone.now() > issue.deadline:
             issue.is_escalated = True
             issue.save()
+
+
+from .models import Notification
+
+def create_notification(user, message):
+    Notification.objects.create(
+        user=user,
+        message=message
+    )
