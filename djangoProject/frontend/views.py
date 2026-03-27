@@ -1,3 +1,5 @@
+from itertools import count
+
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
@@ -6,8 +8,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from accounts.models import UserProfile
-from reports.models import Issue, Notification
+from reports.models import DepartmentRule, Issue, Notification
 from reports.utils import auto_escalate_issues, create_notification
+from django.db.models import Count
 
 
 # =========================
@@ -363,4 +366,73 @@ def worker_list(request):
 
     return render(request, 'frontend/worker_list.html', {
         'workers': workers
+    })
+
+
+from django.db.models import Count, Q
+
+@login_required(login_url='login')
+def department_performance(request):
+
+    dept_data = Issue.objects.values('issue_type').annotate(
+        total=Count('id'),
+        resolved=Count('id', filter=Q(status='resolved')),
+        escalated=Count('id', filter=Q(is_escalated=True))
+    )
+
+    if request.method == "POST":
+        issue_type = request.POST.get("issue_type")
+
+        # your action logic here
+
+    return render(request, 'frontend/department_performance.html', {
+        'dept_data': dept_data
+    })
+
+
+from django.utils import timezone
+from datetime import timedelta
+
+def action(request, issue_type):
+
+    BASE_TIME = {
+        'water': 1,
+        'electricity': 1,
+        'garbage': 2,
+        'road': 3,
+    }
+
+    base_time = BASE_TIME.get(issue_type, 1)
+
+    if request.method == "POST":
+        time_limit = float(request.POST.get("time_limit"))
+
+        # 🔥 VALIDATIONS
+        if time_limit <= 0:
+            error = "Time must be greater than 0"
+
+        elif time_limit > base_time:
+            error = f"Time cannot exceed {base_time} day(s)"
+
+        else:
+            rule, created = DepartmentRule.objects.get_or_create(
+                department=issue_type
+            )
+
+            # 🔥 APPLY PENALTY
+            rule.time_limit = time_limit
+            rule.penalty_applied_at = timezone.now()   # ✅ START TIMER
+            rule.save()
+
+            return redirect('department_performance')
+
+        return render(request, 'frontend/action.html', {
+            'issue_type': issue_type,
+            'base_time': base_time,
+            'error': error
+        })
+
+    return render(request, 'frontend/action.html', {
+        'issue_type': issue_type,
+        'base_time': base_time
     })

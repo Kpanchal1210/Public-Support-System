@@ -12,6 +12,7 @@
 
 <body>
 
+<!-- ================= SIDEBAR ================= -->
 <div class="sidebar">
     <div class="auth-profile">
         <div class="avatar-shield">🏛️</div>
@@ -21,18 +22,24 @@
 
     <nav>
         <a href="#" class="active">🏢 Overview</a>
-        <!-- 🔔 NOTIFICATION BUTTON -->
-    <a href="{% url 'notification' %}" class="notif-btn">
-        🔔 Notifications
 
-        {% if unread_count > 0 %}
-        <span class="badge">{{ unread_count }}</span>
-        {% endif %}
-    </a>
+        <!-- NEW BUTTON -->
+        <a href="{% url 'department_performance' %}">📊 Department Performance</a>
+
+        <!-- 🔔 Notification -->
+        <a href="{% url 'notification' %}" class="notif-btn">
+            🔔 Notifications
+            {% if unread_count > 0 %}
+            <span class="badge">{{ unread_count }}</span>
+            {% endif %}
+        </a>
+
         <a href="{% url 'logout' %}">Logout</a>
     </nav>
 </div>
 
+
+<!-- ================= MAIN ================= -->
 <div class="main-area">
 
     <div class="page-header">
@@ -40,7 +47,7 @@
         <p>Monitor escalated and department-wise issues.</p>
     </div>
 
-    <!-- Stats -->
+    <!-- ================= STATS ================= -->
     <div class="stats-grid">
         <div class="stat-card stat-danger">
             <h5>Escalated</h5>
@@ -63,24 +70,18 @@
         </div>
     </div>
 
-    <!-- FILTER BUTTONS -->
-    <div class="filter-buttons">
-        <button class="active">All</button>
-        <button>Escalated</button>
-        <button>In Progress</button>
-        <button>Resolved</button>
-    </div>
 
-    <!-- TABLE -->
+    <!-- ================= TABLE ================= -->
     <div class="escalation-container">
+
         <table class="esc-table">
+
             <thead>
                 <tr>
                     <th>Department</th>
                     <th>Issue</th>
                     <th>Status</th>
                     <th>Worker</th>
-                    <th>Action</th>
                 </tr>
             </thead>
 
@@ -104,7 +105,9 @@
                         {% if issue.is_escalated %}
                             <span class="delay-badge">Escalated</span>
                         {% else %}
-                            <span class="status-tag">{{ issue.status }}</span>
+                            <span class="status-tag {{ issue.status }}">
+                                {{ issue.status|title }}
+                            </span>
                         {% endif %}
                     </td>
 
@@ -116,22 +119,16 @@
                         {% endif %}
                     </td>
 
-                    <td>
-                        <button class="btn-intervene">Intervene</button>
-                        <button class="btn-view">View</button>
-                    </td>
-
                 </tr>
                 {% endfor %}
 
             </tbody>
+
         </table>
+
     </div>
 
 </div>
-
-<!-- JS FILE -->
-<script src="{% static 'js/headAuthority.js' %}"></script>
 
 </body>
 </html>

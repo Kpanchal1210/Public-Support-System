@@ -4,6 +4,12 @@ from django.utils import timezone
 from datetime import timedelta
 
 
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+from datetime import timedelta
+
+
 class Issue(models.Model):
 
     ISSUE_TYPES = [
@@ -38,31 +44,13 @@ class Issue(models.Model):
 
     # 🔥 escalation
     is_escalated = models.BooleanField(default=False)
+
+    # deadline
     deadline = models.DateTimeField(null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # ================= PENALTY SYSTEM =================
-
-    @staticmethod
-    def get_penalty_factor(issue_type):
-
-        # 🔥 count escalations in last 24 hours ONLY
-        recent_escalations = Issue.objects.filter(
-            issue_type=issue_type,
-            is_escalated=True,
-            created_at__gte=timezone.now() - timedelta(days=1)
-        ).count()
-
-        if recent_escalations >= 2:
-            return 0.5   # heavy penalty
-        elif recent_escalations >= 1:
-            return 0.75  # medium penalty
-        else:
-            return 1     # normal
-
     # ================= DEADLINE =================
-
     def set_deadline(self):
 
         BASE_TIME = {
@@ -74,15 +62,15 @@ class Issue(models.Model):
 
         base_days = BASE_TIME.get(self.issue_type, 2)
 
-        # 🔥 apply penalty
-        penalty = Issue.get_penalty_factor(self.issue_type)
+        # 🔥 check if authority rule exists
+        rule = DepartmentRule.objects.filter(
+            department=self.issue_type
+        ).first()
 
-        final_days = base_days * penalty
+        if rule:
+            base_days = rule.get_effective_time()  # ✅ 24h logic handled here
 
-        # 🔥 safety minimum (6 hours)
-        final_days = max(final_days, 0.25)
-
-        self.deadline = timezone.now() + timedelta(days=final_days)
+        self.deadline = timezone.now() + timedelta(days=base_days)
 
     def save(self, *args, **kwargs):
         if not self.deadline:
@@ -90,7 +78,6 @@ class Issue(models.Model):
         super().save(*args, **kwargs)
 
     # ================= TIME LEFT =================
-
     def time_left(self):
         if self.deadline:
             return self.deadline - timezone.now()
@@ -126,3 +113,43 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.message[:20]}"
+    
+
+class DepartmentRule(models.Model):
+
+    DEPARTMENTS = [
+        ('road', 'Road'),
+        ('water', 'Water'),
+        ('electricity', 'Electricity'),
+        ('garbage', 'Garbage'),
+    ]
+
+    department = models.CharField(max_length=50, choices=DEPARTMENTS)
+
+    # penalty time (e.g. 0.5 day)
+    time_limit = models.FloatField(default=1)
+
+    # 🔥 when penalty was applied
+    penalty_applied_at = models.DateTimeField(null=True, blank=True)
+
+    def is_penalty_active(self):
+        if self.penalty_applied_at:
+            return timezone.now() < self.penalty_applied_at + timedelta(hours=24)
+        return False
+
+    def get_effective_time(self):
+        BASE_TIME = {
+            'water': 1,
+            'electricity': 1,
+            'garbage': 2,
+            'road': 3,
+        }
+
+        base = BASE_TIME.get(self.department, 1)
+
+        if self.is_penalty_active():
+            return self.time_limit  # apply penalty
+        return base  # reset after 24h
+
+    def __str__(self):
+        return f"{self.department} - {self.time_limit} day(s)"

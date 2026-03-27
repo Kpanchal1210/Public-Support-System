@@ -14,7 +14,11 @@
     --border-color: #e2e8f0;
 }
 
-/* GLOBAL */
+/* ================= GLOBAL ================= */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -29,7 +33,7 @@ body {
     min-height: 100vh;
 }
 
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
 .sidebar {
     width: 280px;
     background: var(--bg-sidebar);
@@ -68,9 +72,12 @@ body {
     margin: 0;
 }
 
+/* NAV */
 nav a {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 10px;
     color: var(--text-dim);
     text-decoration: none;
     padding: 14px 18px;
@@ -86,18 +93,29 @@ nav a.active {
     color: var(--accent-primary);
 }
 
-.nav-danger {
-    color: var(--danger);
+/* ================= NOTIFICATION ================= */
+.notif-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* MAIN */
+.notif-btn .badge {
+    background: var(--danger);
+    color: white;
+    font-size: 10px;
+    padding: 3px 7px;
+    border-radius: 50%;
+}
+
+/* ================= MAIN ================= */
 .main-area {
     flex: 1;
     padding: 40px;
     overflow-y: auto;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 .page-header h1 {
     font-size: 2.5rem;
     font-weight: 800;
@@ -106,10 +124,9 @@ nav a.active {
 
 .page-header p {
     color: var(--text-dim);
-    margin-top: 5px;
 }
 
-/* STATS */
+/* ================= STATS ================= */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -130,14 +147,11 @@ nav a.active {
 }
 
 .stat-card h5 {
-    margin: 0;
     font-size: 0.8rem;
-    text-transform: uppercase;
     color: var(--text-dim);
 }
 
 .stat-card h2 {
-    margin: 10px 0 5px;
     font-size: 2rem;
     font-weight: 800;
 }
@@ -150,61 +164,88 @@ nav a.active {
     color: var(--danger);
 }
 
-/* FILTER BUTTONS */
-/* FILTER BUTTONS CONTAINER */
+/* ================= DEPARTMENT PERFORMANCE ================= */
+.dept-performance {
+    margin: 40px 0;
+}
+
+.dept-performance h2 {
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.dept-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.dept-card {
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.dept-card:hover {
+    transform: translateY(-5px);
+}
+
+.dept-card form {
+    margin-top: 10px;
+}
+
+.escalation-count {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--danger);
+    margin: 10px 0;
+}
+
+/* ACTION BUTTON */
+.action-btn {
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.action-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.85;
+}
+
+/* ================= FILTER BUTTONS ================= */
 .filter-buttons {
     display: flex;
     gap: 12px;
     margin-bottom: 25px;
-    flex-wrap: wrap;
 }
 
-/* BUTTON BASE STYLE */
 .filter-buttons button {
     padding: 10px 20px;
-    border-radius: 999px; /* pill shape */
+    border-radius: 999px;
     border: 1px solid var(--border-color);
     background: white;
     color: var(--text-dim);
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
 }
 
-/* HOVER EFFECT */
-.filter-buttons button:hover {
+.filter-buttons button.active {
     background: var(--accent-primary);
     color: white;
-    border-color: var(--accent-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(79, 70, 229, 0.2);
 }
 
-/* ACTIVE BUTTON */
-.filter-buttons button.active {
-    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-    color: white;
-    border: none;
-    box-shadow: 0 6px 15px rgba(79, 70, 229, 0.3);
-}
-
-/* OPTIONAL: STATUS COLORS */
-.filter-buttons button:nth-child(2):hover {
-    background: var(--danger);
-    border-color: var(--danger);
-}
-
-.filter-buttons button:nth-child(3):hover {
-    background: var(--accent-secondary);
-    border-color: var(--accent-secondary);
-}
-
-.filter-buttons button:nth-child(4):hover {
-    background: var(--success);
-    border-color: var(--success);
-}
-
-/* TABLE CONTAINER */
+/* ================= TABLE ================= */
 .escalation-container {
     background: white;
     border-radius: 24px;
@@ -212,19 +253,16 @@ nav a.active {
     padding: 30px;
 }
 
-/* TABLE */
 .esc-table {
     width: 100%;
     border-collapse: collapse;
 }
 
 .esc-table th {
-    text-align: left;
-    padding: 12px;
     font-size: 0.75rem;
-    text-transform: uppercase;
     color: var(--text-dim);
     border-bottom: 1px solid var(--border-color);
+    padding: 12px;
 }
 
 .esc-table td {
@@ -236,14 +274,27 @@ tr:hover {
     background: #f9fafb;
 }
 
-/* STATUS */
+/* ================= STATUS ================= */
 .status-tag {
     padding: 6px 10px;
     border-radius: 8px;
     font-size: 0.75rem;
     font-weight: 700;
+}
+
+.status-tag.pending {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.status-tag.in_progress {
     background: #dbeafe;
-    color: #1e40af;
+    color: #1d4ed8;
+}
+
+.status-tag.resolved {
+    background: #dcfce7;
+    color: #15803d;
 }
 
 .delay-badge {
@@ -252,10 +303,14 @@ tr:hover {
     padding: 6px 10px;
     border-radius: 8px;
     font-weight: 800;
-    font-size: 0.75rem;
 }
 
-/* DEPARTMENT TAG */
+/* ESCALATED ROW */
+.issue-row.escalated {
+    background: #fff1f2;
+}
+
+/* ================= DEPARTMENT TAG ================= */
 .dept-tag {
     font-size: 0.7rem;
     padding: 5px 10px;
@@ -269,7 +324,7 @@ tr:hover {
 .dept-tag.electricity { color: var(--contrast-gold); }
 .dept-tag.garbage { color: var(--success); }
 
-/* BUTTONS */
+/* ================= BUTTONS ================= */
 .btn-intervene {
     background: white;
     border: 1.5px solid var(--danger);
@@ -284,6 +339,7 @@ tr:hover {
 .btn-intervene:hover {
     background: var(--danger);
     color: white;
+    transform: scale(1.05);
 }
 
 .btn-view {
@@ -301,32 +357,20 @@ tr:hover {
 .btn-view:hover {
     background: var(--accent-primary);
     color: white;
+    transform: scale(1.05);
 }
 
-/* NOTIFICATION BUTTON */
-.notif-btn {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    border-radius: 12px;
-    text-decoration: none;
-    color: var(--text-dim);
-    font-weight: 600;
-    margin-bottom: 8px;
-    transition: 0.3s;
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+    .stats-grid,
+    .dept-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-.notif-btn:hover {
-    background: #eef2ff;
-    color: var(--accent-primary);
-}
-
-/* BADGE */
-.notif-btn .badge {
-    background: var(--danger);
-    color: white;
-    font-size: 10px;
-    padding: 3px 7px;
-    border-radius: 50%;
+@media (max-width: 600px) {
+    .stats-grid,
+    .dept-grid {
+        grid-template-columns: 1fr;
+    }
 }

@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Department Performance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/department_performance.css' %}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+    <h2 class="logo">PUBLIC<span>SUPPORT</span></h2>
+
+    <div class="nav-links">
+        <a href="{% url 'headAuthority' %}">Dashboard</a>
+        <a href="{% url 'logout' %}" class="logout">Logout</a>
+    </div>
+</nav>
+
+
+<!-- ================= HEADER ================= -->
+<div class="header">
+    <h1>📊 Department Performance</h1>
+    <p>Track department efficiency and take actions</p>
+</div>
+
+
+<!-- ================= TABLE ================= -->
+<div class="table-container">
+
+    <table class="perf-table">
+
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>Total Issues</th>
+                <th>Resolved</th>
+                <th>Escalated</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for d in dept_data %}
+            <tr>
+
+                <td class="dept-name">{{ d.issue_type|upper }}</td>
+
+                <td>{{ d.total }}</td>
+
+                <td class="resolved">{{ d.resolved }}</td>
+
+                <td class="escalated">{{ d.escalated }}</td>
+
+                <td>
+                    <a href="{% url 'action' d.issue_type %}" class="action-btn">
+                        ⚠️ Take Action
+                    </a>
+                </td>
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="empty">
+                    No data available 🎉
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>

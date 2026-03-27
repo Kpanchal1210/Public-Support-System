@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Take Action</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/action.css' %}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav>
+    <h2>PUBLIC<span>SUPPORT</span></h2>
+
+    <div class="nav-links">
+        <a href="{% url 'headAuthority' %}">Dashboard</a>
+        <a href="{% url 'department_performance' %}">Performance</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</nav>
+
+
+<!-- ================= HEADER ================= -->
+<div class="header">
+    <h1>⚠️ Take Action</h1>
+    <p>Adjust department time limit based on performance</p>
+</div>
+
+
+<!-- ================= FORM ================= -->
+<div class="form-container">
+
+    <!-- ERROR MESSAGE -->
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Department -->
+        <label>Department</label>
+        <input type="text" value="{{ issue_type|upper }}" disabled>
+
+        <input type="hidden" name="issue_type" value="{{ issue_type }}">
+
+        <!-- Time Limit -->
+        <label>New Time Limit (in days)</label>
+        <input type="number"
+       step="0.1"
+       min="0.1"
+       max="{{ base_time }}"
+       name="time_limit"
+       value="{{ base_time }}"
+       required>
+
+        <!-- Submit -->
+        <button type="submit">Apply Action</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -13,6 +13,8 @@ urlpatterns = [
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('citizen_list/', views.citizen_list, name='citizen_list'),
     path('department_list/', views.department_list, name='department_list'),
+    path('department_performance/', views.department_performance, name='department_performance'),
+    path('action/<str:issue_type>/', views.action, name='action'),
     path('workers_list/', views.worker_list, name='worker_list'),
     path('reports/', include('reports.urls')),
     path('headAuthority/', views.headAuthority, name='headAuthority'),

@@ -1,3 +1,4 @@
+/* ===== COLOR VARIABLES ===== */
 :root {
     --bg-main: #f8fafc;
     --bg-surface: #ffffff;
@@ -11,7 +12,10 @@
     --text-muted: #64748b;
 }
 
-* { box-sizing: border-box; }
+/* ===== GLOBAL ===== */
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
@@ -20,7 +24,12 @@ body {
     color: var(--text-dark);
 }
 
-/* NAVBAR */
+/* ===== REMOVE BLUE TAP (MOBILE) ===== */
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== NAVBAR ===== */
 nav {
     display: flex;
     justify-content: space-between;
@@ -29,52 +38,93 @@ nav {
     background: var(--bg-surface);
     border-bottom: 1px solid #e5e7eb;
 }
+
 nav h1 {
     font-size: 20px;
     font-weight: 700;
     color: var(--accent-primary);
 }
-nav a {
+
+/* ===== NAV LINKS ===== */
+.nav-links a {
     margin-left: 22px;
     color: var(--text-dark);
     text-decoration: none;
     font-weight: 500;
+
+    /* 🔥 REMOVE OUTLINE */
+    outline: none;
+    border: none;
 }
-nav a:hover {
+
+/* 🔥 REMOVE FOCUS / CLICK BLUE BOX */
+.nav-links a:focus,
+.nav-links a:active,
+.nav-links a:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Hover */
+.nav-links a:hover {
     color: var(--accent-primary);
 }
 
-.nav-links a[href*="login"] {
-  color: #2563eb;
-  border: 1px solid #2563eb;
-  margin-right: 8px;
+/* LOGIN / REGISTER STYLE */
+.nav-links a[href*="login"],
+.nav-links a[href*="register"] {
+    color: #2563eb;
+    font-weight: 600;
 }
 
-.nav-links a[href*="login"]:hover {
-  background: #2563eb;
-  color: white;
+.nav-links a[href*="login"]:hover,
+.nav-links a[href*="register"]:hover {
+    color: #1d4ed8;
 }
 
+/* USER BADGE */
 .nav-links span {
-  background: #eef2ff;
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-weight: 600;
-  color: #2563eb;
+    background: #eef2ff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #2563eb;
 }
 
-/* HERO */
+/* ===== NOTIFICATION ===== */
+.notif-btn {
+    position: relative;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-left: 10px;
+}
+
+.notif-btn .badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: red;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+/* ===== HERO ===== */
 .hero {
     padding: 90px 60px 70px;
     max-width: 880px;
 }
+
 .hero h2 {
     font-size: 44px;
     line-height: 1.2;
 }
+
 .hero span {
     color: var(--accent-primary);
 }
+
 .hero p {
     color: var(--text-muted);
     max-width: 620px;
@@ -84,7 +134,7 @@ nav a:hover {
     margin-top: 28px;
 }
 
-/* BUTTONS */
+/* ===== BUTTONS ===== */
 .btn-primary {
     background: var(--accent-primary);
     color: white;
@@ -94,6 +144,7 @@ nav a:hover {
     font-weight: 600;
     cursor: pointer;
 }
+
 .btn-primary:hover {
     background: #4f46e5;
 }
@@ -107,32 +158,36 @@ nav a:hover {
     border-radius: 12px;
     cursor: pointer;
 }
+
 .btn-secondary:hover {
     background: #eef2ff;
 }
 
-/* SECTION */
+/* ===== SECTION ===== */
 section {
     padding: 70px 60px;
 }
+
 .section-title {
     font-size: 28px;
     margin-bottom: 34px;
     text-align: center;
 }
 
-/* CARDS */
+/* ===== CARDS ===== */
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 28px;
 }
+
 .card {
     background: var(--bg-surface);
     border-radius: 22px;
     padding: 26px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
+
 .tag {
     display: inline-block;
     background: rgba(6,182,212,0.15);
@@ -142,11 +197,12 @@ section {
     font-size: 11px;
     font-weight: 600;
 }
+
 .card p {
     color: var(--text-muted);
 }
 
-/* CTA */
+/* ===== CTA ===== */
 .cta {
     background: linear-gradient(135deg, #eef2ff, #ffffff);
     padding: 60px;
@@ -157,9 +213,11 @@ section {
     align-items: center;
     border: 1px solid #e5e7eb;
 }
+
 .cta p {
     color: var(--text-muted);
 }
+
 .cta button {
     background: var(--accent-warm);
     color: white;
@@ -170,31 +228,11 @@ section {
     cursor: pointer;
 }
 
-/* FOOTER */
+/* ===== FOOTER ===== */
 footer {
     background: var(--bg-card);
     text-align: center;
     padding: 34px;
     color: var(--text-muted);
     font-size: 13px;
-}
-
-/* NOTIFICATION BUTTON */
-.notif-btn {
-    position: relative;
-    text-decoration: none;
-    font-size: 1.2rem;
-    margin-left: 10px;
-}
-
-/* BADGE */
-.notif-btn .badge {
-    position: absolute;
-    top: -6px;
-    right: -10px;
-    background: red;
-    color: white;
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 50%;
 }

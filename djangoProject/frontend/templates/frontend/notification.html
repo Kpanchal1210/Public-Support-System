@@ -18,13 +18,6 @@
     <div class="nav-links">
         <a href="{% url 'index' %}">Dashboard</a>
 
-        <a href="{% url 'notification' %}" class="active">
-            🔔 
-            <span class="badge">
-                {{ unread_count }}
-            </span>
-        </a>
-
         <a href="{% url 'logout' %}">Logout</a>
     </div>
 </nav>
