@@ -15,6 +15,10 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   </head>
 
   <body>
@@ -48,34 +52,42 @@
   </div>
 </nav>
 
-    <!-- HERO SECTION -->
-    <div class="hero">
-      <h2>
-        See a problem around you? <br />
-        <span>Let the city know.</span>
-      </h2>
+<div class="hero">
 
-      <p>
-        Public Support helps citizens report everyday issues like broken roads,
-        garbage collection delays, or faulty streetlights — quickly and clearly.
-      </p>
+  <!-- LEFT -->
+  <div class="hero-content">
+    <h2>
+      See a problem around you? <br />
+      <span>Let the city know.</span>
+    </h2>
 
-      <div class="hero-actions">
-        <!-- Reports page -->
-        <button
-          class="btn-primary"
-          onclick="location.href='{% url 'report_issue' %}'"
-        >
-          Report an Issue
-        </button>
+    <p>
+      Public Support helps citizens report everyday issues like broken roads,
+      garbage collection delays, or faulty streetlights — quickly and clearly.
+    </p>
 
-        <button class="btn-secondary"
-        onclick="location.href='{% url 'view_reports' %}'"
-        >
+    <div class="hero-actions">
+      <button class="btn-primary"
+        onclick="location.href='{% url 'report_issue' %}'">
+        Report an Issue
+      </button>
+
+      <button class="btn-secondary"
+        onclick="location.href='{% url 'view_reports' %}'">
         View Reports
       </button>
-      </div>
     </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="hero-map">
+    <div id="map"></div>
+  </div>
+
+</div>
+
+<!-- keep script OUTSIDE -->
+<script src="{% static 'js/index.js' %}"></script>
 
     <!-- REPORT CARDS -->
     <section>
@@ -105,7 +117,7 @@
           <p>Dark intersection at night making it unsafe for pedestrians.</p>
         </div>
       </div>
-    </section>
+    </section>  
 
     <!-- CTA -->
     <div class="cta">
@@ -122,4 +134,4 @@
       © 2026 Public Support Portal • Built for citizens, not complaints
     </footer>
   </body>
-</html>
+</html> 

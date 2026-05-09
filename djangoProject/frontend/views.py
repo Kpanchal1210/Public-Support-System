@@ -128,7 +128,7 @@ def headAuthority(request):
 
     issues = Issue.objects.all().order_by('-created_at')
 
-    # 🔔 Notifications for this user
+    # Notifications for this user
     notification_list = Notification.objects.filter(
         user=request.user
     ).order_by('-created_at')[:5]
@@ -144,8 +144,6 @@ def headAuthority(request):
         "escalated_count": issues.filter(is_escalated=True).count(),
         "inprogress_count": issues.filter(status="in_progress").count(),
         "resolved_count": issues.filter(status="resolved").count(),
-
-        # 🔔 add this
         "notification_list": notification_list,
         "unread_count": unread_count,
     }
@@ -285,7 +283,7 @@ def register(request):
             messages.error(request, "Passwords do not match")
             return redirect('register')
 
-        # username already exists
+        # username already exist
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
             return redirect('register')
@@ -302,7 +300,7 @@ def register(request):
 
     return render(request, 'frontend/register.html')
 
-@login_required
+@login_required(login_url='login')
 def admin_dashboard(request):
 
     total_users = User.objects.count()

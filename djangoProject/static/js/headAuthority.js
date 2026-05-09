@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", function () {
     buttons.forEach(button => {
         button.addEventListener("click", function () {
 
-            // remove active from all
+            // remove active class from all
             buttons.forEach(btn => btn.classList.remove("active"));
 
-            // add active to clicked
+            // add active to clicked button
             this.classList.add("active");
 
             const type = this.innerText.toLowerCase().replace(" ", "_");

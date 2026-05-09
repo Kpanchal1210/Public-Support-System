@@ -1,113 +1,214 @@
-/* ---------- Base Styles ---------- */
+/* ================= ROOT VARIABLES ================= */
+
+:root {
+
+    --bg-main: #f5f7fa;
+    --bg-surface: #ffffff;
+    --bg-card: rgba(255,255,255,0.82);
+
+    --accent-primary: #4E8F95;
+    --accent-secondary: #7FD1C9;
+    --accent-warm: #5FA3A6;
+
+    --text-dark: #2F3E4F;
+    --text-muted: #6C7A8C;
+
+    --border-color: #dde5ea;
+}
+
+/* ================= BASE STYLES ================= */
+
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  background: linear-gradient(135deg, #eef2ff, #f8fafc);
-  color: #111827;
-  line-height: 1.4;
+
+    font-family: "Plus Jakarta Sans", sans-serif;
+
+    background:
+        linear-gradient(180deg,#f5f7fa,#e6eff2);
+
+    color: var(--text-dark);
+
+    line-height: 1.5;
 }
 
-/* ---------- Navbar ---------- */
+/* ================= NAVBAR ================= */
+
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 40px;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 40px;
+
+    background: rgba(255,255,255,0.78);
+
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(255,255,255,0.35);
+
+    box-shadow: 0 8px 20px rgba(47,62,79,0.04);
 }
 
 .navbar h1 a {
-  text-decoration: none;
-  color: #111;
-  font-size: 1.2rem;
-  font-weight: 700;
+
+    text-decoration: none;
+
+    color: var(--accent-primary);
+
+    font-size: 1.25rem;
+    font-weight: 800;
+
+    letter-spacing: 0.4px;
 }
 
-/* ---------- Layout ---------- */
+/* ================= LAYOUT ================= */
+
 .auth-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 140px);
-  padding: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: calc(100vh - 140px);
+
+    padding: 25px;
 }
 
-/* ---------- Card ---------- */
+/* ================= CARD ================= */
+
 .auth-card {
-  background: white;
-  padding: 42px 36px;
-  border-radius: 18px;
-  width: 100%;
-  max-width: 420px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  animation: fadeIn 0.4s ease;
+
+    background: var(--bg-card);
+
+    backdrop-filter: blur(16px);
+
+    padding: 46px 38px;
+
+    border-radius: 30px;
+
+    width: 100%;
+    max-width: 430px;
+
+    border: 1px solid rgba(255,255,255,0.35);
+
+    box-shadow:
+        0 25px 50px rgba(47,62,79,0.08),
+        0 8px 20px rgba(47,62,79,0.05);
+
+    text-align: center;
+
+    animation: fadeIn 0.4s ease;
 }
+
+/* TITLE */
 
 .auth-card h2 {
-  font-size: 1.8rem;
-  margin-bottom: 8px;
+
+    font-size: 2rem;
+
+    margin-bottom: 10px;
+
+    color: var(--text-dark);
+
+    font-weight: 800;
 }
+
+/* DESCRIPTION */
 
 .auth-card p {
-  color: #6b7280;
-  margin-bottom: 26px;
+
+    color: var(--text-muted);
+
+    margin-bottom: 30px;
+
+    font-size: 0.96rem;
 }
 
-/* ---------- Button ---------- */
+/* ================= BUTTON ================= */
+
 .btn-primary {
-  display: inline-block;
-  text-decoration: none;
-  padding: 12px 26px;
-  border-radius: 10px;
-  background: #2563eb;
-  color: white;
-  font-weight: 600;
-  transition: all 0.2s ease;
+
+    display: inline-block;
+
+    text-decoration: none;
+
+    padding: 14px 28px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent-primary),
+            var(--accent-warm)
+        );
+
+    color: white;
+
+    font-weight: 700;
+
+    transition: 0.25s;
+
+    box-shadow:
+        0 12px 24px rgba(78,143,149,0.22);
 }
 
 .btn-primary:hover {
-  background: #1d4ed8;
-  transform: translateY(-1px);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 16px 28px rgba(78,143,149,0.28);
 }
 
-/* ---------- Footer ---------- */
+/* ================= FOOTER ================= */
+
 footer {
-  text-align: center;
-  padding: 18px;
-  font-size: 0.85rem;
-  color: #6b7280;
+
+    text-align: center;
+
+    padding: 18px;
+
+    font-size: 0.85rem;
+
+    color: var(--text-muted);
 }
 
-/* ---------- Animation ---------- */
+/* ================= ANIMATION ================= */
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* ---------- Mobile ---------- */
+/* ================= MOBILE ================= */
+
 @media (max-width: 500px) {
-  .navbar {
-    padding: 14px 20px;
-  }
 
-  .auth-card {
-    padding: 32px 22px;
-  }
+    .navbar {
+        padding: 14px 20px;
+    }
 
-  .auth-card h2 {
-    font-size: 1.5rem;
-  }
+    .auth-card {
+        padding: 34px 24px;
+        border-radius: 24px;
+    }
+
+    .auth-card h2 {
+        font-size: 1.7rem;
+    }
 }

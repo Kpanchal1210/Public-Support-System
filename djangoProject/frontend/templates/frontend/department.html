@@ -26,9 +26,6 @@
 
         <a href="{% url 'manage_workers' %}">Manage Workers</a>
 
-        <a href="{% url 'notification' %}" class="notif-btn">
-        🔔 Notifications
-
         {% if unread_count > 0 %}
         <span class="badge">{{ unread_count }}</span>
         {% endif %}

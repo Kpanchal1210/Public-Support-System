@@ -59,13 +59,7 @@ transition:0.3s;
 color:var(--accent-primary);
 }
 
-.logout-btn{
-border:1px solid #ef4444;
-color:#ef4444;
-}
-
 .logout-btn:hover{
-background:#ef4444;
 color:white;
 }
 

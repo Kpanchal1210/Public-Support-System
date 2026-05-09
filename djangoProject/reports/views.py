@@ -30,7 +30,7 @@ def report_issue(request):
 
     return render(request, "frontend/reports.html", {"form": form})
 
-
+@login_required(login_url='login')
 def notification(request):
     notifs = Notification.objects.filter(user=request.user).order_by('-created_at')
 
