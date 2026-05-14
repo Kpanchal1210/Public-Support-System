@@ -20,23 +20,47 @@ from django.db.models import Count
 
 def index(request):
 
-    unread_count = 0  # default
+    unread_count = 0
+
+    # ================= STATS =================
+
+    total_issues = Issue.objects.count()
+
+    solved_issues = Issue.objects.filter(
+        status='resolved'
+    ).count()
+
+    total_workers = UserProfile.objects.filter(
+        user_type='worker'
+    ).count()
+
+    total_departments = UserProfile.objects.filter(
+    user_type='department'
+    ).count()
+
+    # ================= AUTH =================
 
     if request.user.is_authenticated:
 
         role = request.user.userprofile.user_type
 
-        # 🔁 Redirect other roles
+        # DEPARTMENT
+
         if role == 'department':
             return redirect('department')
+
+        # WORKER
 
         elif role == 'worker':
             return redirect('worker_portal')
 
+        # HEAD AUTHORITY
+
         elif role == 'head':
             return redirect('headAuthority')
 
-        # 👤 Citizen stays here
+        # CITIZEN
+
         elif role == 'citizen':
 
             unread_count = Notification.objects.filter(
@@ -45,12 +69,21 @@ def index(request):
             ).count()
 
             return render(request, 'frontend/index.html', {
-                'unread_count': unread_count
+                'unread_count': unread_count,
+                'total_issues': total_issues,
+                'solved_issues': solved_issues,
+                'total_workers': total_workers,
+                'departments_count': total_departments,
             })
 
-    # 👤 Not logged in
+    # ================= GUEST USER =================
+
     return render(request, 'frontend/index.html', {
-        'unread_count': unread_count
+        'unread_count': unread_count,
+        'total_issues': total_issues,
+        'solved_issues': solved_issues,
+        'total_workers': total_workers,
+        'departments_count': total_departments,
     })
 
 

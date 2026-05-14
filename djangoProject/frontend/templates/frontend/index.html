@@ -2,136 +2,413 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Public Support System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+<head>
 
-    <!-- Google Font -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+  <meta charset="UTF-8" />
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <title>Public Support System</title>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <body>
-    <!-- NAVBAR -->
-    <nav>
-  <h1>PUBLIC SUPPORT</h1>
+  <!-- CSS -->
 
-  <div class="nav-links">
-    
-    {% if user.is_authenticated %}
-    
-      <span>Welcome, {{ user.username }}</span>
+  <link rel="stylesheet" href="{% static 'css/index.css' %}" />
 
-      <!-- 🔔 NOTIFICATION BUTTON -->
-      <a href="{% url 'notification' %}" class="notif-btn">
-        🔔
-        {% if unread_count > 0 %}
-        <span class="badge">{{ unread_count }}</span>
-        {% endif %}
-      </a>
+  <!-- GOOGLE FONT -->
 
-      <a href="{% url 'logout' %}">Logout</a>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
 
-    {% else %}
+  <!-- LEAFLET -->
 
-      <a href="{% url 'login' %}">Login</a>
-      <a href="{% url 'register' %}">Register</a>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
 
-    {% endif %}
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  </div>
-</nav>
+</head>
 
-<div class="hero">
+<body>
 
-  <!-- LEFT -->
-  <div class="hero-content">
-    <h2>
-      See a problem around you? <br />
-      <span>Let the city know.</span>
-    </h2>
+  <!-- ================= NAVBAR ================= -->
 
-    <p>
-      Public Support helps citizens report everyday issues like broken roads,
-      garbage collection delays, or faulty streetlights — quickly and clearly.
-    </p>
+  <nav>
 
-    <div class="hero-actions">
-      <button class="btn-primary"
-        onclick="location.href='{% url 'report_issue' %}'">
-        Report an Issue
-      </button>
+    <h1>PUBLIC SUPPORT</h1>
 
-      <button class="btn-secondary"
-        onclick="location.href='{% url 'view_reports' %}'">
-        View Reports
-      </button>
-    </div>
-  </div>
+    <div class="nav-links">
 
-  <!-- RIGHT -->
-  <div class="hero-map">
-    <div id="map"></div>
-  </div>
+      {% if user.is_authenticated %}
 
-</div>
+        <span>Welcome, {{ user.username }}</span>
 
-<!-- keep script OUTSIDE -->
-<script src="{% static 'js/index.js' %}"></script>
+        <!-- NOTIFICATION -->
 
-    <!-- REPORT CARDS -->
-    <section>
-      <div class="section-title">What people are reporting</div>
+        <a href="{% url 'notification' %}" class="notif-btn">
 
-      <div class="cards">
-        <div class="card">
-          <span class="tag">ROAD</span>
-          <h4>Potholes near bus stand</h4>
-          <p>
-            Multiple potholes slowing traffic and causing frequent jams during
-            peak hours.
-          </p>
-        </div>
+          🔔
 
-        <div class="card">
-          <span class="tag">GARBAGE</span>
-          <h4>Waste not collected</h4>
-          <p>
-            Garbage bins have not been cleared for three days, causing overflow.
-          </p>
-        </div>
+          {% if unread_count > 0 %}
+            <span class="badge">{{ unread_count }}</span>
+          {% endif %}
 
-        <div class="card">
-          <span class="tag">STREETLIGHT</span>
-          <h4>Streetlight not working</h4>
-          <p>Dark intersection at night making it unsafe for pedestrians.</p>
-        </div>
-      </div>
-    </section>  
+        </a>
 
-    <!-- CTA -->
-    <div class="cta">
-      <div>
-        <h3>Noticed something that needs fixing?</h3>
-        <p>It takes less than a minute to report.</p>
-      </div>
+        <a href="{% url 'logout' %}">Logout</a>
 
-      <button onclick="location.href='{% url 'report_issue' %}'">Report now</button>
+      {% else %}
+
+        <a href="{% url 'login' %}">Login</a>
+
+        <a href="{% url 'register' %}">Register</a>
+
+      {% endif %}
+
     </div>
 
-    <!-- FOOTER -->
-    <footer>
+  </nav>
+
+  <!-- ================= HERO ================= -->
+
+  <section class="hero">
+
+    <!-- FLOATING SHAPES -->
+
+    <div class="floating-shape shape1"></div>
+    <div class="floating-shape shape2"></div>
+
+    <!-- LEFT -->
+
+    <div class="hero-content parallax-layer">
+
+      <h2>
+        See a problem around you? <br />
+        <span>Let the city know.</span>
+      </h2>
+
+      <p>
+        Public Support helps citizens report everyday issues like broken roads,
+        garbage collection delays, or faulty streetlights — quickly and clearly.
+      </p>
+
+      <div class="hero-actions">
+
+        <button
+          class="btn-primary"
+          onclick="location.href='{% url 'report_issue' %}'">
+
+          Report an Issue
+
+        </button>
+
+        <button
+          class="btn-secondary"
+          onclick="location.href='{% url 'view_reports' %}'">
+
+          View Reports
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="hero-map parallax-layer">
+
+      <div id="map"></div>
+
+    </div>
+
+  </section>
+
+  <!-- ================= STATS SECTION ================= -->
+
+  <section class="stats-section">
+
+    <div class="stats-strip">
+
+      <div class="stat-box">
+        <h2>{{ total_issues }}</h2>
+        <p>Reports Submitted</p>
+      </div>
+
+      <div class="stat-box">
+        <h2>{{ solved_issues }}</h2>
+        <p>Issues Resolved</p>
+      </div>
+
+      <div class="stat-box">
+        <h2>{{ total_workers }}</h2>
+        <p>Active Workers</p>
+      </div>
+
+      <div class="stat-box">
+        <h2>{{ departments_count }}</h2>
+        <p>Departments</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ================= REPORTS SECTION ================= -->
+
+  <section class="reports-section">
+
+    <div class="section-title">
+      What people are reporting
+    </div>
+
+    <div class="reports-grid">
+
+      <!-- CARD 1 -->
+
+      <div class="report-card">
+
+        <span class="tag">ROAD</span>
+
+        <h4>Potholes near bus stand</h4>
+
+        <p>
+          Multiple potholes slowing traffic and causing
+          frequent jams during peak hours.
+        </p>
+
+      </div>
+
+      <!-- CARD 2 -->
+
+      <div class="report-card">
+
+        <span class="tag">GARBAGE</span>
+
+        <h4>Waste not collected</h4>
+
+        <p>
+          Garbage bins have not been cleared for three days,
+          causing overflow.
+        </p>
+
+      </div>
+
+      <!-- CARD 3 -->
+
+      <div class="report-card">
+
+        <span class="tag">STREETLIGHT</span>
+
+        <h4>Streetlight not working</h4>
+
+        <p>
+          Dark intersection at night making it unsafe
+          for pedestrians.
+        </p>
+
+      </div>
+
+      <!-- CARD 4 -->
+
+      <div class="report-card">
+
+        <span class="tag">WATER</span>
+
+        <h4>Water supply issues</h4>
+
+        <p>
+          Intermittent water supply causing inconvenience
+          for residents.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= HOW IT WORKS ================= -->
+
+  <section class="how-section">
+
+    <div class="section-heading">
+
+      <h2>How It Works</h2>
+
+      <p>
+        From reporting issues to resolution — everything stays transparent.
+      </p>
+
+    </div>
+
+    <div class="how-grid">
+
+      <!-- STEP 1 -->
+
+      <div class="how-card">
+
+        <div class="how-icon">📍</div>
+
+        <h3>Report Issue</h3>
+
+        <p>
+          Citizens submit issues with exact map locations and details.
+        </p>
+
+      </div>
+
+      <!-- STEP 2 -->
+
+      <div class="how-card">
+
+        <div class="how-icon">🏢</div>
+
+        <h3>Department Review</h3>
+
+        <p>
+          Departments receive complaints and analyze the issue.
+        </p>
+
+      </div>
+
+      <!-- STEP 3 -->
+
+      <div class="how-card">
+
+        <div class="how-icon">🛠</div>
+
+        <h3>Worker Assignment</h3>
+
+        <p>
+          Workers are assigned and update progress in real time.
+        </p>
+
+      </div>
+
+      <!-- STEP 4 -->
+
+      <div class="how-card">
+
+        <div class="how-icon">✅</div>
+
+        <h3>Issue Resolved</h3>
+
+        <p>
+          Citizens receive notifications after successful resolution.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ================= CTA ================= -->
+
+  <section class="cta">
+
+    <div>
+
+      <h3>Noticed something that needs fixing?</h3>
+
+      <p>
+        It takes less than a minute to report.
+      </p>
+
+    </div>
+
+    <button
+      onclick="location.href='{% url 'report_issue' %}'">
+
+      Report Now
+
+    </button>
+
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="main-footer">
+
+    <div class="footer-grid">
+
+      <!-- BRAND -->
+
+      <div class="footer-brand">
+
+        <h2>PUBLIC SUPPORT</h2>
+
+        <p>
+          A civic platform helping citizens report and track public
+          issues efficiently and transparently.
+        </p>
+
+      </div>
+
+      <!-- LINKS -->
+
+      <div class="footer-links">
+
+        <h4>Platform</h4>
+
+        <a href="{% url 'report_issue' %}">Report Issue</a>
+
+        <a href="{% url 'view_reports' %}">View Reports</a>
+
+        <a href="#">Departments</a>
+
+      </div>
+
+      <!-- RESOURCES -->
+
+      <div class="footer-links">
+
+        <h4>Resources</h4>
+
+        <a href="#">Help Center</a>
+
+        <a href="#">Privacy Policy</a>
+
+        <a href="#">Terms</a>
+
+      </div>
+
+      <!-- CONNECT -->
+
+      <div class="footer-links">
+
+        <h4>Connect</h4>
+
+        <a href="#">GitHub</a>
+
+        <a href="#">Contact</a>
+
+        <a href="#">Support</a>
+
+      </div>
+
+    </div>
+
+    <!-- BOTTOM -->
+
+    <div class="footer-bottom">
+
       © 2026 Public Support Portal • Built for citizens, not complaints
-    </footer>
-  </body>
-</html> 
+
+    </div>
+
+  </footer>
+
+  <!-- JS -->
+
+  <script src="{% static 'js/index.js' %}"></script>
+
+</body>
+
+</html>
