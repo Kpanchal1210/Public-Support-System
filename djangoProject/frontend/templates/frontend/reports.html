@@ -1,100 +1,743 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Report an Issue – Public Support System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Report an Issue – Public Support System
+    </title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet"
+    >
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/reports.css' %}">
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/reports.css' %}"
+    >
+
 </head>
+
+<!-- SUCCESS TOAST -->
+
+<div id="successToast" class="success-toast">
+
+    <div class="toast-icon">
+        ✔
+    </div>
+
+    <div class="toast-content">
+
+        <h4>
+            Complaint Submitted
+        </h4>
+
+        <p>
+            Your issue has been reported successfully.
+        </p>
+
+    </div>
+
+</div>
 
 <body>
 
+
+<!-- ================= NAVBAR ================= -->
+
 <nav>
-    <h2>PUBLIC<span>SUPPORT</span></h2>
+
+    <h2>
+        PUBLIC<span>SUPPORT</span>
+    </h2>
+
     <div class="nav-links">
-        <a href="{% url 'index' %}">Dashboard</a>
-        <a href="{% url 'logout' %}" class="logout">Logout</a>
+
+        <a href="{% url 'index' %}">
+            Dashboard
+        </a>
+
+        <a
+            href="{% url 'logout' %}"
+            class="logout"
+        >
+            Logout
+        </a>
+
     </div>
+
 </nav>
 
+
+
+<!-- ================= HEADER ================= -->
+
 <div class="header">
-    <h1>Report an <span>Issue</span></h1>
-    <p>Help us improve your community. Choose a category below to start your report.</p>
-</div>
 
-<!-- Departments -->
+    <h1>
+        Report an <span>Issue</span>
+    </h1>
 
-<div class="departments">
-
-    <div class="dept-card" onclick="setCategory('garbage')">
-        <h3>🗑️ Garbage</h3>
-        <p>Collection missed or overflowing bins</p>
-    </div>
-
-    <div class="dept-card" onclick="setCategory('road')">
-        <h3>🛣️ Roads</h3>
-        <p>Report potholes or damaged pavement</p>
-    </div>
-
-    <div class="dept-card" onclick="setCategory('electricity')">
-        <h3>💡 Electricity</h3>
-        <p>Dark areas or flickering lamps</p>
-    </div>
-
-    <div class="dept-card" onclick="setCategory('water')">
-        <h3>💧 Water Leak</h3>
-        <p>Pipeline bursts or sewage issues</p>
-    </div>
+    <p>
+        Help us improve your community.
+        Choose a department below to submit your complaint.
+    </p>
 
 </div>
 
-<!-- Complaint Form -->
 
-<div class="form-section" id="formSection">
+<!-- ================= DEPARTMENTS SHOWCASE ================= -->
+
+<section class="departments-showcase">
+
+
+    <!-- ROADS -->
+
+    <div class="department-block">
+
+        <!-- LEFT -->
+
+        <div class="department-content">
+
+            <span class="dept-badge">
+                Roads Department
+            </span>
+
+            <h2>
+                Safer Roads For Everyone
+            </h2>
+
+            <p>
+
+                Report potholes, damaged pavements,
+                broken dividers and unsafe road
+                conditions directly to the department.
+
+            </p>
+
+
+            <div class="department-stats">
+
+                <div class="stat-item">
+
+                    <h3>184+</h3>
+
+                    <span>Issues Resolved</span>
+
+                </div>
+
+
+                <div class="stat-item">
+
+                    <h3>12 hrs</h3>
+
+                    <span>Avg Response</span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="report-btn"
+                onclick="setCategory('road')"
+            >
+
+                Report Road Issue
+
+            </button>
+
+        </div>
+
+
+
+        <!-- RIGHT IMAGE -->
+
+        <div class="department-image">
+
+            <img
+                src="{% static 'images/Empty street-bro.svg' %}"
+                alt="Road Department"
+            >
+
+        </div>
+
+    </div>
+
+
+
+    <!-- WATER -->
+
+    <div class="department-block reverse">
+
+        <!-- LEFT IMAGE -->
+
+        <div class="department-image">
+
+            <img
+                src="{% static 'images/Hazardous waste-bro.svg' %}"
+                alt="Water Department"
+            >
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <div class="department-content">
+
+            <span class="dept-badge">
+                Water Department
+            </span>
+
+            <h2>
+                Better Water Infrastructure
+            </h2>
+
+            <p>
+
+                Report water leakages, drainage
+                problems and sewage related
+                complaints in your area.
+
+            </p>
+
+
+            <div class="department-stats">
+
+                <div class="stat-item">
+
+                    <h3>126+</h3>
+
+                    <span>Issues Resolved</span>
+
+                </div>
+
+
+                <div class="stat-item">
+
+                    <h3>9 hrs</h3>
+
+                    <span>Avg Response</span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="report-btn"
+                onclick="setCategory('water')"
+            >
+
+                Report Water Issue
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ELECTRICITY -->
+
+    <div class="department-block">
+
+        <div class="department-content">
+
+            <span class="dept-badge">
+                Electricity Department
+            </span>
+
+            <h2>
+                Smarter Street Lighting
+            </h2>
+
+            <p>
+
+                Report streetlight outages,
+                exposed wiring and electrical
+                safety issues quickly.
+
+            </p>
+
+
+            <div class="department-stats">
+
+                <div class="stat-item">
+
+                    <h3>203+</h3>
+
+                    <span>Issues Resolved</span>
+
+                </div>
+
+
+                <div class="stat-item">
+
+                    <h3>6 hrs</h3>
+
+                    <span>Avg Response</span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="report-btn"
+                onclick="setCategory('electricity')"
+            >
+
+                Report Electricity Issue
+
+            </button>
+
+        </div>
+
+
+        <div class="department-image">
+
+            <img
+                src="{% static 'images/Electrician-bro.svg' %}"
+                alt="Electricity Department"
+            >
+
+        </div>
+
+    </div>
+
+
+
+    <!-- GARBAGE -->
+
+    <div class="department-block reverse">
+
+        <div class="department-image">
+
+            <img
+                src="{% static 'images/Garbage management-bro.svg' %}"
+                alt="Garbage Department"
+            >
+
+        </div>
+
+
+        <div class="department-content">
+
+            <span class="dept-badge">
+                Garbage Department
+            </span>
+
+            <h2>
+                Cleaner Public Spaces
+            </h2>
+
+            <p>
+
+                Report overflowing bins,
+                illegal dumping and missed
+                garbage collection issues.
+
+            </p>
+
+
+            <div class="department-stats">
+
+                <div class="stat-item">
+
+                    <h3>148+</h3>
+
+                    <span>Issues Resolved</span>
+
+                </div>
+
+
+                <div class="stat-item">
+
+                    <h3>10 hrs</h3>
+
+                    <span>Avg Response</span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="report-btn"
+                onclick="setCategory('garbage')"
+            >
+
+                Report Garbage Issue
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <div
+    class="more-divider"
+    onclick="toggleDepartments()"
+>
+
+    <span id="moreText">
+
+        More Departments
+
+    </span>
+
+</div>
+
+<!-- ================= EXTRA DEPARTMENTS ================= -->
+
+<div
+    class="departments hidden-departments"
+    id="extraDepartments"
+>
+
+
+    <!-- TRAFFIC -->
+
+    <div class="dept-panel">
+
+        <div class="panel-left">
+
+            <h3>
+                🚦 Traffic
+            </h3>
+
+            <p>
+                Broken traffic signals,
+                congestion and road safety issues
+            </p>
+
+            <div class="panel-tags">
+
+                <span>Signals</span>
+
+                <span>Congestion</span>
+
+                <span>Parking</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel-right">
+
+            <span>
+                96 Resolved
+            </span>
+
+            <small>
+                Avg. 7 hrs
+            </small>
+
+            <button
+                class="panel-btn"
+                onclick="setCategory('traffic')"
+            >
+
+                Report Now
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PARKS -->
+
+    <div class="dept-panel">
+
+        <div class="panel-left">
+
+            <h3>
+                🌳 Parks
+            </h3>
+
+            <p>
+                Damaged public parks,
+                greenery and maintenance issues
+            </p>
+
+            <div class="panel-tags">
+
+                <span>Cleanliness</span>
+
+                <span>Benches</span>
+
+                <span>Lighting</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel-right">
+
+            <span>
+                68 Resolved
+            </span>
+
+            <small>
+                Avg. 11 hrs
+            </small>
+
+            <button
+                class="panel-btn"
+                onclick="setCategory('parks')"
+            >
+
+                Report Now
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- TRANSPORT -->
+
+    <div class="dept-panel">
+
+        <div class="panel-left">
+
+            <h3>
+                🚌 Transport
+            </h3>
+
+            <p>
+                Public transport delays
+                and transport-related complaints
+            </p>
+
+            <div class="panel-tags">
+
+                <span>Delays</span>
+
+                <span>Bus Stops</span>
+
+                <span>Routes</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel-right">
+
+            <span>
+                121 Resolved
+            </span>
+
+            <small>
+                Avg. 8 hrs
+            </small>
+
+            <button
+                class="panel-btn"
+                onclick="setCategory('transport')"
+            >
+
+                Report Now
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PUBLIC HEALTH -->
+
+    <div class="dept-panel">
+
+        <div class="panel-left">
+
+            <h3>
+                🏥 Public Health
+            </h3>
+
+            <p>
+                Hygiene, sanitation and
+                unsafe public area complaints
+            </p>
+
+            <div class="panel-tags">
+
+                <span>Sanitation</span>
+
+                <span>Safety</span>
+
+                <span>Cleanliness</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel-right">
+
+            <span>
+                87 Resolved
+            </span>
+
+            <small>
+                Avg. 13 hrs
+            </small>
+
+            <button
+                class="panel-btn"
+                onclick="setCategory('health')"
+            >
+
+                Report Now
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FORM SECTION ================= -->
+
+<div
+    class="form-section"
+    id="formSection"
+>
+
     <div class="form-container">
-        <h2 id="deptTitle">Complaint Form</h2>
 
-        <form method="POST" action="/reports/report_issue/" enctype="multipart/form-data">
+        <h2 id="deptTitle">
+
+            Complaint Form
+
+        </h2>
+
+
+        <form
+            method="POST"
+            action="/reports/report_issue/"
+            enctype="multipart/form-data"
+        >
+
             {% csrf_token %}
 
-            <label>Issue Category</label>
+
+            <!-- ISSUE TYPE -->
+
+            <label>
+                Issue Category
+            </label>
+
             {{ form.issue_type }}
 
-            <label>Location Details</label>
+
+
+            <!-- LOCATION -->
+
+            <label>
+                Location Details
+            </label>
+
             {{ form.location }}
 
-            <label>Description of Issue</label>
+
+
+            <!-- DESCRIPTION -->
+
+            <label>
+                Description of Issue
+            </label>
+
             {{ form.description }}
 
-            <label>Upload Image</label>
+
+
+            <!-- IMAGE -->
+
+            <label>
+                Upload Image
+            </label>
+
             {{ form.image }}
 
-            <button type="submit">Submit Complaint</button>
+
+
+            <!-- BUTTON -->
+
+            <button type="submit">
+
+                Submit Complaint
+
+            </button>
+
         </form>
+
     </div>
+
 </div>
 
+
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
-    &copy; 2026 Public Support Portal • Designed for Citizens
+
+    &copy; 2026 Public Support Portal
+    • Designed for Citizens
+
+    <br><br>
+
+    <small>
+
+        Illustrations by
+
+        <a
+            href="https://storyset.com/people"
+            target="_blank"
+        >
+            Storyset
+        </a>
+
+    </small>
+
 </footer>
+
+
+
+<!-- ================= JS ================= -->
 
 <script src="{% static 'js/reports.js' %}"></script>
 
-{% if messages %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            {% for message in messages %}
-                alert("{{ message }}");
-            {% endfor %}
-        });
-    </script>
-{% endif %}
-
 </body>
+
 </html>

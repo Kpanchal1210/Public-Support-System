@@ -87,73 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (hero && heroMap && heroContent) {
 
-        hero.addEventListener("mousemove", (e) => {
 
-            const rect =
-                hero.getBoundingClientRect();
-
-            const x =
-                e.clientX - rect.left;
-
-            const y =
-                e.clientY - rect.top;
-
-            const moveX =
-                (rect.width / 2 - x) / 35;
-
-            const moveY =
-                (rect.height / 2 - y) / 35;
-
-            // HERO MAP
-
-            heroMap.style.transform = `
-                translate(${moveX}px, ${moveY}px)
-                rotateY(${-moveX / 2}deg)
-                rotateX(${moveY / 2}deg)
-            `;
-
-            // HERO TEXT
-
-            heroContent.style.transform = `
-                translate(${moveX / 2}px, ${moveY / 2}px)
-            `;
-
-            // FLOATING SHAPES
-
-            shapes.forEach((shape, index) => {
-
-                const speed =
-                    (index + 1) * 12;
-
-                shape.style.transform = `
-                    translate(
-                        ${moveX * speed / 20}px,
-                        ${moveY * speed / 20}px
-                    )
-                `;
-            });
-
-        });
-
-        // RESET EFFECT
-
-        hero.addEventListener("mouseleave", () => {
-
-            heroMap.style.transform =
-                `translate(0,0)
-                 rotateX(0)
-                 rotateY(0)`;
-
-            heroContent.style.transform =
-                `translate(0,0)`;
-
-            shapes.forEach(shape => {
-
-                shape.style.transform =
-                    `translate(0,0)`;
-            });
-
-        });
 
     }
 

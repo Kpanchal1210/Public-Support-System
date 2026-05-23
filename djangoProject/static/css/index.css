@@ -136,46 +136,9 @@ nav h1 {
 
 /* FLOATING SHAPES */
 
-.floating-shape {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(90px);
-    pointer-events: none;
-    z-index: 0;
-    will-change: transform;
-}
-
-.shape1 {
-    width: 320px;
-    height: 320px;
-
-    background: rgba(127,209,201,.22);
-
-    top: -80px;
-    left: -100px;
-}
-
-.shape2 {
-    width: 260px;
-    height: 260px;
-
-    background: rgba(78,143,149,.18);
-
-    bottom: -100px;
-    right: -80px;
-}
 
 /* HERO CONTENT */
 
-.hero-content,
-.hero-map {
-    position: relative;
-    z-index: 2;
-
-    will-change: transform;
-
-    transition: transform .18s ease-out;
-}
 
 .hero-content {
     flex: 1;
@@ -216,9 +179,6 @@ nav h1 {
     overflow: hidden;
 
     flex-shrink: 0;
-
-    transform-style: preserve-3d;
-
     box-shadow: 0 20px 40px rgba(0,0,0,.18);
 }
 
@@ -254,7 +214,6 @@ nav h1 {
 .btn-primary:hover,
 .cta button:hover {
     background: #3F7A80;
-    transform: translateY(-3px);
 }
 
 .btn-secondary {
@@ -281,7 +240,6 @@ nav h1 {
 
 .btn-secondary:hover {
     background: rgba(255,255,255,.2);
-    transform: translateY(-3px);
 }
 
 /* ================= STATS ================= */
@@ -496,7 +454,6 @@ nav h1 {
 }
 
 .how-card:hover {
-    transform: translateY(-6px);
 }
 
 .how-icon {
@@ -528,9 +485,7 @@ nav h1 {
 }
 
 .how-card:hover .how-icon {
-    transform:
-        translateY(-6px)
-        scale(1.05);
+    transform: scale(1.05);
 }
 
 .how-card h3 {
@@ -623,7 +578,6 @@ nav h1 {
 
 .footer-links a:hover {
     color: #fff;
-    transform: translateX(4px);
 }
 
 .footer-bottom {
