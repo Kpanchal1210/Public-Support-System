@@ -1,18 +1,27 @@
 :root {
-    --bg-main: #f8fafc;
+
+    --bg-main: #f5f7fa;
     --bg-surface: #ffffff;
-    --bg-card: #f1f5f9;
+    --bg-card: rgba(255,255,255,0.82);
 
-    --accent-primary: #6366f1;
-    --accent-secondary: #06b6d4;
-    --accent-warm: #6366f1;
+    --accent-primary: #4E8F95;
+    --accent-secondary: #7FD1C9;
+    --accent-warm: #5FA3A6;
 
-    --text-dark: #0f172a;
-    --text-muted: #64748b;
+    --gold-accent: #b45309;
+
+    --text-dark: #2F3E4F;
+    --text-muted: #6C7A8C;
+
+    --border-color: #dde5ea;
 }
 
 *{
 box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
 }
 
 body{
@@ -20,8 +29,34 @@ font-family:'Plus Jakarta Sans', sans-serif;
 margin:0;
 background:linear-gradient(180deg,#f9fafb,#eef2ff);
 color:var(--text-dark);
+overflow-x:hidden;
+
+    position:relative;
 }
 
+/* BACKGROUND GLOW */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:420px;
+    height:420px;
+
+    background:
+        rgba(127,209,201,0.18);
+
+    border-radius:50%;
+
+    top:-120px;
+    right:-120px;
+
+    filter:blur(90px);
+
+    z-index:-1;
+}
 
 /* NAVBAR */
 
@@ -47,12 +82,18 @@ gap:20px;
 }
 
 .nav-links a{
-text-decoration:none;
-color:var(--text-dark);
-font-weight:500;
-padding:6px 10px;
-border-radius:6px;
-transition:0.3s;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    padding:10px 16px;
+
+    border-radius:12px;
+
+    color:var(--text-dark);
+
+    transition:0.25s;
 }
 
 .nav-links a:hover{
@@ -80,6 +121,112 @@ margin-bottom:8px;
 color:var(--text-muted);
 }
 
+.header span{
+    color:var(--accent-primary);
+}
+
+/* ================= FILTER BAR ================= */
+
+.filter-bar{
+
+    width:100%;
+
+    max-width:1200px;
+
+    margin:30px auto 10px;
+
+    display:flex;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+    align-items:center;
+}
+
+
+/* INPUT + SELECT */
+
+.filter-bar input,
+.filter-bar select{
+
+    flex:1;
+
+    min-width:220px;
+
+    padding:15px 18px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:16px;
+
+    background:white;
+
+    font-size:0.95rem;
+
+    color:#2F3E4F;
+
+    box-shadow:
+        0 10px 22px rgba(47,62,79,.06);
+}
+
+
+/* BUTTON */
+
+.filter-bar button{
+
+    border:none;
+
+    padding:15px 28px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4E8F95,
+            #5FA3A6
+        );
+
+    color:white;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.25s;
+
+    box-shadow:
+        0 14px 28px rgba(78,143,149,.18);
+}
+
+
+/* HOVER */
+
+.filter-bar button:hover{
+
+    transform:translateY(-2px);
+}
+
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+    .filter-bar{
+
+        flex-direction:column;
+    }
+
+    .filter-bar input,
+    .filter-bar select,
+    .filter-bar button{
+
+        width:100%;
+    }
+}
 
 /* REPORT GRID */
 
@@ -89,10 +236,30 @@ padding:40px 60px 80px 60px;
 
 .report-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+grid-template-columns:repeat(3,1fr);
 gap:28px;
 }
 
+/* TABLET */
+
+@media (max-width:992px){
+
+    .report-grid{
+
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+    .report-grid{
+
+        grid-template-columns:1fr;
+    }
+}
 
 /* REPORT CARD */
 
@@ -177,6 +344,90 @@ padding:80px;
 color:var(--text-muted);
 }
 
+/* ================= PAGINATION ================= */
+
+.pagination{
+
+    margin:60px auto 40px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:14px;
+
+    flex-wrap:wrap;
+}
+
+
+/* BUTTONS */
+
+.pagination a,
+.active-page{
+
+    min-width:48px;
+
+    height:48px;
+
+    padding:0 18px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    transition:0.25s;
+}
+
+
+/* NORMAL BUTTON */
+
+.pagination a{
+
+    background:white;
+
+    color:#2F3E4F;
+
+    box-shadow:
+        0 10px 22px rgba(47,62,79,.06);
+}
+
+
+/* HOVER */
+
+.pagination a:hover{
+
+    transform:translateY(-2px);
+
+    background:#f4f8f9;
+}
+
+
+/* ACTIVE PAGE */
+
+.active-page{
+
+    background:
+        linear-gradient(
+            135deg,
+            #4E8F95,
+            #5FA3A6
+        );
+
+    color:white;
+
+    box-shadow:
+        0 14px 28px rgba(78,143,149,.18);
+}
 
 /* FOOTER */
 

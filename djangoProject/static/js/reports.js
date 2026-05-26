@@ -73,67 +73,37 @@ function toggleDepartments(){
     }
 }
 
-
-
-/* SEARCH FILTER */
-
-const searchInput =
-    document.getElementById("deptSearch");
-
-
-searchInput.addEventListener("keyup", function(){
-
-    const searchValue =
-        this.value.toLowerCase();
-
-    const panels =
-        document.querySelectorAll(".dept-panel");
-
-
-    panels.forEach(panel => {
-
-        const text =
-            panel.innerText.toLowerCase();
-
-
-        if(text.includes(searchValue)){
-
-            panel.style.display = "flex";
-
-        }else{
-
-            panel.style.display = "none";
-        }
-
-    });
-
-});
-
-
-
 /* SUCCESS TOAST */
 
-const form =
-    document.querySelector("form");
+document.addEventListener("DOMContentLoaded", function () {
 
-
-form.addEventListener("submit", function(e){
-
-    e.preventDefault();
+    const form =
+        document.querySelector("form");
 
     const toast =
         document.getElementById("successToast");
 
 
-    toast.classList.add("show");
+    form.addEventListener("submit", function(e){
+
+        if(!form.checkValidity()){
+
+            return;
+        }
+
+        e.preventDefault();
+
+        toast.classList.add("show");
 
 
-    setTimeout(() => {
+        setTimeout(() => {
 
-        toast.classList.remove("show");
+            toast.classList.remove("show");
 
-        form.submit();
+            form.submit();
 
-    }, 2200);
+        }, 2200);
+
+    });
 
 });

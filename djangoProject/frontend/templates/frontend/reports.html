@@ -60,9 +60,9 @@
 
 <nav>
 
-    <h2>
-        PUBLIC<span>SUPPORT</span>
-    </h2>
+    <div class="logo">
+        <span>PUBLIC SUPPORT</span>
+    </div>
 
     <div class="nav-links">
 
@@ -104,20 +104,36 @@
 <section class="departments-showcase">
 
 
-    <!-- ROADS -->
+    <!-- ================= ROADS ================= -->
 
     <div class="department-block">
 
-        <!-- LEFT -->
+        <!-- IMAGE -->
+
+        <div class="department-image">
+
+            <img
+                src="{% static 'images/Empty street-bro.svg' %}"
+                alt="Road Department"
+            >
+
+        </div>
+
+
+        <!-- CONTENT -->
 
         <div class="department-content">
 
             <span class="dept-badge">
+
                 Roads Department
+
             </span>
 
             <h2>
+
                 Safer Roads For Everyone
+
             </h2>
 
             <p>
@@ -162,28 +178,15 @@
 
         </div>
 
-
-
-        <!-- RIGHT IMAGE -->
-
-        <div class="department-image">
-
-            <img
-                src="{% static 'images/Empty street-bro.svg' %}"
-                alt="Road Department"
-            >
-
-        </div>
-
     </div>
 
 
 
-    <!-- WATER -->
+    <!-- ================= WATER ================= -->
 
     <div class="department-block reverse">
 
-        <!-- LEFT IMAGE -->
+        <!-- IMAGE -->
 
         <div class="department-image">
 
@@ -195,16 +198,20 @@
         </div>
 
 
-        <!-- RIGHT -->
+        <!-- CONTENT -->
 
         <div class="department-content">
 
             <span class="dept-badge">
+
                 Water Department
+
             </span>
 
             <h2>
+
                 Better Water Infrastructure
+
             </h2>
 
             <p>
@@ -253,18 +260,36 @@
 
 
 
-    <!-- ELECTRICITY -->
+    <!-- ================= ELECTRICITY ================= -->
 
     <div class="department-block">
+
+        <!-- IMAGE -->
+
+        <div class="department-image">
+
+            <img
+                src="{% static 'images/Electrician-bro.svg' %}"
+                alt="Electricity Department"
+            >
+
+        </div>
+
+
+        <!-- CONTENT -->
 
         <div class="department-content">
 
             <span class="dept-badge">
+
                 Electricity Department
+
             </span>
 
             <h2>
+
                 Smarter Street Lighting
+
             </h2>
 
             <p>
@@ -309,23 +334,15 @@
 
         </div>
 
-
-        <div class="department-image">
-
-            <img
-                src="{% static 'images/Electrician-bro.svg' %}"
-                alt="Electricity Department"
-            >
-
-        </div>
-
     </div>
 
 
 
-    <!-- GARBAGE -->
+    <!-- ================= GARBAGE ================= -->
 
     <div class="department-block reverse">
+
+        <!-- IMAGE -->
 
         <div class="department-image">
 
@@ -337,14 +354,20 @@
         </div>
 
 
+        <!-- CONTENT -->
+
         <div class="department-content">
 
             <span class="dept-badge">
+
                 Garbage Department
+
             </span>
 
             <h2>
+
                 Cleaner Public Spaces
+
             </h2>
 
             <p>
@@ -393,7 +416,9 @@
 
 </section>
 
-    <div
+    <!-- ================= MORE DIVIDER ================= -->
+
+<div
     class="more-divider"
     onclick="toggleDepartments()"
 >
@@ -406,227 +431,179 @@
 
 </div>
 
-<!-- ================= EXTRA DEPARTMENTS ================= -->
+
+
+<!-- ================= HIDDEN MORE DEPARTMENTS ================= -->
 
 <div
-    class="departments hidden-departments"
+    class="hidden-departments"
     id="extraDepartments"
 >
 
+    <section class="more-departments">
 
-    <!-- TRAFFIC -->
 
-    <div class="dept-panel">
+        <!-- TRAFFIC -->
 
-        <div class="panel-left">
+        <div class="mini-department">
+
+            <img
+                src="{% static 'images/Pedestrian crossing-bro.svg' %}"
+                alt="Traffic"
+            >
 
             <h3>
-                🚦 Traffic
+                Traffic
             </h3>
 
             <p>
-                Broken traffic signals,
-                congestion and road safety issues
+
+                Broken signals, parking
+                and traffic congestion issues.
+
             </p>
 
-            <div class="panel-tags">
+            <div class="mini-stats">
 
-                <span>Signals</span>
+                <span>96 Resolved</span>
 
-                <span>Congestion</span>
-
-                <span>Parking</span>
+                <span>7 hrs Avg</span>
 
             </div>
 
-        </div>
-
-
-        <div class="panel-right">
-
-            <span>
-                96 Resolved
-            </span>
-
-            <small>
-                Avg. 7 hrs
-            </small>
-
             <button
-                class="panel-btn"
                 onclick="setCategory('traffic')"
             >
 
-                Report Now
+                Report Issue
 
             </button>
 
         </div>
 
-    </div>
 
 
+        <!-- PARKS -->
 
-    <!-- PARKS -->
+        <div class="mini-department">
 
-    <div class="dept-panel">
-
-        <div class="panel-left">
+            <img
+                src="{% static 'images/Through the Park-bro.svg' %}"
+                alt="Parks"
+            >
 
             <h3>
-                🌳 Parks
+                Parks
             </h3>
 
             <p>
-                Damaged public parks,
-                greenery and maintenance issues
+
+                Public park cleanliness,
+                lighting and maintenance.
+
             </p>
 
-            <div class="panel-tags">
+            <div class="mini-stats">
 
-                <span>Cleanliness</span>
+                <span>68 Resolved</span>
 
-                <span>Benches</span>
-
-                <span>Lighting</span>
+                <span>11 hrs Avg</span>
 
             </div>
 
-        </div>
-
-
-        <div class="panel-right">
-
-            <span>
-                68 Resolved
-            </span>
-
-            <small>
-                Avg. 11 hrs
-            </small>
-
             <button
-                class="panel-btn"
                 onclick="setCategory('parks')"
             >
 
-                Report Now
+                Report Issue
 
             </button>
 
         </div>
 
-    </div>
 
 
+        <!-- TRANSPORT -->
 
-    <!-- TRANSPORT -->
+        <div class="mini-department">
 
-    <div class="dept-panel">
-
-        <div class="panel-left">
+            <img
+                src="{% static 'images/city bus-bro.svg' %}"
+                alt="Transport"
+            >
 
             <h3>
-                🚌 Transport
+                Transport
             </h3>
 
             <p>
+
                 Public transport delays
-                and transport-related complaints
+                and route complaints.
+
             </p>
 
-            <div class="panel-tags">
+            <div class="mini-stats">
 
-                <span>Delays</span>
+                <span>121 Resolved</span>
 
-                <span>Bus Stops</span>
-
-                <span>Routes</span>
+                <span>8 hrs Avg</span>
 
             </div>
 
-        </div>
-
-
-        <div class="panel-right">
-
-            <span>
-                121 Resolved
-            </span>
-
-            <small>
-                Avg. 8 hrs
-            </small>
-
             <button
-                class="panel-btn"
                 onclick="setCategory('transport')"
             >
 
-                Report Now
+                Report Issue
 
             </button>
 
         </div>
 
-    </div>
 
 
+        <!-- HEALTH -->
 
-    <!-- PUBLIC HEALTH -->
+        <div class="mini-department">
 
-    <div class="dept-panel">
-
-        <div class="panel-left">
+            <img
+                src="{% static 'images/Medical care-bro.svg' %}"
+                alt="Health"
+            >
 
             <h3>
-                🏥 Public Health
+                Public Health
             </h3>
 
             <p>
-                Hygiene, sanitation and
-                unsafe public area complaints
+
+                Hygiene, sanitation
+                and unsafe area reports.
+
             </p>
 
-            <div class="panel-tags">
+            <div class="mini-stats">
 
-                <span>Sanitation</span>
+                <span>87 Resolved</span>
 
-                <span>Safety</span>
-
-                <span>Cleanliness</span>
+                <span>13 hrs Avg</span>
 
             </div>
 
-        </div>
-
-
-        <div class="panel-right">
-
-            <span>
-                87 Resolved
-            </span>
-
-            <small>
-                Avg. 13 hrs
-            </small>
-
             <button
-                class="panel-btn"
                 onclick="setCategory('health')"
             >
 
-                Report Now
+                Report Issue
 
             </button>
 
         </div>
 
-    </div>
+    </section>
 
 </div>
-
-
 <!-- ================= FORM SECTION ================= -->
 
 <div

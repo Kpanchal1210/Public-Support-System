@@ -1,4 +1,3 @@
-from itertools import count
 
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
@@ -11,6 +10,7 @@ from accounts.models import UserProfile
 from reports.models import DepartmentRule, Issue, Notification
 from reports.utils import auto_escalate_issues, create_notification
 from django.db.models import Count
+from django.core.paginator import Paginator
 
 
 # =========================
@@ -238,8 +238,40 @@ def view_reports(request):
 
     issues = Issue.objects.all().order_by('-created_at')
 
+    paginator = Paginator(
+        issues,
+        6
+    )
+
+    # SEARCH BY LOCATION
+
+    location = request.GET.get('location')
+
+    if location:
+
+        issues = issues.filter(
+            location__icontains=location
+        )
+
+
+    # FILTER BY ISSUE TYPE
+
+    issue_type = request.GET.get('issue_type')
+
+    if issue_type:
+
+        issues = issues.filter(
+            issue_type=issue_type
+        )
+
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'frontend/my_reports.html', {
-        'issues': issues
+        'page_obj': page_obj,
+        'location': location,
+        'issue_type': issue_type
     })
 
 def logout_view(request):

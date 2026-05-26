@@ -45,9 +45,9 @@
 
 <nav>
 
-    <h1>
-        PUBLIC SUPPORT
-    </h1>
+    <div class="logo">
+        <span>PUBLIC SUPPORT</span>
+    </div>
 
     <div class="nav-links">
 
@@ -137,7 +137,6 @@
 
             </button>
 
-
             <button
                 class="btn-secondary"
                 onclick="location.href='{% url 'view_reports' %}'"
@@ -151,18 +150,80 @@
 
     </div>
 
+</section>
 
-    <!-- RIGHT -->
 
-    <div class="hero-map">
+
+<!-- ================= MAP SECTION ================= -->
+
+<section class="map-section">
+
+    <!-- HEADING -->
+
+    <div class="map-heading">
+
+        <h2>
+            Service Availability Map
+        </h2>
+
+        <p>
+
+            Explore public services available
+            across different areas of the city.
+
+        </p>
+
+    </div>
+
+
+    <!-- FILTERS -->
+
+    <div class="map-services">
+
+        <button class="service-btn active">
+            Roads
+        </button>
+
+        <button class="service-btn">
+            Water
+        </button>
+
+        <button class="service-btn">
+            Electricity
+        </button>
+
+        <button class="service-btn">
+            Garbage
+        </button>
+
+        <button class="service-btn mini">
+            Traffic
+        </button>
+
+        <button class="service-btn mini">
+            Parks
+        </button>
+
+        <button class="service-btn mini">
+            Transport
+        </button>
+
+        <button class="service-btn mini">
+            Health
+        </button>
+
+    </div>
+
+
+    <!-- MAP -->
+
+    <div class="map-container">
 
         <div id="map"></div>
 
     </div>
 
 </section>
-
-
 
 <!-- ================= STATS ================= -->
 
