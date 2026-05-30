@@ -26,7 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         minZoom: 5,
 
-        maxZoom: 18
+        maxZoom: 18,
+
+        scrollWheelZoom: false
 
     });
 
@@ -59,6 +61,52 @@ document.addEventListener("DOMContentLoaded", function () {
     // REMOVE LEAFLET PREFIX
 
     map.attributionControl.setPrefix(false);
+
+
+
+    // =====================================================
+    // ENABLE SCROLL ZOOM WITH CTRL KEY
+    // =====================================================
+
+    const mapContainer = document.getElementById('map');
+
+    mapContainer.addEventListener('mouseenter', () => {
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        document.addEventListener('keyup', handleKeyUp);
+
+    });
+
+    mapContainer.addEventListener('mouseleave', () => {
+
+        document.removeEventListener('keydown', handleKeyDown);
+
+        document.removeEventListener('keyup', handleKeyUp);
+
+        map.scrollWheelZoom.disable();
+
+    });
+
+    function handleKeyDown(e) {
+
+        if (e.ctrlKey || e.metaKey) {
+
+            map.scrollWheelZoom.enable();
+
+        }
+
+    }
+
+    function handleKeyUp(e) {
+
+        if (!e.ctrlKey && !e.metaKey) {
+
+            map.scrollWheelZoom.disable();
+
+        }
+
+    }
 
 
 
@@ -116,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
 
 
-        parks: {
+        education: {
 
             border: "#0f766e",
 
@@ -500,9 +548,9 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
 
 
-    // ================= PARKS =================
+    // ================= EDUCATION =================
 
-    parks: [
+    education: [
 
         {
             lat: 15.2993,

@@ -348,3 +348,148 @@ body{
     }
 
 }
+/* ================= FOOTER ================= */
+
+.main-footer{
+
+    margin-top:80px;
+
+    padding:55px 60px 24px;
+
+    background:var(--accent-primary);
+
+    color:white;
+
+    box-shadow:var(--shadow-md);
+}
+
+
+/* GRID */
+
+.footer-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1.6fr 1fr 1fr 1fr;
+
+    gap:50px;
+
+    margin-bottom:35px;
+}
+
+
+/* BRAND */
+
+.footer-brand h2{
+
+    font-size:1.9rem;
+
+    font-weight:800;
+
+    margin-bottom:14px;
+
+    letter-spacing:0.5px;
+}
+
+
+.footer-brand p{
+
+    color:rgba(255,255,255,0.82);
+
+    line-height:1.8;
+
+    font-size:0.95rem;
+
+    max-width:320px;
+}
+
+
+/* HEADINGS */
+
+.footer-links h4{
+
+    margin-bottom:18px;
+
+    font-size:1rem;
+
+    font-weight:700;
+
+    color:white;
+}
+
+
+/* LINKS */
+
+.footer-links a{
+
+    display:block;
+
+    margin-bottom:12px;
+
+    text-decoration:none;
+
+    color:rgba(255,255,255,0.82);
+
+    font-size:0.94rem;
+
+    transition:var(--transition);
+}
+
+
+/* HOVER */
+
+.footer-links a:hover{
+
+    color:white;
+}
+
+
+/* BOTTOM */
+
+.footer-bottom{
+
+    text-align:center;
+
+    padding-top:22px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.14);
+
+    color:rgba(255,255,255,0.74);
+
+    font-size:0.88rem;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width:900px){
+
+    .footer-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+}
+
+
+@media (max-width:768px){
+
+    .main-footer{
+
+        padding:45px 24px 22px;
+    }
+
+    .footer-grid{
+
+        grid-template-columns:1fr;
+
+        gap:34px;
+    }
+
+    .footer-brand p{
+
+        max-width:100%;
+    }
+}

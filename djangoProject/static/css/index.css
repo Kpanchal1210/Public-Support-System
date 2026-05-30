@@ -513,6 +513,8 @@ nav {
 
     box-shadow:
         0 30px 60px rgba(47,62,79,.12);
+
+    position: relative;
 }
 
 
@@ -520,6 +522,28 @@ nav {
 
     width:100%;
     height:100%;
+}
+
+
+/* ================= MAP HINT ================= */
+
+.map-hint {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: black;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    z-index: 1000;
+    font-size: large;
+}
+
+.map-hint kbd {
+    background: transparent;
+    padding: 0;
+    border: none;
+    font-weight: 600;
 }
 
 
@@ -933,155 +957,146 @@ nav {
 
 /* ================= FOOTER ================= */
 
-.main-footer {
-    margin-top: 80px;
+.main-footer{
 
-    padding: 70px 60px 30px;
+    margin-top:80px;
 
-    border-radius: 40px 40px 0 0;
+    padding:55px 60px 24px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #3f7f84,
-            #5FA3A6
-        );
+    background:var(--accent-primary);
 
-    color: #fff;
+    color:white;
+
+    box-shadow:var(--shadow-md);
 }
 
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-    gap: 40px;
-    margin-bottom: 50px;
+
+/* GRID */
+
+.footer-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1.6fr 1fr 1fr 1fr;
+
+    gap:50px;
+
+    margin-bottom:35px;
 }
 
-.footer-brand h2 {
-    font-size: 1.8rem;
-    margin-bottom: 16px;
-    font-weight: 800;
+
+/* BRAND */
+
+.footer-brand h2{
+
+    font-size:1.9rem;
+
+    font-weight:800;
+
+    margin-bottom:14px;
+
+    letter-spacing:0.5px;
 }
 
-.footer-brand p {
-    color: rgba(255,255,255,.78);
-    line-height: 1.8;
+
+.footer-brand p{
+
+    color:rgba(255,255,255,0.82);
+
+    line-height:1.8;
+
+    font-size:0.95rem;
+
+    max-width:320px;
 }
 
-.footer-links h4 {
-    margin-bottom: 18px;
+
+/* HEADINGS */
+
+.footer-links h4{
+
+    margin-bottom:18px;
+
+    font-size:1rem;
+
+    font-weight:700;
+
+    color:white;
 }
 
-.footer-links a {
-    display: block;
-    margin-bottom: 12px;
-    text-decoration: none;
-    color: rgba(255,255,255,.78);
-    transition: var(--transition);
+
+/* LINKS */
+
+.footer-links a{
+
+    display:block;
+
+    margin-bottom:12px;
+
+    text-decoration:none;
+
+    color:rgba(255,255,255,0.82);
+
+    font-size:0.94rem;
+
+    transition:var(--transition);
 }
 
-.footer-links a:hover {
-    color: #fff;
-    transform: translateX(4px);
+
+/* HOVER */
+
+.footer-links a:hover{
+
+    color:white;
 }
 
-.footer-bottom {
-    text-align: center;
-    padding-top: 25px;
-    border-top: 1px solid rgba(255,255,255,.15);
-    color: rgba(255,255,255,.7);
-    font-size: .9rem;
+
+/* BOTTOM */
+
+.footer-bottom{
+
+    text-align:center;
+
+    padding-top:22px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.14);
+
+    color:rgba(255,255,255,0.74);
+
+    font-size:0.88rem;
 }
+
 
 /* ================= RESPONSIVE ================= */
 
-@media (max-width: 900px) {
+@media (max-width:900px){
 
-    .hero,
-    .cta {
-        flex-direction: column;
-        text-align: center;
-    }
+    .footer-grid{
 
-    .hero-map {
-        width: 100%;
-        height: 320px;
-    }
-
-    .cta {
-        gap: 20px;
+        grid-template-columns:
+            repeat(2,1fr);
     }
 }
 
-@media (max-width: 768px) {
 
-    nav {
-        flex-direction: column;
-        gap: 14px;
-        text-align: center;
-        padding: 22px 20px;
+@media (max-width:768px){
+
+    .main-footer{
+
+        padding:45px 24px 22px;
     }
 
-    section,
-    .hero,
-    .stats-section,
-    .how-section,
-    .reports-section {
-        padding-left: 20px;
-        padding-right: 20px;
+    .footer-grid{
+
+        grid-template-columns:1fr;
+
+        gap:34px;
     }
 
-    section {
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
+    .footer-brand p{
 
-    .reports-section {
-        padding-top: 70px;
-        padding-bottom: 70px;
-    }
-
-    .reports-grid,
-    .how-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .hero {
-        margin: 20px;
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .hero-content h2 {
-        font-size: 2.8rem;
-    }
-
-    .report-card,
-    .how-card {
-        padding: 28px;
-    }
-
-    .cta {
-        margin: 20px;
-        padding: 40px 25px;
-    }
-
-    .main-footer {
-        padding: 50px 20px 25px;
-    }
-
-    .section-title,
-    .section-heading h2 {
-        font-size: 2.2rem;
-    }
-
-    .floating-shape {
-        display: none;
-    }
-
-    .hero-content,
-    .hero-map,
-    .report-card {
-        transform: none !important;
+        max-width:100%;
     }
 }

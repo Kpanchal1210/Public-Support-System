@@ -131,7 +131,7 @@ def department(request):
 
         # Assign worker
         issue.worker = worker
-        issue.status = 'in_progress'
+        issue.status = 'pending'
         issue.save()
 
         # 🔔 NOTIFICATION TO WORKER
@@ -197,13 +197,47 @@ def manage_workers(request):
         'workers': workers
     })
 
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect, get_object_or_404
+
 @login_required(login_url='login')
 def worker_portal(request):
 
-    # 🔥 Issues assigned to worker
-    issues = Issue.objects.filter(worker=request.user)
+    # ================= BASE QUERY =================
 
-    # 🔔 Notifications for worker
+    issues = Issue.objects.filter(
+        worker=request.user
+    ).order_by('-created_at')
+
+    # ================= SEARCH =================
+
+    search = request.GET.get('search', '')
+
+    if search:
+        issues = issues.filter(
+            location__icontains=search
+        )
+
+    # ================= FILTER =================
+
+    status_filter = request.GET.get('status', 'all')
+
+    if status_filter != 'all':
+        issues = issues.filter(
+            status=status_filter
+        )
+
+    # ================= PAGINATION =================
+
+    paginator = Paginator(issues, 6)
+
+    page_number = request.GET.get('page')
+
+    issues = paginator.get_page(page_number)
+
+    # ================= NOTIFICATIONS =================
+
     notification_list = Notification.objects.filter(
         user=request.user
     ).order_by('-created_at')[:5]
@@ -214,11 +248,16 @@ def worker_portal(request):
     ).count()
 
     # ================= UPDATE STATUS =================
+
     if request.method == "POST":
+
         issue_id = request.POST.get("issue_id")
         status = request.POST.get("status")
 
-        issue = get_object_or_404(Issue, id=issue_id)
+        issue = get_object_or_404(
+            Issue,
+            id=issue_id
+        )
 
         issue.status = status
         issue.save()
@@ -226,22 +265,25 @@ def worker_portal(request):
         return redirect('worker_portal')
 
     # ================= RESPONSE =================
-    return render(request, 'frontend/worker_portal.html', {
-        "issues": issues,
 
-        # 🔔 notification data
-        "notification_list": notification_list,
-        "unread_count": unread_count
-    })
+    return render(
+        request,
+        'frontend/worker_portal.html',
+        {
+            "issues": issues,
+            "search": search,
+            "status_filter": status_filter,
+
+            "notification_list": notification_list,
+            "unread_count": unread_count
+        }
+    )
+
 
 def view_reports(request):
 
     issues = Issue.objects.all().order_by('-created_at')
 
-    paginator = Paginator(
-        issues,
-        6
-    )
 
     # SEARCH BY LOCATION
 
@@ -265,13 +307,26 @@ def view_reports(request):
         )
 
 
+    # PAGINATION
+
+    paginator = Paginator(
+        issues,
+        6
+    )
+
     page_number = request.GET.get('page')
+
     page_obj = paginator.get_page(page_number)
 
+
     return render(request, 'frontend/my_reports.html', {
+
         'page_obj': page_obj,
+
         'location': location,
+
         'issue_type': issue_type
+
     })
 
 def logout_view(request):

@@ -483,17 +483,17 @@
 
 
 
-        <!-- PARKS -->
+        <!-- EDUCATION -->
 
         <div class="mini-department">
 
             <img
                 src="{% static 'images/Through the Park-bro.svg' %}"
-                alt="Parks"
+                alt="Education"
             >
 
             <h3>
-                Parks
+                Education
             </h3>
 
             <p>
@@ -512,7 +512,7 @@
             </div>
 
             <button
-                onclick="setCategory('parks')"
+                onclick="setCategory('education')"
             >
 
                 Report Issue
@@ -687,25 +687,108 @@
 
 <!-- ================= FOOTER ================= -->
 
-<footer>
+<footer class="main-footer">
 
-    &copy; 2026 Public Support Portal
-    • Designed for Citizens
+    <div class="footer-grid">
 
-    <br><br>
+        <!-- BRAND -->
 
-    <small>
+        <div class="footer-brand">
 
-        Illustrations by
+            <h2>
+                PUBLIC SUPPORT
+            </h2>
 
-        <a
-            href="https://storyset.com/people"
-            target="_blank"
-        >
-            Storyset
-        </a>
+            <p>
 
-    </small>
+                A civic platform helping citizens
+                report and track public issues
+                efficiently and transparently.
+
+            </p>
+
+        </div>
+
+
+        <!-- LINKS -->
+
+        <div class="footer-links">
+
+            <h4>
+                Platform
+            </h4>
+
+            <a href="{% url 'report_issue' %}">
+                Report Issue
+            </a>
+
+            <a href="{% url 'view_reports' %}">
+                View Reports
+            </a>
+
+            <a href="#">
+                Departments
+            </a>
+
+        </div>
+
+
+        <!-- RESOURCES -->
+
+        <div class="footer-links">
+
+            <h4>
+                Resources
+            </h4>
+
+            <a href="#">
+                Help Center
+            </a>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <a href="#">
+                Terms
+            </a>
+
+        </div>
+
+
+        <!-- CONNECT -->
+
+        <div class="footer-links">
+
+            <h4>
+                Connect
+            </h4>
+
+            <a href="#">
+                GitHub
+            </a>
+
+            <a href="#">
+                Contact
+            </a>
+
+            <a href="#">
+                Support
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTTOM -->
+
+    <div class="footer-bottom">
+
+        Â© 2026 Public Support Portal â€¢
+        Built for citizens, not complaints
+
+    </div>
 
 </footer>
 

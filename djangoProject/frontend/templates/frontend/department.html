@@ -13,8 +13,8 @@
 <body>
 
 <!-- ================= SIDEBAR ================= -->
-
-<div class="sidebar">
+<div class="page-layout">
+    <div class="sidebar">
 
     <div class="dept-profile">
         <div class="avatar">HQ</div>
@@ -51,60 +51,60 @@
 
 <section>
 
-<h3>New Complaints</h3>
+    <h3>New Complaints</h3>
 
-<div class="allocation-grid">
+    <div class="allocation-grid">
 
-{% for issue in pending_issues %}
+    {% for issue in pending_issues %}
 
-<div class="pending-card">
+    <div class="pending-card">
 
-<div class="media-box">
-{% if issue.image %}
-<img src="{{ issue.image.url }}">
-{% else %}
-<div>No Image</div>
-{% endif %}
-</div>
-
-<h4>{{ issue.issue_type }}</h4>
-
-<p><b>Citizen:</b> {{ issue.citizen.username }}</p>
-<p><b>Location:</b> {{ issue.location }}</p>
-<p><b>Description:</b> {{ issue.description }}</p>
-
-<!-- TIME LEFT -->
-<p class="deadline
-    {% if issue.formatted_time_left == 'Expired' %}
-        deadline-expired
-    {% elif issue.time_left and issue.time_left.days == 0 %}
-        deadline-warning
+    <div class="media-box">
+    {% if issue.image %}
+    <img src="{{ issue.image.url }}">
+    {% else %}
+    <div>No Image</div>
     {% endif %}
-">
-    ⏳ {{ issue.formatted_time_left }}
-</p>
+    </div>
 
-<form method="POST">
-{% csrf_token %}
-<input type="hidden" name="issue_id" value="{{ issue.id }}">
+    <h4>{{ issue.issue_type }}</h4>
 
-<label>Select Worker</label>
+    <p><b>Citizen:</b> {{ issue.citizen.username }}</p>
+    <p><b>Location:</b> {{ issue.location }}</p>
+    <p><b>Description:</b> {{ issue.description }}</p>
 
-<select name="worker" required>
-<option value="">Choose Worker</option>
-{% for worker in workers %}
-<option value="{{ worker.id }}">{{ worker.username }}</option>
-{% endfor %}
-</select>
+    <!-- TIME LEFT -->
+    <p class="deadline
+        {% if issue.formatted_time_left == 'Expired' %}
+            deadline-expired
+        {% elif issue.time_left and issue.time_left.days == 0 %}
+            deadline-warning
+        {% endif %}
+    ">
+        ⏳ {{ issue.formatted_time_left }}
+    </p>
 
-<button type="submit">Allocate Work</button>
-</form>
+    <form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="issue_id" value="{{ issue.id }}">
 
-</div>
+    <label>Select Worker</label>
 
-{% empty %}
-<p>No pending complaints.</p>
-{% endfor %}
+    <select name="worker" required>
+    <option value="">Choose Worker</option>
+    {% for worker in workers %}
+    <option value="{{ worker.id }}">{{ worker.username }}</option>
+    {% endfor %}
+    </select>
+
+    <button type="submit">Allocate Work</button>
+    </form>
+
+    </div>
+
+    {% empty %}
+    <p>No pending complaints.</p>
+    {% endfor %}
 
 </div>
 
@@ -210,6 +210,115 @@
 </section>
 
 </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="main-footer">
+
+    <div class="footer-grid">
+
+        <!-- BRAND -->
+
+        <div class="footer-brand">
+
+            <h2>
+                PUBLIC SUPPORT
+            </h2>
+
+            <p>
+
+                A civic platform helping citizens
+                report and track public issues
+                efficiently and transparently.
+
+            </p>
+
+        </div>
+
+
+        <!-- LINKS -->
+
+        <div class="footer-links">
+
+            <h4>
+                Platform
+            </h4>
+
+            <a href="{% url 'report_issue' %}">
+                Report Issue
+            </a>
+
+            <a href="{% url 'view_reports' %}">
+                View Reports
+            </a>
+
+            <a href="#">
+                Departments
+            </a>
+
+        </div>
+
+
+        <!-- RESOURCES -->
+
+        <div class="footer-links">
+
+            <h4>
+                Resources
+            </h4>
+
+            <a href="#">
+                Help Center
+            </a>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <a href="#">
+                Terms
+            </a>
+
+        </div>
+
+
+        <!-- CONNECT -->
+
+        <div class="footer-links">
+
+            <h4>
+                Connect
+            </h4>
+
+            <a href="#">
+                GitHub
+            </a>
+
+            <a href="#">
+                Contact
+            </a>
+
+            <a href="#">
+                Support
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTTOM -->
+
+    <div class="footer-bottom">
+
+        © 2026 Public Support Portal â€¢
+        Built for citizens, not complaints
+
+    </div>
+
+</footer>
 
 </body>
 </html>

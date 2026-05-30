@@ -1,117 +1,419 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<title>Worker Portal – CivicFlow</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<title>Worker Portal</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="{% static 'css/worker_portal.css' %}">
+
 </head>
 
 <body>
 
-<div class="sidebar">
+<!-- NAVBAR -->
 
-<div class="worker-profile">
-<div class="avatar">
-{{ request.user.username|first|upper }}
-</div>
+<nav class="navbar">
 
-<h4>{{ request.user.username }}</h4>
-<p>Field Worker</p>
-</div>
+    <div class="logo">
+        PUBLIC SUPPORT
+    </div>
 
-<nav>
-<a href="#" class="active">Assigned Tasks</a>
-<a href="{% url 'notification' %}" class="notif-btn">
-        🔔 Notifications
+    <div class="nav-links">
 
-        {% if unread_count > 0 %}
-        <span class="badge">{{ unread_count }}</span>
-        {% endif %}
-</a>
-<a href="{% url 'logout' %}">Logout</a>
+        <span class="worker-name">
+            {{ request.user.username }}
+        </span>
+
+        <a href="{% url 'notification' %}">
+
+            🔔 Notifications
+
+            {% if unread_count > 0 %}
+            <span class="badge">
+                {{ unread_count }}
+            </span>
+            {% endif %}
+
+        </a>
+
+        <a href="{% url 'logout' %}" class="logout-btn">
+            Logout
+        </a>
+
+    </div>
+
 </nav>
 
+
+<!-- HEADER -->
+
+<section class="header">
+
+    <h1>My Assigned Issues</h1>
+
+    <p>
+        View and update all tasks assigned to you.
+    </p>
+
+</section>
+
+<!-- ================= SEARCH + FILTER ================= -->
+
+<section class="toolbar">
+
+    <form method="GET" class="toolbar-form">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search by location..."
+            value="{{ search }}"
+        >
+
+        <input
+            type="hidden"
+            name="status"
+            value="{{ status_filter }}"
+        >
+
+        <button type="submit">
+            Search
+        </button>
+
+    </form>
+
+    <div class="filter-bar">
+
+        <a
+            href="?status=all&search={{ search }}"
+            class="{% if status_filter == 'all' %}active{% endif %}"
+        >
+            All
+        </a>
+
+        <a
+            href="?status=pending&search={{ search }}"
+            class="{% if status_filter == 'pending' %}active{% endif %}"
+        >
+            Pending
+        </a>
+
+        <a
+            href="?status=in_progress&search={{ search }}"
+            class="{% if status_filter == 'in_progress' %}active{% endif %}"
+        >
+            In Progress
+        </a>
+
+        <a
+            href="?status=resolved&search={{ search }}"
+            class="{% if status_filter == 'resolved' %}active{% endif %}"
+        >
+            Resolved
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- TASKS -->
+
+<section class="task-container">
+
+    <div class="task-grid">
+
+        {% for issue in issues %}
+
+        <div class="task-card">
+
+            <div class="card-top">
+
+                <span class="issue-type">
+                    {{ issue.get_issue_type_display }}
+                </span>
+
+                <span class="status {{ issue.status }}">
+                    {{ issue.get_status_display }}
+                </span>
+
+            </div>
+
+            <h3>
+                📍 {{ issue.location }}
+            </h3>
+
+            <p class="description">
+                {{ issue.description|truncatechars:120 }}
+            </p>
+
+            {% if issue.image %}
+
+            <div class="issue-image">
+
+                <img
+                    src="{{ issue.image.url }}"
+                    alt="Issue Image"
+                    onclick="openImage(this.src)"
+                >
+
+            </div>
+
+            {% endif %}
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <input
+                    type="hidden"
+                    name="issue_id"
+                    value="{{ issue.id }}"
+                >
+
+                <div class="controls">
+
+                    {% if issue.status == "pending" %}
+
+                        <input
+                            type="hidden"
+                            name="status"
+                            value="in_progress"
+                        >
+
+                        <button
+                            type="submit"
+                            class="start-btn"
+                        >
+                            Start Work
+                        </button>
+
+                    {% elif issue.status == "in_progress" %}
+
+                        <input
+                            type="hidden"
+                            name="status"
+                            value="resolved"
+                        >
+
+                        <button
+                            type="submit"
+                            class="resolve-btn"
+                        >
+                            Mark Resolved
+                        </button>
+
+                    {% else %}
+
+                        <div class="completed-badge">
+                            ✓ Completed
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </form>
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty-state">
+
+            <h2>
+                No Issues Found
+            </h2>
+
+            <p>
+                No issues match your current search or filter.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% if issues.has_other_pages %}
+
+<div class="pagination">
+
+    <!-- PREVIOUS -->
+
+    {% if issues.has_previous %}
+
+        <a href="?page={{ issues.previous_page_number }}&status={{ status_filter }}&search={{ search }}">
+
+            Previous
+
+        </a>
+
+    {% endif %}
+
+    <!-- PAGE NUMBERS -->
+
+    {% for num in issues.paginator.page_range %}
+
+        {% if issues.number == num %}
+
+            <span class="active-page">
+
+                {{ num }}
+
+            </span>
+
+        {% else %}
+
+            <a href="?page={{ num }}&status={{ status_filter }}&search={{ search }}">
+
+                {{ num }}
+
+            </a>
+
+        {% endif %}
+
+    {% endfor %}
+
+    <!-- NEXT -->
+
+    {% if issues.has_next %}
+
+        <a href="?page={{ issues.next_page_number }}&status={{ status_filter }}&search={{ search }}">
+
+            Next
+
+        </a>
+
+    {% endif %}
+
 </div>
 
-
-<div class="main-area">
-
-<h1>My Assigned Issues</h1>
-
-<div class="task-grid">
-
-{% for issue in issues %}
-
-<div class="task-item">
-
-<div class="task-header">
-
-<div>
-<span class="priority-tag">{{ issue.get_issue_type_display }}</span>
-<h2>{{ issue.location }}</h2>
-</div>
-
-<b>{{ issue.status }}</b>
-
-</div>
-
-
-<div class="task-info-box">
-
-<p><b>📍 Location:</b> {{ issue.location }}</p>
-
-<p><b>⚠️ Issue:</b> {{ issue.description }}</p>
-
-</div>
-
-
-{% if issue.image %}
-<div class="issue-image">
-<img src="{{ issue.image.url }}" style="width:100%;border-radius:10px;">
-</div>
 {% endif %}
+</section>
 
+<!-- IMAGE MODAL -->
 
-<form method="POST">
+<div id="imageModal" class="image-modal">
 
-{% csrf_token %}
+    <span
+        class="close-modal"
+        onclick="closeImage()"
+    >
+        &times;
+    </span>
 
-<input type="hidden" name="issue_id" value="{{ issue.id }}">
-
-<div class="controls">
-
-<select name="status">
-
-<option value="pending" {% if issue.status == "pending" %}selected{% endif %}>Pending</option>
-
-<option value="in_progress" {% if issue.status == "in_progress" %}selected{% endif %}>In Progress</option>
-
-<option value="resolved" {% if issue.status == "resolved" %}selected{% endif %}>Resolved</option>
-
-</select>
-
-<button class="update-btn">Update</button>
+    <img
+        id="modalImg"
+        src=""
+        alt="Full Image"
+    >
 
 </div>
 
-</form>
 
-</div>
+<!-- FOOTER -->
 
-{% empty %}
+<footer class="main-footer">
 
-<p>No issues assigned.</p>
+    <div class="footer-grid">
 
-{% endfor %}
+        <div class="footer-brand">
 
-</div>
+            <h2>
+                PUBLIC SUPPORT
+            </h2>
 
-</div>
+            <p>
+
+                A civic platform helping citizens
+                report and track public issues
+                efficiently and transparently.
+
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h4>
+                Platform
+            </h4>
+
+            <a href="{% url 'report_issue' %}">
+                Report Issue
+            </a>
+
+            <a href="{% url 'view_reports' %}">
+                View Reports
+            </a>
+
+            <a href="#">
+                Departments
+            </a>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h4>
+                Resources
+            </h4>
+
+            <a href="#">
+                Help Center
+            </a>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <a href="#">
+                Terms
+            </a>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h4>
+                Connect
+            </h4>
+
+            <a href="#">
+                GitHub
+            </a>
+
+            <a href="#">
+                Contact
+            </a>
+
+            <a href="#">
+                Support
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        © 2026 Public Support Portal •
+        Built for citizens, not complaints
+
+    </div>
+
+</footer>
+
+
+<script src="{% static 'js/worker_portal.js' %}"></script>
 
 </body>
 </html>
