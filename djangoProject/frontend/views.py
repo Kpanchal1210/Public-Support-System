@@ -87,16 +87,19 @@ def index(request):
     })
 
 
-@login_required(login_url='login')
+@login_required(login_url='login') 
 def department(request):
 
-    # 🔥 Auto escalation check
+    # ================= AUTO ESCALATION =================
+
     auto_escalate_issues()
 
-    # 🔥 Get department
+    # ================= DEPARTMENT =================
+
     dept = request.user.userprofile.department
 
-    # 🔥 Filter issues
+    # ================= ISSUES =================
+
     pending_issues = Issue.objects.filter(
         issue_type=dept,
         status='pending',
@@ -114,27 +117,95 @@ def department(request):
         is_escalated=True
     )
 
-    # 🔥 Get workers of same department
+    # ================= WORKERS =================
+
     workers = User.objects.filter(
         userprofile__user_type='worker',
         userprofile__department=dept
     )
 
+    # ================= DEPARTMENT INFO =================
+
+    department_data = {
+
+        "water": {
+            "icon": "💧",
+            "title": "Water Department",
+            "description":
+                "Responsible for water supply, pipeline maintenance and leak repairs."
+        },
+
+        "roads": {
+            "icon": "🛣️",
+            "title": "Roads Department",
+            "description":
+                "Responsible for road maintenance, pothole repairs and public road infrastructure."
+        },
+
+        "electricity": {
+            "icon": "⚡",
+            "title": "Electricity Department",
+            "description":
+                "Responsible for street lights, electrical faults and power distribution infrastructure."
+        },
+
+        "garbage": {
+            "icon": "♻️",
+            "title": "Garbage Department",
+            "description":
+                "Responsible for waste collection, sanitation and cleanliness services."
+        }
+
+    }
+
+    department_info = department_data.get(
+        dept.lower(),
+        {
+            "icon": "🏢",
+            "title": f"{dept.title()} Department",
+            "description":
+                "Department management dashboard."
+        }
+    )
+
+    # ================= DASHBOARD STATS =================
+
+    total_issues = Issue.objects.filter(
+        issue_type=dept
+    ).count()
+
+    resolved_count = Issue.objects.filter(
+        issue_type=dept,
+        status='resolved'
+    ).count()
+
+    active_count = active_issues.count()
+
+    escalated_count = escalated_issues.count()
+
     # ================= ASSIGN WORK =================
+
     if request.method == 'POST':
 
         issue_id = request.POST.get('issue_id')
         worker_id = request.POST.get('worker')
 
-        issue = get_object_or_404(Issue, id=issue_id)
-        worker = get_object_or_404(User, id=worker_id)
+        issue = get_object_or_404(
+            Issue,
+            id=issue_id
+        )
 
-        # Assign worker
+        worker = get_object_or_404(
+            User,
+            id=worker_id
+        )
+
         issue.worker = worker
+
         issue.status = 'pending'
+
         issue.save()
 
-        # 🔔 NOTIFICATION TO WORKER
         create_notification(
             worker,
             f"You have been assigned a {issue.issue_type} issue at {issue.location}"
@@ -143,13 +214,24 @@ def department(request):
         return redirect('department')
 
     # ================= RESPONSE =================
-    return render(request, 'frontend/department.html', {
-        'pending_issues': pending_issues,
-        'active_issues': active_issues,
-        'escalated_issues': escalated_issues,
-        'workers': workers
-    })
 
+    return render(
+        request,
+        'frontend/department.html',
+        {
+            'pending_issues': pending_issues,
+            'active_issues': active_issues,
+            'escalated_issues': escalated_issues,
+            'workers': workers,
+
+            'department_info': department_info,
+
+            'total_issues': total_issues,
+            'resolved_count': resolved_count,
+            'active_count': active_count,
+            'escalated_count': escalated_count,
+        }
+    )
 
 @login_required(login_url='login')
 def reports(request):

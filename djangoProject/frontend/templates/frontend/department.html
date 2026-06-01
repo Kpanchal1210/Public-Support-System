@@ -12,46 +12,153 @@
 
 <body>
 
-<!-- ================= SIDEBAR ================= -->
-<div class="page-layout">
-    <div class="sidebar">
+<nav class="navbar">
 
-    <div class="dept-profile">
-        <div class="avatar">HQ</div>
-        <h4>Department Panel</h4>
-        <p>Issue Management</p>
+    <div class="logo">
+
+        PUBLIC SUPPORT
+
     </div>
 
-    <nav>
+    <div class="nav-links">
 
-        <a href="{% url 'manage_workers' %}">Manage Workers</a>
-
-        {% if unread_count > 0 %}
-        <span class="badge">{{ unread_count }}</span>
-        {% endif %}
+        <a href="{% url 'manage_workers' %}">
+            Manage Workers
         </a>
 
-        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
 
-    </nav>
+    </div>
 
-</div>
-
+</nav>
 
 <!-- ================= MAIN ================= -->
 
 <div class="main-area">
 
-<header>
-<h1>Department Dashboard</h1>
-</header>
+<section class="department-overview">
 
+    <div class="overview-header">
+
+        <div class="overview-icon">
+
+            {{ department_info.icon }}
+
+        </div>
+
+        <div>
+
+            <h1>
+                {{ department_info.title }}
+            </h1>
+
+            <p>
+                Monitoring and managing public service requests efficiently across the city.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="overview-stats">
+
+        <div class="overview-item">
+
+            <span class="overview-value">
+
+                {{ total_issues }}
+
+            </span>
+
+            <span class="overview-label">
+
+                Total Complaints
+
+            </span>
+
+        </div>
+
+        <div class="overview-item">
+
+            <span class="overview-value">
+
+                {{ active_count }}
+
+            </span>
+
+            <span class="overview-label">
+
+                Active Field Work
+
+            </span>
+
+        </div>
+
+        <div class="overview-item">
+
+            <span class="overview-value">
+
+                {% widthratio resolved_count total_issues 100 %}%
+
+            </span>
+
+            <span class="overview-label">
+
+                Resolution Rate
+
+            </span>
+
+        </div>
+
+        <div class="overview-item">
+
+            <span class="overview-value">
+
+                {{ escalated_count }}
+
+            </span>
+
+            <span class="overview-label">
+
+                Escalated Issues
+
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="operations-header">
+
+    <h2>
+        Operations Dashboard
+    </h2>
+
+    <p>
+        Manage incoming complaints, active field operations and escalated issues.
+    </p>
+
+</div>
 
 <!-- ================= PENDING ================= -->
 
-<section>
+<section class="dashboard-section">
 
-    <h3>New Complaints</h3>
+    <div class="section-header">
+
+        <h3>
+            New Complaints
+        </h3>
+
+        <span>
+            {{ pending_issues.count }} Issues
+        </span>
+
+    </div>
 
     <div class="allocation-grid">
 
@@ -103,7 +210,17 @@
     </div>
 
     {% empty %}
-    <p>No pending complaints.</p>
+    <div class="empty-state">
+
+    <h4>
+        No New Complaints
+    </h4>
+
+    <p>
+        Everything is under control.
+    </p>
+
+    </div>
     {% endfor %}
 
 </div>
@@ -113,9 +230,19 @@
 
 <!-- ================= ACTIVE ================= -->
 
-<section>
+<section class="dashboard-section">
 
-<h3>Active Field Work</h3>
+<div class="section-header">
+
+    <h3>
+        Active Field Work
+    </h3>
+
+    <span>
+        {{ active_issues.count }} Tasks
+    </span>
+
+</div>
 
 <div class="task-grid">
 
@@ -170,7 +297,17 @@
 </div>
 
 {% empty %}
-<p>No active work.</p>
+<div class="empty-state">
+
+    <h4>
+        No Active Work
+    </h4>
+
+    <p>
+        No workers are currently assigned.
+    </p>
+
+</div>
 {% endfor %}
 
 </div>
@@ -180,9 +317,23 @@
 
 <!-- ================= ESCALATED ================= -->
 
-<section>
+<section class="dashboard-section">
 
-<h3 class="escalated-title">⚠️ Escalated Issues</h3>
+<div class="section-header">
+
+    <h3 class="escalated-title">
+
+         Escalated Issues
+
+    </h3>
+
+    <span>
+
+        {{ escalated_issues.count }} Issues
+
+    </span>
+
+</div>
 
 <div class="allocation-grid">
 
@@ -202,7 +353,17 @@
 </div>
 
 {% empty %}
-<p>No escalated issues.</p>
+<div class="empty-state">
+
+    <h4>
+        No Escalated Issues
+    </h4>
+
+    <p>
+        Great job. No unresolved escalations.
+    </p>
+
+</div>
 {% endfor %}
 
 </div>
