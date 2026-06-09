@@ -14,7 +14,7 @@ from django.core.paginator import Paginator
 
 
 # =========================
-# PUBLIC PAGES
+# PUBLIC PAGES  
 # =========================
 
 
@@ -104,18 +104,23 @@ def department(request):
         issue_type=dept,
         status='pending',
         is_escalated=False
-    )
+    )[:6]
 
     active_issues = Issue.objects.filter(
         issue_type=dept,
         status='in_progress',
         is_escalated=False
-    )
+    )[:6]
 
     escalated_issues = Issue.objects.filter(
         issue_type=dept,
         is_escalated=True
-    )
+    )[:6]
+
+    resolved_issues = Issue.objects.filter(
+        issue_type=dept,
+        status='resolved'
+    )[:6]
 
     # ================= WORKERS =================
 
@@ -129,28 +134,24 @@ def department(request):
     department_data = {
 
         "water": {
-            "icon": "💧",
             "title": "Water Department",
             "description":
                 "Responsible for water supply, pipeline maintenance and leak repairs."
         },
 
         "roads": {
-            "icon": "🛣️",
             "title": "Roads Department",
             "description":
                 "Responsible for road maintenance, pothole repairs and public road infrastructure."
         },
 
         "electricity": {
-            "icon": "⚡",
             "title": "Electricity Department",
             "description":
                 "Responsible for street lights, electrical faults and power distribution infrastructure."
         },
 
         "garbage": {
-            "icon": "♻️",
             "title": "Garbage Department",
             "description":
                 "Responsible for waste collection, sanitation and cleanliness services."
@@ -161,7 +162,6 @@ def department(request):
     department_info = department_data.get(
         dept.lower(),
         {
-            "icon": "🏢",
             "title": f"{dept.title()} Department",
             "description":
                 "Department management dashboard."
@@ -202,7 +202,7 @@ def department(request):
 
         issue.worker = worker
 
-        issue.status = 'pending'
+        issue.status = 'in_progress'
 
         issue.save()
 
@@ -222,6 +222,7 @@ def department(request):
             'pending_issues': pending_issues,
             'active_issues': active_issues,
             'escalated_issues': escalated_issues,
+            'resolved_issues': resolved_issues,
             'workers': workers,
 
             'department_info': department_info,
@@ -232,6 +233,7 @@ def department(request):
             'escalated_count': escalated_count,
         }
     )
+
 
 @login_required(login_url='login')
 def reports(request):
@@ -635,4 +637,170 @@ def action(request, issue_type):
     return render(request, 'frontend/action.html', {
         'issue_type': issue_type,
         'base_time': base_time
+    })
+
+
+def pending_issues(request):
+
+    dept = request.user.userprofile.department
+
+    issues = Issue.objects.filter(
+        issue_type=dept,
+        status='pending',
+        is_escalated=False
+    ).order_by('-created_at')
+
+    location = request.GET.get('location')
+
+    if location:
+
+        issues = issues.filter(
+            location__icontains=location
+        )
+
+    # PAGINATION
+
+    paginator = Paginator(
+        issues,
+        6
+    )
+
+    page_number = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_number)
+
+    worker = request.GET.get('worker')
+
+    return render(request, 'frontend/pending_issues.html', {
+
+        'worker': worker,
+
+        'page_obj': page_obj,
+
+        'location': location,
+
+    })
+
+
+def active_issues(request):
+
+    dept = request.user.userprofile.department
+
+    issues = Issue.objects.filter(
+        issue_type=dept,
+        status='in_progress',
+        is_escalated=False
+    ).order_by('-created_at')
+
+    location = request.GET.get('location')
+
+    if location:
+
+        issues = issues.filter(
+            location__icontains=location
+        )
+
+    # PAGINATION
+
+    paginator = Paginator(
+        issues,
+        6
+    )
+
+    page_number = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_number)
+
+    worker = request.GET.get('worker')
+
+    return render(request, 'frontend/active_issues.html', {
+
+        'worker': worker,
+
+        'page_obj': page_obj,
+
+        'location': location,
+
+    })
+
+
+def escalated_issues(request):
+
+    dept = request.user.userprofile.department
+
+    issues = Issue.objects.filter(
+        issue_type=dept,    
+        is_escalated=True
+    ).order_by('-created_at')
+
+
+    location = request.GET.get('location')
+
+    if location:
+
+        issues = issues.filter(
+            location__icontains=location
+        )
+
+    # PAGINATION
+
+    paginator = Paginator(
+        issues,
+        6
+    )
+
+    page_number = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_number)
+
+    worker = request.GET.get('worker')
+
+    return render(request, 'frontend/escalated_issues.html', {
+
+        'worker': worker,
+
+        'page_obj': page_obj,
+
+        'location': location,
+
+    })
+
+def resolved_issues(request):
+
+    dept = request.user.userprofile.department
+
+    issues = Issue.objects.filter(
+        issue_type=dept,
+        status='resolved',
+    ).order_by('-created_at')
+
+    location = request.GET.get('location')
+
+    if location:
+
+        issues = issues.filter(
+            location__icontains=location
+        )
+
+    # PAGINATION
+
+    paginator = Paginator(
+        issues,
+        6
+    )
+
+    page_number = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_number)
+
+    worker = request.GET.get('worker')
+
+    return render(request, 'frontend/resolved_issues.html', {
+
+        'worker': worker,
+
+        'page_obj': page_obj,
+
+        'location': location,
+
     })

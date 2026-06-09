@@ -185,25 +185,6 @@ p {
     z-index:2;
 }
 
-.overview-icon{
-
-    width:80px;
-
-    height:80px;
-
-    border-radius:22px;
-
-    background:rgba(255,255,255,.15);
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:2.2rem;
-}
-
 .overview-header h1{
 
     margin:0 0 8px;
@@ -485,11 +466,54 @@ section h3.escalated-title {
     color: #dc2626;
 }
 
+/* ================= RESOLVED ================= */
+
+.resolved-card {
+    border: 1px solid rgba(34,197,94,0.22);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(220,251,235,0.7),
+            rgba(240,253,244,0.8)
+        );
+
+    box-shadow:
+        0 20px 40px rgba(34,197,94,0.12);
+}
+
+.resolved-card h4 {
+    color: #059669;
+}
+
+.status-badge-resolved {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    background: rgba(34,197,94,0.12);
+
+    color: var(--success);
+
+    font-weight: 700;
+
+    font-size: 0.8rem;
+}
+
 /* ================= TASK GRID ================= */
 
 .task-grid {
-    display: grid;
-    gap: 22px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(420px,1fr));
+
+    gap:22px;
 }
 
 /* TASK ITEM */
@@ -580,16 +604,6 @@ section h3.escalated-title {
 }
 
 /* ================= MEDIA ================= */
-
-.media-container {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 15px;
-
-    margin: 15px 0;
-}
 
 .media-box {
     background: rgba(127,209,201,0.08);
@@ -722,10 +736,6 @@ select:focus {
 
     .main-area {
         padding: 25px;
-    }
-
-    .media-container {
-        grid-template-columns: 1fr;
     }
 
     .overview-stats{

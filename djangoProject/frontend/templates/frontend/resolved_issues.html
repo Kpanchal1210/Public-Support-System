@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Resolved Issues</title>
+
+<link rel="stylesheet"
+      href="{% static 'css/resolved_issues.css' %}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        PUBLIC SUPPORT
+
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'department' %}">
+            Dashboard
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+<div class="main-area">
+
+<div class="page-top">
+
+    <div class="title-section">
+
+        <h1>
+            Resolved Complaints
+        </h1>
+
+    </div>
+
+    <div class="search-section">
+
+        <form method="GET">
+
+            <input
+                type="text"
+                name="location"
+                placeholder="Search location..."
+                value="{{ location|default:'' }}"
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<section class="dashboard-section">
+
+<div class="section-header">
+
+    <h3>
+
+        Resolved Issues
+
+    </h3>
+
+    <span>
+
+        {{ page_obj.paginator.count }} Issues
+
+    </span>
+
+</div>
+
+<div class="task-grid">
+
+{% for issue in page_obj %}
+
+<div class="resolved-card">
+
+    <div class="media-box">
+
+        {% if issue.image %}
+            <img src="{{ issue.image.url }}">
+        {% else %}
+            <div>No Image</div>
+        {% endif %}
+
+    </div>
+
+    <h4>
+
+        {{ issue.issue_type }}
+
+    </h4>
+
+    <p>
+
+        <b>Citizen:</b>
+
+        {{ issue.citizen.username }}
+
+    </p>
+
+    <p>
+
+        <b>Location:</b>
+
+        {{ issue.location }}
+
+    </p>
+
+    <p>
+
+        <b>Description:</b>
+
+        {{ issue.description }}
+
+    </p>
+
+    <div class="resolved-badge">
+
+        ✓ Resolved
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="empty-state">
+
+    <h4>
+
+        No Resolved Complaints
+
+    </h4>
+
+    <p>
+
+        No completed issues yet.
+
+    </p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</section>
+
+<!-- Pagination -->
+
+<div class="pagination">
+
+{% if page_obj.has_previous %}
+
+<a href="?page=1">
+
+    First
+
+</a>
+
+<a href="?page={{ page_obj.next_page_number }}&location={{ location }}">
+
+    Previous
+
+</a>
+
+{% endif %}
+
+<span>
+
+    Page {{ page_obj.number }}
+    of
+    {{ page_obj.paginator.num_pages }}
+
+</span>
+
+{% if page_obj.has_next %}
+
+<a href="?page={{ page_obj.next_page_number }}">
+
+    Next
+
+</a>
+
+<a href="?page={{ page_obj.paginator.num_pages }}">
+
+    Last
+
+</a>
+
+{% endif %}
+ 
+</div>
+
+</div>
+
+</body>
+</html>

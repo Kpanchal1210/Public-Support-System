@@ -20,4 +20,8 @@ urlpatterns = [
     path('headAuthority/', views.headAuthority, name='headAuthority'),
     path('manage_workers/', views.manage_workers, name='manage_workers'),
     path('view_reports/', views.view_reports, name='view_reports'),
+    path('pending_issues/', views.pending_issues, name='pending_issues'),
+    path('active_issues/', views.active_issues, name='active_issues'),  
+    path('escalated_issues/', views.escalated_issues, name='escalated_issues'),
+    path('resolved_issues/', views.resolved_issues, name='resolved_issues'),
 ]

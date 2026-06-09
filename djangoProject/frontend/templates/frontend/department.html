@@ -41,13 +41,7 @@
 <section class="department-overview">
 
     <div class="overview-header">
-
-        <div class="overview-icon">
-
-            {{ department_info.icon }}
-
-        </div>
-
+        
         <div>
 
             <h1>
@@ -158,6 +152,10 @@
             {{ pending_issues.count }} Issues
         </span>
 
+        <a href="{% url 'pending_issues' %}">
+            View All →
+        </a>
+
     </div>
 
     <div class="allocation-grid">
@@ -242,6 +240,10 @@
         {{ active_issues.count }} Tasks
     </span>
 
+    <a href="{% url 'active_issues' %}">
+            View All →
+        </a>
+
 </div>
 
 <div class="task-grid">
@@ -279,8 +281,7 @@
 
 <div class="media-container">
 
-<div class="media-box">
-<span>CITIZEN PHOTO</span>
+<div class="media-box"> 
 {% if issue.image %}
 <img src="{{ issue.image.url }}">
 {% else %}
@@ -333,6 +334,10 @@
 
     </span>
 
+    <a href="{% url 'escalated_issues' %}">
+            View All →
+        </a>
+
 </div>
 
 <div class="allocation-grid">
@@ -361,6 +366,67 @@
 
     <p>
         Great job. No unresolved escalations.
+    </p>
+
+</div>
+{% endfor %}
+
+</div>
+
+</section>
+
+
+<!-- ================= RESOLVED ================= -->
+
+<section class="dashboard-section">
+
+<div class="section-header">
+
+    <h3>
+
+        Resolved Issues
+
+    </h3>
+
+    <span>
+
+        {{ resolved_issues.count }} Issues
+
+    </span>
+
+    <a href="{% url 'resolved_issues' %}">
+            View All →
+        </a>
+
+</div>
+
+<div class="allocation-grid">
+
+{% for issue in resolved_issues %}
+
+<div class="pending-card resolved-card">
+
+<h4>{{ issue.issue_type }}</h4>
+
+<p><b>Citizen:</b> {{ issue.citizen.username }}</p>
+<p><b>Location:</b> {{ issue.location }}</p>
+<p><b>Description:</b> {{ issue.description }}</p>
+
+<p class="status-badge-resolved">
+✓ Resolved
+</p>
+
+</div>
+
+{% empty %}
+<div class="empty-state">
+
+    <h4>
+        No Resolved Issues
+    </h4>
+
+    <p>
+        Resolved issues will appear here.
     </p>
 
 </div>
