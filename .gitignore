@@ -1,0 +1,47 @@
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+
+# Django
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+db.sqlite3
+db.sqlite3-journal
+/staticfiles/
+/media/
+/static/
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Test coverage
+.coverage
+htmlcov/
+
+# JSON data files
+current_data.json
+data.json
