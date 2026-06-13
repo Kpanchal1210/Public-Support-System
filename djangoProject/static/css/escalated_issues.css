@@ -339,7 +339,7 @@ p{
 
 /* ================= TASK CARD ================= */
 
-.task-item{
+.escalated-card{
 
     background:var(--bg-card);
 
@@ -357,7 +357,7 @@ p{
     transition:.25s;
 }
 
-.task-item:hover{
+.escalated-card:hover{
 
     transform:translateY(-5px);
 }

@@ -102,57 +102,101 @@
 
 <section class="hero">
 
-    <!-- LEFT -->
+    <h1>
+        See a problem around you?
+        <br>
+        <span>Let the city know.</span>
+    </h1>
 
-    <div class="hero-content">
 
-        <h2>
+    <img
+        src="{% static 'images/boston.jpeg' %}"
+        alt="City Skyline"
+        class="hero-image"
+    >
 
-            See a problem around you?
-            <br>
+    <p>
+        Report public issues like damaged roads,
+        garbage collection delays, faulty
+        streetlights and more.
+    </p>
 
-            <span>
-                Let the city know.
-            </span>
+    <div class="hero-actions">
 
-        </h2>
+        <button class="btn-primary"
+            onclick="location.href='{% url 'report_issue' %}'">
+            Report Issue
+        </button>
 
-        <p>
+        <button class="btn-secondary"
+            onclick="location.href='{% url 'view_reports' %}'">
+            View Reports
+        </button>
 
-            Public Support helps citizens report
-            everyday issues like broken roads,
-            garbage collection delays, or faulty
-            streetlights — quickly and transparently.
+    </div>
 
-        </p>
+</section>
 
-        <div class="hero-actions">
+<!-- ================= STATS ================= -->
 
-            <button
-                class="btn-primary"
-                onclick="location.href='{% url 'report_issue' %}'"
-            >
+<section class="stats-section">
 
-                Report an Issue
+    <div class="stats-strip">
 
-            </button>
+        <div class="stat-box">
 
-            <button
-                class="btn-secondary"
-                onclick="location.href='{% url 'view_reports' %}'"
-            >
+            <h2>
+                {{ total_issues }}
+            </h2>
 
-                View Reports
+            <p>
+                Reports Submitted
+            </p>
 
-            </button>
+        </div>
+
+
+        <div class="stat-box">
+
+            <h2>
+                {{ solved_issues }}
+            </h2>
+
+            <p>
+                Issues Resolved
+            </p>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <h2>
+                {{ total_workers }}
+            </h2>
+
+            <p>
+                Active Workers
+            </p>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <h2>
+                {{ departments_count }}
+            </h2>
+
+            <p>
+                Departments
+            </p>
 
         </div>
 
     </div>
 
 </section>
-
-
 
 <!-- ================= MAP SECTION ================= -->
 
@@ -236,69 +280,6 @@
     </div>
 
 </section>
-
-<!-- ================= STATS ================= -->
-
-<section class="stats-section">
-
-    <div class="stats-strip">
-
-        <div class="stat-box">
-
-            <h2>
-                {{ total_issues }}
-            </h2>
-
-            <p>
-                Reports Submitted
-            </p>
-
-        </div>
-
-
-        <div class="stat-box">
-
-            <h2>
-                {{ solved_issues }}
-            </h2>
-
-            <p>
-                Issues Resolved
-            </p>
-
-        </div>
-
-
-        <div class="stat-box">
-
-            <h2>
-                {{ total_workers }}
-            </h2>
-
-            <p>
-                Active Workers
-            </p>
-
-        </div>
-
-
-        <div class="stat-box">
-
-            <h2>
-                {{ departments_count }}
-            </h2>
-
-            <p>
-                Departments
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
 
 <!-- ================= REPORTS SECTION ================= -->
 
