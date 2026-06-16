@@ -1,7 +1,9 @@
+from datetime import timedelta
+
 from celery import shared_task
 from django.utils import timezone
 
-from .models import Issue
+from .models import Issue, Notification
 
 
 @shared_task
@@ -21,3 +23,16 @@ def auto_escalate_issues():
         count += 1
 
     return f"{count} issues escalated"
+
+
+@shared_task
+def cleanup_notifications():
+
+    cutoff = timezone.now() - timedelta(days=30)
+
+    deleted_count, _ = Notification.objects.filter(
+        is_read=True,
+        created_at__lt=cutoff
+    ).delete()
+
+    return f"Deleted {deleted_count} notifications"

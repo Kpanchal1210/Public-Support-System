@@ -4,39 +4,22 @@ html {
     scroll-behavior: smooth;
 }
 
-:root {
+:root{
 
-   /* Backgrounds */
+    --bg-main:#f5f7fa;
+    --bg-card:rgba(255,255,255,.85);
 
-   --bg-main:      #F8F9FB;
-   --bg-surface:   #FFFFFF;
-   --bg-card:      #EEF1F5;
+    --accent-primary:#4E8F95;
+    --accent-secondary:#7FD1C9;
+    --accent-warm:#5FA3A6;
 
-   /* Brand Colors */
+    --success:#22c55e;
+    --danger:#ef4444;
 
-   --primary:      #292E54;
-   --secondary:    #3C4368;
+    --text-dark:#2F3E4F;
+    --text-muted:#6C7A8C;
 
-   /* Accent */
-
-   --accent:       #FFDE91;
-   --accent-dark:  #F6C95C;
-
-   /* Text */
-
-   --text-dark:    #292E54;
-   --text-muted:   #6F7693;
-
-   /* Borders */
-
-   --border:       #D9DDE6;
-
-   /* Shadows */
-
-   --shadow-sm: 0 5px 12px rgba(41,46,84,.05);
-   --shadow-md: 0 15px 30px rgba(41,46,84,.08);
-   --shadow-lg: 0 25px 50px rgba(41,46,84,.12);
-
+    --border-color:#dde5ea;
 }
 
 
