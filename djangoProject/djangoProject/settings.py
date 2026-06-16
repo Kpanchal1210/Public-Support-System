@@ -134,3 +134,10 @@ CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
 CELERY_BEAT_SCHEDULER = (
     "django_celery_beat.schedulers:DatabaseScheduler"
 )
+
+CELERY_BEAT_SCHEDULE = {
+    "cleanup-notifications": {
+        "task": "notifications.tasks.cleanup_notifications",
+        "schedule": 86400.0,  # 24 hours
+    },
+}
