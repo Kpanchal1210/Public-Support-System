@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 from accounts.models import UserProfile
 from reports.models import DepartmentRule, Issue, Notification
-from reports.utils import auto_escalate_issues, create_notification
+from reports.utils import  create_notification
 from django.db.models import Count
 from django.core.paginator import Paginator
 
@@ -89,10 +89,6 @@ def index(request):
 
 @login_required(login_url='login') 
 def department(request):
-
-    # ================= AUTO ESCALATION =================
-
-    auto_escalate_issues()
 
     # ================= DEPARTMENT =================
 
