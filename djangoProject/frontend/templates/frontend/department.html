@@ -165,11 +165,19 @@
     <div class="pending-card">
 
     <div class="media-box">
-    {% if issue.image %}
-    <img src="{{ issue.image.url }}">
-    {% else %}
-    <div>No Image</div>
-    {% endif %}
+        {% if issue.image %}
+
+            <div class="issue-image">
+
+                <img
+                    src="{{ issue.image.url }}"
+                    alt="Issue Image"
+                    onclick="openImage(this.src)"
+                >
+
+            </div>
+
+        {% endif %}
     </div>
 
     <h4>{{ issue.issue_type }}</h4>
@@ -282,11 +290,19 @@
 <div class="media-container">
 
 <div class="media-box"> 
-{% if issue.image %}
-<img src="{{ issue.image.url }}">
-{% else %}
-<div>No Image</div>
-{% endif %}
+    {% if issue.image %}
+
+            <div class="issue-image">
+
+                <img
+                    src="{{ issue.image.url }}"
+                    alt="Issue Image"
+                    onclick="openImage(this.src)"
+                >
+
+            </div>
+
+        {% endif %}
 </div>
 
 </div>
@@ -351,9 +367,24 @@
 <p><b>Location:</b> {{ issue.location }}</p>
 <p><b>Description:</b> {{ issue.description }}</p>
 
-<p class="deadline deadline-expired">
-🚨 Escalated
-</p>
+<div class="media-container">
+
+<div class="media-box"> 
+    {% if issue.image %}
+
+            <div class="issue-image">
+
+                <img
+                    src="{{ issue.image.url }}"
+                    alt="Issue Image"
+                    onclick="openImage(this.src)"
+                >
+
+            </div>
+
+        {% endif %}
+
+</div>
 
 </div>
 
@@ -437,6 +468,25 @@
 </section>
 
 </div>
+
+</div>
+
+<!-- IMAGE MODAL -->
+
+<div id="imageModal" class="image-modal">
+
+    <span
+        class="close-modal"
+        onclick="closeImage()"
+    >
+        &times;
+    </span>
+
+    <img
+        id="modalImg"
+        src=""
+        alt="Full Image"
+    >
 
 </div>
 
@@ -546,6 +596,10 @@
     </div>
 
 </footer>
+
+<!-- ================= JS ================= -->
+
+<script src="{% static 'js/department.js' %}"></script>
 
 </body>
 </html>
